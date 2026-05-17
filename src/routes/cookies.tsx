@@ -5,9 +5,9 @@ import { Footer, CookieBanner } from "@/components/site/Footer";
 export const Route = createFileRoute("/cookies")({
   head: () => ({
     meta: [
-      { title: "Política de Cookies — Digital Wave" },
+      { title: "Política de Cookies, Digital Wave" },
       { name: "description", content: "Informação sobre os cookies utilizados pela Digital Wave, conforme a Lei n.º 41/2004 e o RGPD." },
-      { property: "og:title", content: "Política de Cookies — Digital Wave" },
+      { property: "og:title", content: "Política de Cookies, Digital Wave" },
       { property: "og:description", content: "Que cookies usamos, para quê e como podes geri-los." },
     ],
   }),

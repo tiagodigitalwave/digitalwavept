@@ -9,9 +9,9 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave — Agendamos reuniões B2B com decisores por email" },
+      { title: "Digital Wave, Agendamos reuniões B2B com decisores por email" },
       { name: "description", content: "Digital Wave é a operação de email outbound para empresas B2B. +200 reuniões agendadas, +20 mercados, 7 dígitos gerados a parceiros." },
-      { property: "og:title", content: "Digital Wave — Email outbound B2B que agenda reuniões" },
+      { property: "og:title", content: "Digital Wave, Email outbound B2B que agenda reuniões" },
       { property: "og:description", content: "Encontramos e agendamos reuniões com os teus clientes ideais, por email, todos os meses." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -115,7 +115,7 @@ function Mission() {
         </p>
         <p className="text-lg text-muted-foreground leading-relaxed">
           Construímos sistemas de email outbound do zero: infraestrutura, listas
-          verificadas, copy e cadências testadas. O nosso trabalho é simples — fazer
+          verificadas, copy e cadências testadas. O nosso trabalho é simples, fazer
           chegar à agenda do nosso cliente reuniões com decisores qualificados, todos
           os meses, em vários mercados.
         </p>
@@ -297,7 +297,7 @@ function Testimonials() {
         </p>
       </div>
 
-      {/* Placeholder marquee — replace with email screenshots */}
+      {/* Placeholder marquee, replace with email screenshots */}
       <div className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />

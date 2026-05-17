@@ -5,9 +5,9 @@ import { Footer, CookieBanner } from "@/components/site/Footer";
 export const Route = createFileRoute("/termos")({
   head: () => ({
     meta: [
-      { title: "Termos e Condições — Digital Wave" },
+      { title: "Termos e Condições, Digital Wave" },
       { name: "description", content: "Termos e condições de utilização do website e serviços da Digital Wave." },
-      { property: "og:title", content: "Termos e Condições — Digital Wave" },
+      { property: "og:title", content: "Termos e Condições, Digital Wave" },
       { property: "og:description", content: "Termos e condições de utilização do website e serviços da Digital Wave." },
     ],
   }),

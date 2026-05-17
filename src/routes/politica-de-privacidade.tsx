@@ -5,9 +5,9 @@ import { Footer, CookieBanner } from "@/components/site/Footer";
 export const Route = createFileRoute("/politica-de-privacidade")({
   head: () => ({
     meta: [
-      { title: "Política de Privacidade — Digital Wave" },
+      { title: "Política de Privacidade, Digital Wave" },
       { name: "description", content: "Política de privacidade e tratamento de dados pessoais da Digital Wave, conforme o RGPD." },
-      { property: "og:title", content: "Política de Privacidade — Digital Wave" },
+      { property: "og:title", content: "Política de Privacidade, Digital Wave" },
       { property: "og:description", content: "Como tratamos os teus dados pessoais, em conformidade com o RGPD e a Lei n.º 58/2019." },
     ],
   }),
