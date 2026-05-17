@@ -37,14 +37,14 @@ function CtaButton({ children = "Agendar uma reunião", variant = "primary" as "
 
 function Hero() {
   return (
-    <section id="top" className="relative pt-36 md:pt-44 pb-20 px-6 max-w-7xl mx-auto">
+    <section id="top" className="relative pt-32 sm:pt-36 md:pt-44 pb-16 md:pb-20 px-6 max-w-7xl mx-auto">
       <span className="eyebrow">Email outbound · B2B</span>
       <h1 className="display mt-6 max-w-5xl">
-        Encontramos e agendamos<br />reuniões com os teus<br /><em>clientes ideais.</em>
+        Encontramos e agendamos reuniões com os teus <em>clientes ideais.</em>
       </h1>
-      <p className="mt-8 max-w-xl text-lg text-muted-foreground leading-relaxed">
+      <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
         Construímos a operação de email outbound da tua empresa B2B. Listas verificadas,
-        copy testado e infraestrutura sólida — para a tua agenda nunca mais ficar vazia.
+        copy testado e infraestrutura sólida, para a tua agenda nunca mais ficar vazia.
         Tu fechas, nós abastecemos.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">
@@ -138,7 +138,7 @@ function Pilar() {
           <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Email outbound como serviço</div>
         </div>
         <h3 className="text-3xl md:text-4xl mt-4">Sistema de aquisição por email, ponta a ponta.</h3>
-        <p className="mt-4 text-muted-foreground text-lg leading-relaxed max-w-2xl">
+        <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
           Não somos uma "ferramenta". Operamos o canal por ti: do setup técnico ao
           envio diário, da resposta à marcação no teu calendário. Tu só apareces às
           reuniões.
@@ -197,7 +197,7 @@ const STEPS = [
   {
     tag: "Reuniões",
     title: "Agendamento no teu calendário",
-    body: "Apenas as leads qualificadas chegam até ti — já com contexto, agenda confirmada e link da reunião. Tu só fazes aquilo que sabes melhor: fechar.",
+    body: "Apenas as leads qualificadas chegam até ti, já com contexto, agenda confirmada e link da reunião. Tu só fazes aquilo que sabes melhor: fechar.",
     points: ["Briefing pré-reunião", "Confirmações automáticas", "Reporting semanal de pipeline"],
   },
 ];
@@ -209,9 +209,9 @@ function Ecosystem() {
       <h2 className="display mt-6 max-w-4xl">
         Ecossistema de email outbound. <em>Passo a passo.</em>
       </h2>
-      <p className="mt-6 max-w-2xl text-muted-foreground text-lg">
+      <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
         Seis etapas que cobrem todo o ciclo, do ICP à reunião marcada. Nada é
-        terceirizado, nada é genérico — cada conta tem a sua operação dedicada.
+        terceirizado, nada é genérico. Cada conta tem a sua operação dedicada.
       </p>
 
       <div className="mt-16 grid md:grid-cols-2 gap-5">
@@ -306,7 +306,7 @@ function Testimonials() {
             <div
               key={i}
               data-email-screenshot-placeholder
-              className="card-surface w-[420px] h-[280px] shrink-0 grid place-items-center text-center p-6"
+              className="card-surface w-[min(420px,85vw)] h-[260px] sm:h-[280px] shrink-0 grid place-items-center text-center p-6"
             >
               <div>
                 <div className="text-xs uppercase tracking-[0.18em] text-wave mb-2">Print de email #{i + 1}</div>
@@ -342,7 +342,7 @@ function Team() {
         Operadores. Engenheiros. <em>Closers.</em>
       </h2>
 
-      <div className="mt-16 grid md:grid-cols-[360px_1fr] gap-10 items-start">
+      <div className="mt-12 md:mt-16 grid md:grid-cols-[300px_1fr] lg:grid-cols-[360px_1fr] gap-8 md:gap-10 items-start">
         <div className="card-surface p-4">
           <div
             className="aspect-[4/5] rounded-xl bg-muted/40 overflow-hidden grid place-items-center cursor-pointer relative group"
@@ -374,13 +374,10 @@ function Team() {
             da Digital Wave, porque é que o email outbound é o teu canal de eleição
             e o que faz com que a tua operação seja diferente.
           </p>
-          <p className="mt-4 text-muted-foreground text-lg leading-relaxed max-w-2xl">
-            (Edita este bloco com o teu texto definitivo — formação, experiência,
+          <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
+            (Edita este bloco com o teu texto definitivo: formação, experiência,
             clientes anteriores, números pessoais ou um manifesto curto.)
           </p>
-          <div className="mt-8">
-            <CtaButton>Falar comigo diretamente</CtaButton>
-          </div>
         </div>
       </div>
     </section>
