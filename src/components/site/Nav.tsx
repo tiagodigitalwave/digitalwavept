@@ -1,36 +1,39 @@
+import { Link } from "@tanstack/react-router";
+
 const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 
 const links = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#pilar", label: "Oferta" },
-  { href: "#ecossistema", label: "Ecossistema" },
-  { href: "#metodo", label: "Método" },
-  { href: "#cases", label: "Cases" },
-  { href: "#equipa", label: "Equipa" },
+  { hash: "sobre", label: "Sobre" },
+  { hash: "pilar", label: "Oferta" },
+  { hash: "ecossistema", label: "Ecossistema" },
+  { hash: "metodo", label: "Método" },
+  { hash: "cases", label: "Cases" },
+  { hash: "equipa", label: "Equipa" },
 ];
 
 export function Nav() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
-      <div className="mx-auto max-w-7xl flex items-center justify-between rounded-full border border-border bg-background/60 backdrop-blur-xl px-5 py-3">
-        <a href="#top" className="flex items-center gap-2">
+    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 pt-3 sm:pt-4">
+      <div className="mx-auto max-w-7xl flex items-center justify-between gap-3 rounded-full border border-border bg-background/60 backdrop-blur-xl px-4 sm:px-5 py-2.5 sm:py-3">
+        <Link to="/" hash="top" className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-full bg-wave/20 border border-wave/40 grid place-items-center">
             <div className="w-3 h-3 rounded-full bg-wave shadow-[0_0_12px_var(--color-wave)]" />
           </div>
           <div className="leading-none">
             <div className="text-sm font-semibold tracking-tight">Digital Wave</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">B2B · Email</div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground hidden sm:block">B2B · Email</div>
           </div>
-        </a>
-        <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
+        </Link>
+        <nav className="hidden lg:flex items-center gap-7 text-sm text-muted-foreground">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="hover:text-foreground transition-colors">
+            <Link key={l.hash} to="/" hash={l.hash} className="hover:text-foreground transition-colors">
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
-        <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="btn-primary !py-2 !px-4 !text-sm">
-          Agendar uma reunião
+        <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="btn-primary !py-2 !px-3 sm:!px-4 !text-xs sm:!text-sm shrink-0">
+          <span className="hidden sm:inline">Agendar uma reunião</span>
+          <span className="sm:hidden">Agendar</span>
           <span aria-hidden>→</span>
         </a>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 
@@ -20,7 +21,7 @@ export function Footer() {
         </div>
         <div>
           <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">Contacto</div>
-          <a href="mailto:hello@tiagodigitalwave.eu" className="block text-foreground hover:text-wave transition">
+          <a href="mailto:hello@tiagodigitalwave.eu" className="block text-foreground hover:text-wave transition break-all">
             hello@tiagodigitalwave.eu
           </a>
           <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="block text-sm text-muted-foreground hover:text-wave transition mt-2">
@@ -30,20 +31,20 @@ export function Footer() {
         <div>
           <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">Navegação</div>
           <ul className="space-y-2 text-sm">
-            <li><a href="#sobre" className="text-muted-foreground hover:text-foreground">Sobre</a></li>
-            <li><a href="#ecossistema" className="text-muted-foreground hover:text-foreground">Como funciona</a></li>
-            <li><a href="#cases" className="text-muted-foreground hover:text-foreground">Casos de estudo</a></li>
-            <li><a href="#equipa" className="text-muted-foreground hover:text-foreground">Equipa</a></li>
+            <li><Link to="/" hash="sobre" className="text-muted-foreground hover:text-foreground">Sobre</Link></li>
+            <li><Link to="/" hash="ecossistema" className="text-muted-foreground hover:text-foreground">Como funciona</Link></li>
+            <li><Link to="/" hash="cases" className="text-muted-foreground hover:text-foreground">Casos de estudo</Link></li>
+            <li><Link to="/" hash="equipa" className="text-muted-foreground hover:text-foreground">Equipa</Link></li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row gap-3 items-center justify-between text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} Digital Wave. Todos os direitos reservados.</div>
-          <div className="flex gap-5">
-            <a href="#" className="hover:text-foreground">Política de Privacidade</a>
-            <a href="#" className="hover:text-foreground">Termos</a>
-            <a href="#" className="hover:text-foreground">Cookies</a>
+          <div className="flex flex-wrap gap-5 justify-center">
+            <Link to="/politica-de-privacidade" className="hover:text-foreground">Política de Privacidade</Link>
+            <Link to="/termos" className="hover:text-foreground">Termos</Link>
+            <Link to="/cookies" className="hover:text-foreground">Cookies</Link>
           </div>
         </div>
       </div>
@@ -66,11 +67,12 @@ export function CookieBanner() {
     <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-3xl card-surface p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center gap-4">
       <p className="text-sm text-muted-foreground flex-1">
         Usamos cookies para melhorar a tua experiência, analisar tráfego e personalizar conteúdos.
-        Podes aceitar todos ou recusar os opcionais. Vê a nossa <a href="#" className="text-wave underline">Política de Cookies</a>.
+        Podes aceitar todos ou recusar os opcionais. Vê a nossa{" "}
+        <Link to="/cookies" className="text-wave underline">Política de Cookies</Link>.
       </p>
-      <div className="flex gap-2 shrink-0">
-        <button onClick={() => decide("reject")} className="btn-ghost !py-2 !px-4 !text-sm">Recusar</button>
-        <button onClick={() => decide("accept")} className="btn-primary !py-2 !px-4 !text-sm">Aceitar</button>
+      <div className="flex gap-2 shrink-0 w-full md:w-auto">
+        <button onClick={() => decide("reject")} className="btn-ghost !py-2 !px-4 !text-sm flex-1 md:flex-none justify-center">Recusar</button>
+        <button onClick={() => decide("accept")} className="btn-primary !py-2 !px-4 !text-sm flex-1 md:flex-none justify-center">Aceitar</button>
       </div>
     </div>
   );
