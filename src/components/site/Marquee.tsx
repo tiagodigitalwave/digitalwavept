@@ -1,10 +1,17 @@
+import bolt from "@/assets/logos/bolt.png";
+import ontime from "@/assets/logos/ontime.png";
+import salvador from "@/assets/logos/salvador-caetano.png";
+import arquimea from "@/assets/logos/arquimea.png";
+import mcdonalds from "@/assets/logos/mcdonalds.png";
+import hipay from "@/assets/logos/hipay.png";
+
 const logos = [
-  { name: "Bolt", domain: "bolt.eu" },
-  { name: "Ontime", domain: "ontime.pt" },
-  { name: "Grupo Salvador Caetano", domain: "salvadorcaetano.com" },
-  { name: "ARQUIMEA", domain: "arquimea.com" },
-  { name: "McDonald's", domain: "mcdonalds.com" },
-  { name: "HiPay", domain: "hipay.com" },
+  { name: "Bolt", src: bolt },
+  { name: "Ontime", src: ontime },
+  { name: "Grupo Salvador Caetano", src: salvador },
+  { name: "ARQUIMEA", src: arquimea },
+  { name: "McDonald's", src: mcdonalds },
+  { name: "HiPay", src: hipay },
 ];
 
 export function LogoMarquee({ size = "md" }: { size?: "md" | "lg" }) {
@@ -17,17 +24,11 @@ export function LogoMarquee({ size = "md" }: { size?: "md" | "lg" }) {
       <div className={`flex items-center gap-10 md:gap-20 ${size === "lg" ? "marquee-track-slow" : "marquee-track"} whitespace-nowrap`}>
         {items.map((logo, i) => (
           <img
-            key={`${logo.domain}-${i}`}
-            src={`https://logo.clearbit.com/${logo.domain}`}
+            key={`${logo.name}-${i}`}
+            src={logo.src}
             alt={logo.name}
             loading="lazy"
-            className={`${h} w-auto shrink-0 object-contain brightness-0 invert opacity-60 hover:opacity-100 transition`}
-            onError={(e) => {
-              const t = e.currentTarget as HTMLImageElement;
-              t.style.display = "none";
-              const fb = t.nextElementSibling as HTMLElement | null;
-              if (fb) fb.style.display = "inline-block";
-            }}
+            className={`${h} w-auto shrink-0 object-contain opacity-90 hover:opacity-100 transition`}
           />
         ))}
       </div>
