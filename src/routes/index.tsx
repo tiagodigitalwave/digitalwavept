@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Nav } from "@/components/site/Nav";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
-import tiagoPhoto from "@/assets/tiago.jpg";
+import tiagoVideo from "@/assets/tiago-video.mp4";
 
 const YT_ID = "1r3yGX4nPnc";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
