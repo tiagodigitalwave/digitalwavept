@@ -42,14 +42,14 @@ function CtaButton({ children = "Agendar uma reunião", variant = "primary" as "
 function Hero() {
   return (
     <section id="top" className="relative pt-32 sm:pt-36 md:pt-44 pb-16 md:pb-20 px-6 max-w-7xl mx-auto">
-      <span className="eyebrow">Email outbound · B2B</span>
+      <span className="eyebrow">Email Marketing · B2B</span>
       <h1 className="display mt-6 max-w-5xl">
-        Encontramos e agendamos reuniões com os teus <em>clientes ideais.</em>
+        Encontramos e agendamos reuniões com os teus <em>clientes ideais</em> através de Email Marketing.
       </h1>
       <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-        Construímos a operação de email outbound da tua empresa B2B. Listas verificadas,
-        copy testado e infraestrutura sólida, para a tua agenda nunca mais ficar vazia.
-        Tu fechas, nós abastecemos.
+        Operamos toda a tua máquina de Email Marketing B2B: identificamos os decisores certos,
+        escrevemos mensagens que geram resposta, garantimos que chegam à caixa de entrada
+        e marcamos as reuniões diretamente no teu calendário. Tu fechas, nós abastecemos o pipeline.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">
         <CtaButton />
