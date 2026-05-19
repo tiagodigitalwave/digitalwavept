@@ -1,8 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Nav } from "@/components/site/Nav";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
+import tiagoPhoto from "@/assets/tiago.jpg";
+
+const YT_ID = "1r3yGX4nPnc";
+const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
 
 const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 
@@ -79,25 +83,46 @@ function Partners() {
   );
 }
 
+function VslPlayer() {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <div className="card-surface aspect-video relative overflow-hidden grid place-items-center">
+      {playing ? (
+        <iframe
+          className="absolute inset-0 w-full h-full"
+          src={`https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}&rel=0&modestbranding=1&playsinline=1`}
+          title="Digital Wave VSL"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          className="absolute inset-0 w-full h-full group"
+          aria-label="Reproduzir vídeo"
+        >
+          <img
+            src={YT_THUMB}
+            alt="Pré-visualização do vídeo"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 blur-[2px] group-hover:opacity-70 transition"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
+          <div className="relative grid place-items-center h-full">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-wave text-primary-foreground grid place-items-center shadow-[0_0_60px_var(--color-wave)] group-hover:scale-110 transition">
+              <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
+            </div>
+          </div>
+        </button>
+      )}
+    </div>
+  );
+}
+
 function VideoBlock() {
   return (
     <section className="section">
-      <div className="card-surface aspect-video relative overflow-hidden grid place-items-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-wave/10 via-transparent to-wave/5" />
-        <div className="relative flex flex-col items-center gap-4 text-center">
-          <button
-            type="button"
-            className="w-20 h-20 rounded-full bg-wave text-primary-foreground grid place-items-center shadow-[0_0_60px_var(--color-wave)]"
-            aria-label="Reproduzir vídeo"
-          >
-            <svg width="22" height="26" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
-          </button>
-          <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Vídeo de apresentação · em breve</div>
-          <p className="text-sm text-muted-foreground max-w-md">
-            Espaço reservado para o vídeo institucional da Digital Wave.
-          </p>
-        </div>
-      </div>
+      <VslPlayer />
     </section>
   );
 }
@@ -324,17 +349,6 @@ function Testimonials() {
 }
 
 function Team() {
-  const [photo, setPhoto] = useState<string | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setPhoto(reader.result as string);
-    reader.readAsDataURL(file);
-  };
-
   return (
     <section id="equipa" className="section">
       <span className="eyebrow">A equipa</span>
@@ -344,20 +358,8 @@ function Team() {
 
       <div className="mt-12 md:mt-16 grid md:grid-cols-[300px_1fr] lg:grid-cols-[360px_1fr] gap-8 md:gap-10 items-start">
         <div className="card-surface p-4">
-          <div
-            className="aspect-[4/5] rounded-xl bg-muted/40 overflow-hidden grid place-items-center cursor-pointer relative group"
-            onClick={() => inputRef.current?.click()}
-          >
-            {photo ? (
-              <img src={photo} alt="Tiago Barbosa" className="w-full h-full object-cover" />
-            ) : (
-              <div className="text-center px-6">
-                <div className="w-16 h-16 mx-auto rounded-full border border-wave/40 bg-wave/10 grid place-items-center text-wave text-2xl mb-3">+</div>
-                <div className="text-sm text-foreground font-medium">Carregar fotografia</div>
-                <div className="text-xs text-muted-foreground mt-1">Clica aqui para fazer upload</div>
-              </div>
-            )}
-            <input ref={inputRef} type="file" accept="image/*" onChange={onFile} className="hidden" />
+          <div className="aspect-[4/5] rounded-xl bg-muted/40 overflow-hidden">
+            <img src={tiagoPhoto} alt="Tiago Barbosa" className="w-full h-full object-cover" />
           </div>
           <div className="mt-4 px-2 pb-2">
             <div className="text-lg font-medium">Tiago Barbosa</div>
