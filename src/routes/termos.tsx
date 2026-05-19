@@ -37,7 +37,7 @@ function TermosPage() {
             <h2 className="text-2xl mb-3">2. Objeto</h2>
             <p>
               Os presentes Termos e Condições regulam o acesso e a utilização do website
-              tiagodigitalwave.eu e dos serviços de email outbound B2B prestados pela Digital Wave,
+              tiagodigitalwave.eu e dos serviços de Email Marketing B2B prestados pela Digital Wave,
               em conformidade com a legislação portuguesa, designadamente o Código Civil, a Lei n.º 7/2004
               de 7 de janeiro (comércio eletrónico), o Decreto-Lei n.º 24/2014 (contratos à distância) e
               o Regulamento (UE) 2016/679 (RGPD).
