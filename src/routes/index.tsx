@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Nav } from "@/components/site/Nav";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
-import tiagoPhoto from "@/assets/tiago.jpg";
+import tiagoVideo from "@/assets/tiago-video.mp4";
 
 const YT_ID = "1r3yGX4nPnc";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
@@ -13,10 +13,10 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave, Agendamos reuniões B2B com decisores por email" },
-      { name: "description", content: "Digital Wave é a operação de email outbound para empresas B2B. +200 reuniões agendadas, +20 mercados, 7 dígitos gerados a parceiros." },
-      { property: "og:title", content: "Digital Wave, Email outbound B2B que agenda reuniões" },
-      { property: "og:description", content: "Encontramos e agendamos reuniões com os teus clientes ideais, por email, todos os meses." },
+      { title: "Digital Wave, Email Marketing B2B que agenda reuniões com decisores" },
+      { name: "description", content: "Digital Wave é a operação de Email Marketing para empresas B2B. +200 reuniões agendadas, +20 mercados, 7 dígitos gerados a parceiros." },
+      { property: "og:title", content: "Digital Wave, Email Marketing B2B que agenda reuniões" },
+      { property: "og:description", content: "Encontramos e agendamos reuniões com os teus clientes ideais através de Email Marketing, todos os meses." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
@@ -42,14 +42,14 @@ function CtaButton({ children = "Agendar uma reunião", variant = "primary" as "
 function Hero() {
   return (
     <section id="top" className="relative pt-32 sm:pt-36 md:pt-44 pb-16 md:pb-20 px-6 max-w-7xl mx-auto">
-      <span className="eyebrow">Email outbound · B2B</span>
+      <span className="eyebrow">Email Marketing · B2B</span>
       <h1 className="display mt-6 max-w-5xl">
-        Encontramos e agendamos reuniões com os teus <em>clientes ideais.</em>
+        Encontramos e agendamos reuniões com os teus <em>clientes ideais</em> através de Email Marketing.
       </h1>
       <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-        Construímos a operação de email outbound da tua empresa B2B. Listas verificadas,
-        copy testado e infraestrutura sólida, para a tua agenda nunca mais ficar vazia.
-        Tu fechas, nós abastecemos.
+        Operamos toda a tua máquina de Email Marketing B2B: identificamos os decisores certos,
+        escrevemos mensagens que geram resposta, garantimos que chegam à caixa de entrada
+        e marcamos as reuniões diretamente no teu calendário. Tu fechas, nós abastecemos o pipeline.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">
         <CtaButton />
@@ -134,15 +134,15 @@ function Mission() {
       <h2 className="display mt-6 max-w-4xl">Missão.</h2>
       <div className="mt-10 grid md:grid-cols-2 gap-10 max-w-5xl">
         <p className="text-lg text-foreground leading-relaxed">
-          A Digital Wave é a operação de aquisição por email que está por trás de
-          empresas B2B que querem crescer sem depender de referências, anúncios pagos
-          ou comerciais a "procurar leads no LinkedIn".
+          A Digital Wave é a operação de Email Marketing B2B que está por trás de
+          empresas que querem crescer de forma previsível, sem depender de referências,
+          anúncios pagos ou comerciais a "procurar leads no LinkedIn".
         </p>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Construímos sistemas de email outbound do zero: infraestrutura, listas
-          verificadas, copy e cadências testadas. O nosso trabalho é simples, fazer
-          chegar à agenda do nosso cliente reuniões com decisores qualificados, todos
-          os meses, em vários mercados.
+          Construímos, do zero, todo o sistema de Email Marketing da tua empresa: infraestrutura
+          técnica, listas de decisores verificadas, mensagens e cadências testadas. O resultado é
+          simples e mensurável, reuniões com decisores qualificados marcadas no teu calendário,
+          todos os meses, em vários mercados.
         </p>
       </div>
     </section>
@@ -160,13 +160,13 @@ function Pilar() {
       <div className="mt-12 card-surface p-8 md:p-12 max-w-4xl">
         <div className="flex items-baseline gap-6">
           <span className="num-display text-wave">01</span>
-          <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Email outbound como serviço</div>
+          <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Email Marketing como serviço</div>
         </div>
-        <h3 className="text-3xl md:text-4xl mt-4">Sistema de aquisição por email, ponta a ponta.</h3>
+        <h3 className="text-3xl md:text-4xl mt-4">Sistema completo de Email Marketing B2B, ponta a ponta.</h3>
         <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
-          Não somos uma "ferramenta". Operamos o canal por ti: do setup técnico ao
-          envio diário, da resposta à marcação no teu calendário. Tu só apareces às
-          reuniões.
+          Não somos uma "ferramenta" nem mais um curso. Operamos o canal por ti, do dia 1 ao envio diário:
+          definimos o cliente ideal, preparamos a infraestrutura, escrevemos as mensagens, enviamos,
+          respondemos e qualificamos. Tu só apareces às reuniões.
         </p>
         <ul className="mt-8 grid sm:grid-cols-2 gap-3 text-sm">
           {[
@@ -199,7 +199,7 @@ const STEPS = [
     tag: "Infraestrutura",
     title: "Setup técnico de envio",
     body: "Compramos e configuramos domínios secundários, fazemos o aquecimento (warm-up) e garantimos SPF, DKIM e DMARC. Zero risco para o teu domínio principal.",
-    points: ["Domínios dedicados ao outbound", "Warm-up automático 2-3 semanas", "Autenticação SPF/DKIM/DMARC"],
+    points: ["Domínios dedicados ao Email Marketing", "Warm-up automático 2-3 semanas", "Autenticação SPF/DKIM/DMARC"],
   },
   {
     tag: "Dados",
@@ -232,11 +232,11 @@ function Ecosystem() {
     <section id="ecossistema" className="section">
       <span className="eyebrow">Como funciona</span>
       <h2 className="display mt-6 max-w-4xl">
-        Ecossistema de email outbound. <em>Passo a passo.</em>
+        Ecossistema de Email Marketing B2B. <em>Passo a passo.</em>
       </h2>
       <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
-        Seis etapas que cobrem todo o ciclo, do ICP à reunião marcada. Nada é
-        terceirizado, nada é genérico. Cada conta tem a sua operação dedicada.
+        Seis etapas que cobrem todo o ciclo, do perfil de cliente ideal até à reunião marcada.
+        Nada é terceirizado, nada é genérico. Cada conta tem a sua operação dedicada.
       </p>
 
       <div className="mt-16 grid md:grid-cols-2 gap-5">
@@ -280,7 +280,7 @@ function Method() {
     <section id="metodo" className="section">
       <span className="eyebrow">Método</span>
       <h2 className="display mt-6 max-w-4xl">
-        Em <em>3 semanas</em> a tua máquina de outbound está a enviar.
+        Em <em>3 semanas</em> a tua máquina de Email Marketing está a enviar.
       </h2>
 
       <div className="mt-12 grid md:grid-cols-2 gap-6">
@@ -316,10 +316,6 @@ function Testimonials() {
         <h2 className="display mt-6 max-w-4xl">
           Deixamos os <em>clientes falar</em> por nós.
         </h2>
-        <p className="mt-6 max-w-2xl text-muted-foreground text-lg">
-          Espaço reservado para prints reais de emails e respostas de clientes. Vai
-          passar em rodapé maior, em loop contínuo.
-        </p>
       </div>
 
       {/* Placeholder marquee, replace with email screenshots */}
@@ -353,13 +349,19 @@ function Team() {
     <section id="equipa" className="section">
       <span className="eyebrow">A equipa</span>
       <h2 className="display mt-6 max-w-4xl">
-        Operadores. Engenheiros. <em>Closers.</em>
+        Quem é o <em>Founder</em> da Digital Wave?
       </h2>
 
       <div className="mt-12 md:mt-16 grid md:grid-cols-[300px_1fr] lg:grid-cols-[360px_1fr] gap-8 md:gap-10 items-start">
         <div className="card-surface p-4">
           <div className="aspect-[4/5] rounded-xl bg-muted/40 overflow-hidden">
-            <img src={tiagoPhoto} alt="Tiago Barbosa" className="w-full h-full object-cover" />
+            <video
+              src={tiagoVideo}
+              controls
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div className="mt-4 px-2 pb-2">
             <div className="text-lg font-medium">Tiago Barbosa</div>
@@ -369,16 +371,18 @@ function Team() {
 
         <div>
           <h3 className="text-3xl md:text-4xl max-w-2xl">
-            Construído à mão por quem opera, não por quem vende cursos.
+            A história, a missão e a forma como a Digital Wave coloca decisores B2B na tua agenda.
           </h3>
           <p className="mt-6 text-muted-foreground text-lg leading-relaxed max-w-2xl">
-            Espaço reservado para a tua breve descrição. Quem és, o que fizeste antes
-            da Digital Wave, porque é que o email outbound é o teu canal de eleição
-            e o que faz com que a tua operação seja diferente.
+            Neste vídeo, o Tiago apresenta-se em primeira pessoa: o percurso que o levou
+            a especializar-se em Email Marketing B2B, as empresas e mercados com que já
+            trabalhou e a forma como hoje constrói, do zero, operações de aquisição por
+            email para empresas que querem crescer com previsibilidade.
           </p>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
-            (Edita este bloco com o teu texto definitivo: formação, experiência,
-            clientes anteriores, números pessoais ou um manifesto curto.)
+            Explica também o que torna a operação da Digital Wave diferente: equipa
+            dedicada por cliente, foco em decisores qualificados e total transparência
+            sobre números, processos e resultados.
           </p>
         </div>
       </div>

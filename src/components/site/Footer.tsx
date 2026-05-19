@@ -15,7 +15,7 @@ export function Footer() {
             <span className="font-semibold">Digital Wave</span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">
-            Engenharia de outbound por email para empresas B2B. Agendamos reuniões com
+            Email Marketing B2B operado ponta a ponta. Agendamos reuniões com
             os decisores que importam.
           </p>
         </div>
