@@ -160,13 +160,13 @@ function Pilar() {
       <div className="mt-12 card-surface p-8 md:p-12 max-w-4xl">
         <div className="flex items-baseline gap-6">
           <span className="num-display text-wave">01</span>
-          <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Email outbound como serviço</div>
+          <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Email Marketing como serviço</div>
         </div>
-        <h3 className="text-3xl md:text-4xl mt-4">Sistema de aquisição por email, ponta a ponta.</h3>
+        <h3 className="text-3xl md:text-4xl mt-4">Sistema completo de Email Marketing B2B, ponta a ponta.</h3>
         <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
-          Não somos uma "ferramenta". Operamos o canal por ti: do setup técnico ao
-          envio diário, da resposta à marcação no teu calendário. Tu só apareces às
-          reuniões.
+          Não somos uma "ferramenta" nem mais um curso. Operamos o canal por ti, do dia 1 ao envio diário:
+          definimos o cliente ideal, preparamos a infraestrutura, escrevemos as mensagens, enviamos,
+          respondemos e qualificamos. Tu só apareces às reuniões.
         </p>
         <ul className="mt-8 grid sm:grid-cols-2 gap-3 text-sm">
           {[
