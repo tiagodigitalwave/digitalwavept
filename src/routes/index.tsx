@@ -199,7 +199,7 @@ const STEPS = [
     tag: "Infraestrutura",
     title: "Setup técnico de envio",
     body: "Compramos e configuramos domínios secundários, fazemos o aquecimento (warm-up) e garantimos SPF, DKIM e DMARC. Zero risco para o teu domínio principal.",
-    points: ["Domínios dedicados ao outbound", "Warm-up automático 2-3 semanas", "Autenticação SPF/DKIM/DMARC"],
+    points: ["Domínios dedicados ao Email Marketing", "Warm-up automático 2-3 semanas", "Autenticação SPF/DKIM/DMARC"],
   },
   {
     tag: "Dados",
