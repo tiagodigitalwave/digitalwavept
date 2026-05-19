@@ -134,15 +134,15 @@ function Mission() {
       <h2 className="display mt-6 max-w-4xl">Missão.</h2>
       <div className="mt-10 grid md:grid-cols-2 gap-10 max-w-5xl">
         <p className="text-lg text-foreground leading-relaxed">
-          A Digital Wave é a operação de aquisição por email que está por trás de
-          empresas B2B que querem crescer sem depender de referências, anúncios pagos
-          ou comerciais a "procurar leads no LinkedIn".
+          A Digital Wave é a operação de Email Marketing B2B que está por trás de
+          empresas que querem crescer de forma previsível, sem depender de referências,
+          anúncios pagos ou comerciais a "procurar leads no LinkedIn".
         </p>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Construímos sistemas de email outbound do zero: infraestrutura, listas
-          verificadas, copy e cadências testadas. O nosso trabalho é simples, fazer
-          chegar à agenda do nosso cliente reuniões com decisores qualificados, todos
-          os meses, em vários mercados.
+          Construímos, do zero, todo o sistema de Email Marketing da tua empresa: infraestrutura
+          técnica, listas de decisores verificadas, mensagens e cadências testadas. O resultado é
+          simples e mensurável, reuniões com decisores qualificados marcadas no teu calendário,
+          todos os meses, em vários mercados.
         </p>
       </div>
     </section>
