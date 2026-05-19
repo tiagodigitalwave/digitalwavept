@@ -4,6 +4,7 @@ import salvador from "@/assets/logos/salvador-caetano.png";
 import arquimea from "@/assets/logos/arquimea.png";
 import mcdonalds from "@/assets/logos/mcdonalds.png";
 import hipay from "@/assets/logos/hipay.png";
+import mosqueteiros from "@/assets/logos/mosqueteiros.png";
 
 const logos = [
   { name: "Bolt", src: bolt },
@@ -12,6 +13,7 @@ const logos = [
   { name: "ARQUIMEA", src: arquimea },
   { name: "McDonald's", src: mcdonalds },
   { name: "HiPay", src: hipay },
+  { name: "Grupo Mosqueteiros", src: mosqueteiros },
 ];
 
 export function LogoMarquee({ size = "md" }: { size?: "md" | "lg" }) {

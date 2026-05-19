@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import logo from "@/assets/logo-dw.png";
+
 
 const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 
@@ -15,10 +17,13 @@ export function Nav() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 pt-3 sm:pt-4">
       <div className="mx-auto max-w-7xl flex items-center justify-between gap-3 rounded-full border border-border bg-background/60 backdrop-blur-xl px-4 sm:px-5 py-2.5 sm:py-3">
-        <Link to="/" hash="top" className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-full bg-wave/20 border border-wave/40 grid place-items-center">
-            <div className="w-3 h-3 rounded-full bg-wave shadow-[0_0_12px_var(--color-wave)]" />
-          </div>
+        <Link to="/" hash="top" className="flex items-center gap-2.5 shrink-0">
+          <img
+            src={logo}
+            alt="Digital Wave"
+            className="w-9 h-9 object-contain"
+            style={{ filter: "invert(1) brightness(2)", mixBlendMode: "screen" }}
+          />
           <div className="leading-none">
             <div className="text-sm font-semibold tracking-tight">Digital Wave</div>
             <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground hidden sm:block">B2B · Email</div>
