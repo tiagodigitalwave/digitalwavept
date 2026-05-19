@@ -13,10 +13,10 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave, Agendamos reuniões B2B com decisores por email" },
-      { name: "description", content: "Digital Wave é a operação de email outbound para empresas B2B. +200 reuniões agendadas, +20 mercados, 7 dígitos gerados a parceiros." },
-      { property: "og:title", content: "Digital Wave, Email outbound B2B que agenda reuniões" },
-      { property: "og:description", content: "Encontramos e agendamos reuniões com os teus clientes ideais, por email, todos os meses." },
+      { title: "Digital Wave, Email Marketing B2B que agenda reuniões com decisores" },
+      { name: "description", content: "Digital Wave é a operação de Email Marketing para empresas B2B. +200 reuniões agendadas, +20 mercados, 7 dígitos gerados a parceiros." },
+      { property: "og:title", content: "Digital Wave, Email Marketing B2B que agenda reuniões" },
+      { property: "og:description", content: "Encontramos e agendamos reuniões com os teus clientes ideais através de Email Marketing, todos os meses." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
