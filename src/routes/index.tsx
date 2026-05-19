@@ -280,7 +280,7 @@ function Method() {
     <section id="metodo" className="section">
       <span className="eyebrow">Método</span>
       <h2 className="display mt-6 max-w-4xl">
-        Em <em>3 semanas</em> a tua máquina de outbound está a enviar.
+        Em <em>3 semanas</em> a tua máquina de Email Marketing está a enviar.
       </h2>
 
       <div className="mt-12 grid md:grid-cols-2 gap-6">
