@@ -316,10 +316,6 @@ function Testimonials() {
         <h2 className="display mt-6 max-w-4xl">
           Deixamos os <em>clientes falar</em> por nós.
         </h2>
-        <p className="mt-6 max-w-2xl text-muted-foreground text-lg">
-          Espaço reservado para prints reais de emails e respostas de clientes. Vai
-          passar em rodapé maior, em loop contínuo.
-        </p>
       </div>
 
       {/* Placeholder marquee, replace with email screenshots */}
