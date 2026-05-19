@@ -349,13 +349,19 @@ function Team() {
     <section id="equipa" className="section">
       <span className="eyebrow">A equipa</span>
       <h2 className="display mt-6 max-w-4xl">
-        Operadores. Engenheiros. <em>Closers.</em>
+        Quem é o <em>Founder</em> da Digital Wave?
       </h2>
 
       <div className="mt-12 md:mt-16 grid md:grid-cols-[300px_1fr] lg:grid-cols-[360px_1fr] gap-8 md:gap-10 items-start">
         <div className="card-surface p-4">
           <div className="aspect-[4/5] rounded-xl bg-muted/40 overflow-hidden">
-            <img src={tiagoPhoto} alt="Tiago Barbosa" className="w-full h-full object-cover" />
+            <video
+              src={tiagoVideo}
+              controls
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div className="mt-4 px-2 pb-2">
             <div className="text-lg font-medium">Tiago Barbosa</div>
@@ -365,16 +371,18 @@ function Team() {
 
         <div>
           <h3 className="text-3xl md:text-4xl max-w-2xl">
-            Construído à mão por quem opera, não por quem vende cursos.
+            A história, a missão e a forma como a Digital Wave coloca decisores B2B na tua agenda.
           </h3>
           <p className="mt-6 text-muted-foreground text-lg leading-relaxed max-w-2xl">
-            Espaço reservado para a tua breve descrição. Quem és, o que fizeste antes
-            da Digital Wave, porque é que o email outbound é o teu canal de eleição
-            e o que faz com que a tua operação seja diferente.
+            Neste vídeo, o Tiago apresenta-se em primeira pessoa: o percurso que o levou
+            a especializar-se em Email Marketing B2B, as empresas e mercados com que já
+            trabalhou e a forma como hoje constrói, do zero, operações de aquisição por
+            email para empresas que querem crescer com previsibilidade.
           </p>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
-            (Edita este bloco com o teu texto definitivo: formação, experiência,
-            clientes anteriores, números pessoais ou um manifesto curto.)
+            Explica também o que torna a operação da Digital Wave diferente: equipa
+            dedicada por cliente, foco em decisores qualificados e total transparência
+            sobre números, processos e resultados.
           </p>
         </div>
       </div>
