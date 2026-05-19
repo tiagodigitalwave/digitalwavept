@@ -232,11 +232,11 @@ function Ecosystem() {
     <section id="ecossistema" className="section">
       <span className="eyebrow">Como funciona</span>
       <h2 className="display mt-6 max-w-4xl">
-        Ecossistema de email outbound. <em>Passo a passo.</em>
+        Ecossistema de Email Marketing B2B. <em>Passo a passo.</em>
       </h2>
       <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
-        Seis etapas que cobrem todo o ciclo, do ICP à reunião marcada. Nada é
-        terceirizado, nada é genérico. Cada conta tem a sua operação dedicada.
+        Seis etapas que cobrem todo o ciclo, do perfil de cliente ideal até à reunião marcada.
+        Nada é terceirizado, nada é genérico. Cada conta tem a sua operação dedicada.
       </p>
 
       <div className="mt-16 grid md:grid-cols-2 gap-5">
