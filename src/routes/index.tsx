@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Nav } from "@/components/site/Nav";
 import { LogoMarquee } from "@/components/site/Marquee";
@@ -390,6 +390,31 @@ function Team() {
   );
 }
 
+function QuizCta() {
+  return (
+    <section id="quiz" className="section">
+      <div className="card-surface p-10 md:p-16 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,oklch(0.72_0.19_47/0.18),transparent_70%)]" />
+        <div className="relative grid md:grid-cols-[1fr_auto] gap-8 items-end">
+          <div>
+            <span className="eyebrow">Diagnóstico gratuito</span>
+            <h2 className="display mt-6 max-w-3xl">
+              Descobre a <em>Pontuação da Saúde</em> da Tua Empresa.
+            </h2>
+            <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
+              8 perguntas, 4 pilares críticos do teu sistema de aquisição de clientes. No fim
+              recebes um diagnóstico claro do que está a travar o crescimento, e o que ativar a seguir.
+            </p>
+          </div>
+          <Link to="/quiz" className="btn-primary">
+            Faz o Quiz <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCta() {
   return (
     <section id="contacto" className="section">
@@ -433,6 +458,7 @@ function Page() {
         <Method />
         <Testimonials />
         <Team />
+        <QuizCta />
         <FinalCta />
       </main>
       <Footer />
