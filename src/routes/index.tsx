@@ -458,6 +458,7 @@ function Page() {
         <Method />
         <Testimonials />
         <Team />
+        <QuizCta />
         <FinalCta />
       </main>
       <Footer />
