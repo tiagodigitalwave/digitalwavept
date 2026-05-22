@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermosRouteImport } from './routes/termos'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +19,11 @@ import { Route as ApiPublicQuizSubmitRouteImport } from './routes/api/public/qui
 const TermosRoute = TermosRouteImport.update({
   id: '/termos',
   path: '/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cookies': typeof CookiesRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/quiz': typeof QuizRoute
   '/termos': typeof TermosRoute
   '/api/public/quiz-submit': typeof ApiPublicQuizSubmitRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cookies': typeof CookiesRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/quiz': typeof QuizRoute
   '/termos': typeof TermosRoute
   '/api/public/quiz-submit': typeof ApiPublicQuizSubmitRoute
 }
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cookies': typeof CookiesRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/quiz': typeof QuizRoute
   '/termos': typeof TermosRoute
   '/api/public/quiz-submit': typeof ApiPublicQuizSubmitRoute
 }
@@ -69,6 +78,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cookies'
     | '/politica-de-privacidade'
+    | '/quiz'
     | '/termos'
     | '/api/public/quiz-submit'
   fileRoutesByTo: FileRoutesByTo
@@ -76,6 +86,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cookies'
     | '/politica-de-privacidade'
+    | '/quiz'
     | '/termos'
     | '/api/public/quiz-submit'
   id:
@@ -83,6 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cookies'
     | '/politica-de-privacidade'
+    | '/quiz'
     | '/termos'
     | '/api/public/quiz-submit'
   fileRoutesById: FileRoutesById
@@ -91,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CookiesRoute: typeof CookiesRoute
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
+  QuizRoute: typeof QuizRoute
   TermosRoute: typeof TermosRoute
   ApiPublicQuizSubmitRoute: typeof ApiPublicQuizSubmitRoute
 }
@@ -102,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/termos'
       fullPath: '/termos'
       preLoaderRoute: typeof TermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/politica-de-privacidade': {
@@ -139,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CookiesRoute: CookiesRoute,
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
+  QuizRoute: QuizRoute,
   TermosRoute: TermosRoute,
   ApiPublicQuizSubmitRoute: ApiPublicQuizSubmitRoute,
 }
