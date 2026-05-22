@@ -199,3 +199,38 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
+
+/* react-phone-number-input overrides */
+.dw-phone {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background: oklch(0.16 0 0 / 0.5);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+.dw-phone:focus-within { border-color: var(--wave); }
+.dw-phone .PhoneInputCountry {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.dw-phone .PhoneInputCountrySelect {
+  background: transparent;
+  color: var(--foreground);
+}
+.dw-phone .PhoneInputCountrySelect option { color: #111; }
+.dw-phone .PhoneInputInput {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: var(--foreground);
+  padding: 0.5rem 0;
+  font: inherit;
+}
+.dw-phone .PhoneInputCountryIcon--border {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.15);
+  background: transparent;
+}
