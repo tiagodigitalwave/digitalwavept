@@ -183,8 +183,10 @@ function QuizPage() {
   async function submit() {
     setError(null);
     setStep("loading");
+    // Show result immediately, send email in background
+    setTimeout(() => setStep("result"), 600);
     try {
-      const res = await fetch("/api/public/quiz-submit", {
+      await fetch("/api/public/quiz-submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -197,11 +199,8 @@ function QuizPage() {
           scores,
         }),
       });
-      if (!res.ok) throw new Error("send-failed");
-      setStep("result");
-    } catch {
-      setError("Não foi possível enviar agora. Tenta novamente em alguns segundos.");
-      setStep("about");
+    } catch (e) {
+      console.error("Email send failed", e);
     }
   }
 
