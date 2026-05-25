@@ -444,6 +444,16 @@ async function sendEmail(opts: {
   }
 }
 
+async function sendEmailSafely(label: string, opts: Parameters<typeof sendEmail>[0]) {
+  try {
+    await sendEmail(opts);
+    return { label, ok: true } as const;
+  } catch (error) {
+    console.error(`Quiz email failed (${label}):`, error);
+    return { label, ok: false } as const;
+  }
+}
+
 export const Route = createFileRoute("/api/public/quiz-submit")({
   server: {
     handlers: {
@@ -472,37 +482,35 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
           });
         }
 
-        try {
-          const pdfBytes = await buildPdf(d);
-          const pdfB64 = bytesToBase64(pdfBytes);
-          const filename = `Digital_Wave_Relatorio_${d.firstName.replace(/\s+/g, "_")}.pdf`;
+        const pdfBytes = await buildPdf(d);
+        const pdfB64 = bytesToBase64(pdfBytes);
+        const filename = `Digital_Wave_Relatorio_${d.firstName.replace(/\s+/g, "_")}.pdf`;
 
-          await sendEmail({
-            apiKey: RESEND_API_KEY,
-            to: d.email,
-            replyTo: "hello@tiagodigitalwave.eu",
-            subject: "O teu relatório Digital Wave está pronto",
-            html: userEmailHtml(d.firstName, d.scores.overall),
-            attachment: { filename, content: pdfB64 },
-          });
-
-          await sendEmail({
+        const results = await Promise.all([
+          sendEmailSafely("admin", {
             apiKey: RESEND_API_KEY,
             to: "hello@tiagodigitalwave.eu",
             replyTo: d.email,
             subject: `Quiz Digital Wave · ${d.firstName} (${d.scores.overall}%)`,
             html: adminEmailHtml(d),
             attachment: { filename, content: pdfB64 },
-          });
-        } catch (err) {
-          console.error("Quiz submit failed:", err);
-          return new Response(JSON.stringify({ error: "Send failed" }), {
-            status: 502, headers: { "Content-Type": "application/json" },
-          });
+          }),
+          sendEmailSafely("visitor", {
+            apiKey: RESEND_API_KEY,
+            to: d.email,
+            replyTo: "hello@tiagodigitalwave.eu",
+            subject: "O teu relatório Digital Wave está pronto",
+            html: userEmailHtml(d.firstName, d.scores.overall),
+            attachment: { filename, content: pdfB64 },
+          }),
+        ]);
+
+        if (results.some((result) => !result.ok)) {
+          console.error("Quiz submit email delivery partial/failed:", results);
         }
 
         return new Response(JSON.stringify({ ok: true }), {
-          status: 200, headers: { "Content-Type": "application/json" },
+          status: 202, headers: { "Content-Type": "application/json" },
         });
       },
     },
