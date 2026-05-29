@@ -17,96 +17,249 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 
 type Answer = "A" | "B" | "C";
 
-const PILLARS = [
+type Question = { q: string; opts: Record<Answer, string> };
+type Category = {
+  key: "canal" | "icp" | "mensagem" | "pipeline" | "conversao";
+  name: string;
+  short: string;
+  weight: number;
+  questions: Question[];
+  diagnoses: {
+    low: string;
+    mid: string;
+    high: string;
+  };
+};
+
+const CATEGORIES: Category[] = [
   {
-    name: "Volume e Atração de Leads",
-    short: "Atração",
+    key: "canal",
+    name: "Saúde do Canal de Email",
+    short: "Canal",
+    weight: 1.5,
     questions: [
       {
-        q: "Qual é o volume atual de novas oportunidades de negócio (leads) que chegam à tua empresa mensalmente?",
+        q: "Qual é a tua taxa média de abertura de emails frios?",
         opts: {
-          A: "Quase nenhum, ou totalmente insuficiente para as nossas metas.",
-          B: "Entram algumas leads, mas o volume flutua muito de mês para mês.",
-          C: "Temos um volume alto e constante de novas leads todas as semanas.",
+          A: "Abaixo de 20%",
+          B: "Entre 20% e 40%",
+          C: "Acima de 40%",
         },
       },
       {
-        q: "Quando precisas de colocar novas reuniões de vendas na agenda, qual é o teu nível de esforço?",
+        q: "Com que frequência verificas a reputação do teu domínio de envio?",
         opts: {
-          A: "É um processo doloroso, demorado e muitas vezes falhamos o objetivo.",
-          B: "Conseguimos preencher a agenda, mas exige muito esforço manual ou ads caros.",
-          C: "É quase automático, temos reuniões agendadas com consistência sem esforço absurdo.",
+          A: "Nunca verifiquei ou não sei como",
+          B: "Verifico quando os resultados pioram",
+          C: "Tenho monitorização regular (Google Postmaster ou similar)",
+        },
+      },
+      {
+        q: "Como está organizada a tua infraestrutura de envio?",
+        opts: {
+          A: "Envio tudo a partir de um único endereço/domínio principal",
+          B: "Tenho domínios separados mas sem rotação sistemática",
+          C: "Múltiplos domínios aquecidos com rotação e limites diários definidos",
+        },
+      },
+      {
+        q: "Qual é a tua taxa de bounce e spam nos últimos 30 dias?",
+        opts: {
+          A: "Não monitorizo ou está acima de 3%",
+          B: "Entre 1% e 3%",
+          C: "Abaixo de 1% e monitorizo semanalmente",
         },
       },
     ],
+    diagnoses: {
+      low: "Canal comprometido. Alta probabilidade de emails a cair em spam sem saberes. Precisas de auditoria técnica urgente antes de escalar volume.",
+      mid: "Canal instável. Funciona mas sem garantias de consistência. Um pico de volume ou uma lista má pode colapsar os resultados.",
+      high: "Canal saudável. A infraestrutura não é o teu problema principal.",
+    },
   },
   {
-    name: "Previsibilidade e Canais",
-    short: "Previsibilidade",
+    key: "icp",
+    name: "Qualidade do ICP e Lista",
+    short: "ICP & Lista",
+    weight: 1.5,
     questions: [
       {
-        q: "Se fechares as redes sociais ou paragens nos ads hoje, o que acontece à tua aquisição de clientes?",
+        q: "Como defines o teu cliente ideal (ICP)?",
         opts: {
-          A: "A empresa para de faturar imediatamente. Dependemos a 100% disso.",
-          B: "O fluxo diminui drasticamente, mas ainda temos referências ou clientes antigos.",
-          C: "Continuamos a faturar, temos canais próprios de outbound (email e prospecção ativa).",
+          A: "Tenho uma ideia geral do sector e dimensão da empresa",
+          B: "Tenho cargo, sector e dimensão definidos",
+          C: "ICP detalhado com cargo, sector, dimensão, sinais de intenção e dores específicas",
         },
       },
       {
-        q: "Consegues prever com precisão quantos novos clientes vais fechar no próximo mês?",
+        q: "De onde vêm os contactos que prospetas?",
         opts: {
-          A: "Não, vivemos num sistema de \u201Cmarketing de esperança\u201D.",
-          B: "Tenho uma vaga ideia baseada no histórico, mas é sempre uma surpresa.",
-          C: "Sim, conheço as métricas de conversão dos meus canais de aquisição.",
+          A: "Listas compradas ou scraped sem verificação",
+          B: "LinkedIn manual ou ferramentas básicas, sem validação de email",
+          C: "Processo sistemático com validação de email, verificação de cargo actual e enriquecimento",
+        },
+      },
+      {
+        q: "Com que frequência actualizas e limpas as tuas listas?",
+        opts: {
+          A: "Raramente ou nunca — uso as mesmas listas durante meses",
+          B: "Removo bounces mas não verifico se os cargos/empresas mudaram",
+          C: "Processo regular de limpeza, remoção de não-respondentes e actualização de dados",
+        },
+      },
+      {
+        q: "Quando mudas de ICP ou segmento, como validas antes de escalar?",
+        opts: {
+          A: "Escalo directamente com volume alto",
+          B: "Faço um teste pequeno mas sem critérios de decisão definidos",
+          C: "Processo de teste com volume mínimo, métricas de validação e threshold de go/no-go",
         },
       },
     ],
+    diagnoses: {
+      low: "Lista é o teu maior problema. Podes ter o melhor copy do mundo e não vai funcionar. Volume sem qualidade destrói a reputação do canal.",
+      mid: "Lista razoável mas com lacunas que criam inconsistência. Os resultados vão variar muito de campanha para campanha.",
+      high: "Boa qualidade de dados. O problema está noutras áreas do funil.",
+    },
   },
   {
-    name: "Qualidade e Conversão",
+    key: "mensagem",
+    name: "Eficácia da Mensagem",
+    short: "Mensagem",
+    weight: 1,
+    questions: [
+      {
+        q: "Como é a abertura dos teus emails frios?",
+        opts: {
+          A: "Apresento a empresa e o que fazemos logo no primeiro parágrafo",
+          B: "Começo com uma dor ou problema do mercado",
+          C: "Começo com algo específico sobre a pessoa ou empresa — personalização real",
+        },
+      },
+      {
+        q: "Qual é o teu CTA principal nos emails frios?",
+        opts: {
+          A: "“Gostaria de agendar uma reunião para apresentar os nossos serviços”",
+          B: "“Tens disponibilidade para uma chamada rápida?”",
+          C: "CTA com valor claro e baixo compromisso — pergunta que gera resposta ou oferta específica",
+        },
+      },
+      {
+        q: "Tens sequências de follow-up estruturadas?",
+        opts: {
+          A: "Envio um email e se não responder abandono",
+          B: "Faço 1-2 follows mas sem sequência definida",
+          C: "Sequência de 4-6 toques com ângulos diferentes, timing definido e saída programada",
+        },
+      },
+      {
+        q: "Como testas e optimizas o copy das mensagens?",
+        opts: {
+          A: "Uso o mesmo copy indefinidamente",
+          B: "Mudo quando os resultados pioram",
+          C: "Testo variáveis sistematicamente (subject, abertura, CTA) com volume estatisticamente significativo",
+        },
+      },
+    ],
+    diagnoses: {
+      low: "A mensagem está a afastar potenciais clientes. O problema não é chegar à caixa de entrada — é o que acontece depois.",
+      mid: "Mensagem funcional mas genérica. Converte em mercados fáceis, falha em mercados competitivos ou com decisores exigentes.",
+      high: "Copy como vantagem competitiva. Se os resultados são maus, o problema está no canal ou na lista.",
+    },
+  },
+  {
+    key: "pipeline",
+    name: "Previsibilidade do Pipeline",
+    short: "Pipeline",
+    weight: 1,
+    questions: [
+      {
+        q: "Consegues prever com razoável precisão quantas reuniões vais ter no próximo mês?",
+        opts: {
+          A: "Não — os resultados variam muito e não consigo antecipar",
+          B: "Tenho uma ideia aproximada mas com grande margem de erro",
+          C: "Sim — tenho dados históricos para previsões com ±20% de precisão",
+        },
+      },
+      {
+        q: "Tens métricas de funil definidas e monitorizadas regularmente?",
+        opts: {
+          A: "Sei quantos emails envio mas não monitorizo taxas de conversão por etapa",
+          B: "Monitorizei algumas métricas mas não de forma sistemática",
+          C: "Dashboard com taxa de abertura, resposta, lead, reunião e cliente — actualizado semanalmente",
+        },
+      },
+      {
+        q: "Quando os resultados pioram, consegues identificar rapidamente onde está o problema no funil?",
+        opts: {
+          A: "Não — é difícil perceber o que está a falhar",
+          B: "Consigo identificar mas demora tempo e é baseado em intuição",
+          C: "Sim — as métricas mostram exactamente em que etapa a conversão quebrou",
+        },
+      },
+      {
+        q: "Os teus resultados de outreach são consistentes semana a semana?",
+        opts: {
+          A: "Variam muito — há semanas boas e semanas a zero sem perceber porquê",
+          B: "Razoavelmente consistentes mas com picos e vales significativos",
+          C: "Consistentes dentro de uma banda previsível — variações têm causa identificável",
+        },
+      },
+    ],
+    diagnoses: {
+      low: "Estás a gerir por intuição. Sem dados, cada semana má é um mistério e cada semana boa é sorte. Impossível escalar.",
+      mid: "Sistema parcial. Tens alguma visibilidade mas lacunas que criam pontos cegos — como o que estás a viver agora.",
+      high: "Pipeline previsível. Consegues tomar decisões baseadas em dados e escalar com confiança.",
+    },
+  },
+  {
+    key: "conversao",
+    name: "Conversão e Qualificação",
     short: "Conversão",
+    weight: 1,
     questions: [
       {
-        q: "Como avalias o perfil e poder de compra das leads que chegam à tua equipa de vendas?",
+        q: "Qual é a tua taxa de lead para reunião agendada?",
         opts: {
-          A: "Chegam muitas leads sem orçamento, curiosos ou empresas fora do alvo.",
-          B: "Perfil misto. Perdemos muito tempo a filtrar quem tem interesse e dinheiro.",
-          C: "A maioria são decisores de empresas com o perfil exato e orçamento para comprar.",
+          A: "Abaixo de 30%",
+          B: "Entre 30% e 60%",
+          C: "Acima de 60%",
         },
       },
       {
-        q: "Qual é o principal motivo das tuas propostas serem rejeitadas ou ficarem \u201Ccongeladas\u201D?",
+        q: "As reuniões que agendam são com decisores reais?",
         opts: {
-          A: "\u201CPreço demasiado alto\u201D ou falta de urgência do cliente.",
-          B: "O cliente diz que vai analisar, mas a decisão arrasta-se por meses.",
-          C: "Objeções raras, a lead chega à reunião educada sobre o nosso valor.",
+          A: "Frequentemente falo com pessoas sem poder de decisão",
+          B: "Maioritariamente decisores mas com algumas excepções",
+          C: "Quase sempre decisores — tenho critérios de qualificação antes da reunião",
+        },
+      },
+      {
+        q: "Qual é a tua taxa de reunião para proposta enviada?",
+        opts: {
+          A: "Abaixo de 30%",
+          B: "Entre 30% e 60%",
+          C: "Acima de 60%",
+        },
+      },
+      {
+        q: "Tens um processo de qualificação antes de agendar a reunião?",
+        opts: {
+          A: "Agendo com qualquer pessoa que mostre interesse",
+          B: "Faço algumas perguntas básicas mas sem critérios definidos",
+          C: "Critérios de qualificação claros (BANT ou similar) e recuso reuniões que não qualificam",
         },
       },
     ],
+    diagnoses: {
+      low: "O fundo do funil está a desperdiçar o trabalho do topo. Cada reunião custa tempo e energia — se não convertem, o problema pode ser qualificação fraca ou proposta desalinhada.",
+      mid: "Conversão razoável com espaço para optimização. Pequenas melhorias no processo de qualificação têm impacto directo na receita.",
+      high: "Fundo de funil eficiente. O problema de crescimento está no volume ou na consistência do topo.",
+    },
   },
-  {
-    name: "Retenção e Nutrição",
-    short: "Retenção",
-    questions: [
-      {
-        q: "O que acontece às leads que dizem \u201Cagora não\u201D ou não compram de imediato?",
-        opts: {
-          A: "Ficam esquecidas na base de dados, ninguém volta a falar com elas.",
-          B: "A equipa de vendas liga umas semanas mais tarde, mas de forma desorganizada.",
-          C: "Entram numa sequência automática de email marketing que gera vendas mais tarde.",
-        },
-      },
-      {
-        q: "Com que frequência comunicas com a tua base de clientes e ex-clientes para vender (upsell/cross-sell)?",
-        opts: {
-          A: "Nunca, ou só quando precisamos desesperadamente de dinheiro.",
-          B: "Newsletter esporádica, sem estratégia de vendas agressiva.",
-          C: "Campanhas regulares de email que geram compras de clientes antigos de forma previsível.",
-        },
-      },
-    ],
-  },
-] as const;
+];
+
+const TOTAL_Q = CATEGORIES.reduce((a, c) => a + c.questions.length, 0); // 20
 
 const ROLES = ["CEO", "COO", "Founder", "HR Manager", "Head of Sales", "Head of Marketing", "Outro"];
 const REVENUES = [
@@ -124,7 +277,7 @@ export const Route = createFileRoute("/quiz")({
   head: () => ({
     meta: [
       { title: "Quiz · Saúde da tua aquisição de clientes — Digital Wave" },
-      { name: "description", content: "Descobre a pontuação da saúde do teu sistema de aquisição de clientes em 8 perguntas." },
+      { name: "description", content: "Descobre a pontuação da saúde do teu sistema de aquisição de clientes em 20 perguntas, divididas em 5 categorias críticas." },
     ],
   }),
   component: QuizPage,
@@ -132,19 +285,41 @@ export const Route = createFileRoute("/quiz")({
 
 type Step = "intro" | "questions" | "about" | "loading" | "result";
 
+type Scores = {
+  raw: number[]; // per-category raw 4..12
+  perTen: number[]; // per-category /10
+  overall: number; // weighted 0-100
+};
+
+function computeScores(answers: (Answer | null)[]): Scores {
+  const map = (a: Answer | null) => (a === "A" ? 1 : a === "B" ? 2 : a === "C" ? 3 : 0);
+  const raw: number[] = [];
+  const perTen: number[] = [];
+  let i = 0;
+  for (const cat of CATEGORIES) {
+    let s = 0;
+    for (let j = 0; j < cat.questions.length; j++) s += map(answers[i + j]);
+    raw.push(s);
+    perTen.push(Math.round((s / (cat.questions.length * 3)) * 10));
+    i += cat.questions.length;
+  }
+  const totalWeight = CATEGORIES.reduce((a, c) => a + c.weight, 0);
+  const weightedMax = totalWeight * 10;
+  const weightedSum = CATEGORIES.reduce((a, c, idx) => a + perTen[idx] * c.weight, 0);
+  const overall = Math.round((weightedSum / weightedMax) * 100);
+  return { raw, perTen, overall };
+}
+
 function QuizPage() {
   const [step, setStep] = useState<Step>("intro");
 
-  // Lead form
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState<string | undefined>(undefined);
 
-  // Questions
-  const [answers, setAnswers] = useState<(Answer | null)[]>(Array(8).fill(null));
+  const [answers, setAnswers] = useState<(Answer | null)[]>(Array(TOTAL_Q).fill(null));
   const [qIndex, setQIndex] = useState(0);
 
-  // About
   const [role, setRole] = useState("");
   const [revenue, setRevenue] = useState("");
 
@@ -154,36 +329,34 @@ function QuizPage() {
   const phoneValid = !!phone && isValidPhoneNumber(phone);
   const formValid = firstName.trim().length >= 2 && emailValid && phoneValid;
 
-  const totalQ = PILLARS.reduce((a, p) => a + p.questions.length, 0);
-  const currentPillarIdx = qIndex < 2 ? 0 : qIndex < 4 ? 1 : qIndex < 6 ? 2 : 3;
-  const currentPillar = PILLARS[currentPillarIdx];
-  const currentQ = qIndex < 8 ? PILLARS[currentPillarIdx].questions[qIndex - currentPillarIdx * 2] : null;
+  // resolve current category/question from qIndex
+  const { catIdx, qInCat } = useMemo(() => {
+    let n = qIndex;
+    for (let c = 0; c < CATEGORIES.length; c++) {
+      if (n < CATEGORIES[c].questions.length) return { catIdx: c, qInCat: n };
+      n -= CATEGORIES[c].questions.length;
+    }
+    return { catIdx: CATEGORIES.length - 1, qInCat: 0 };
+  }, [qIndex]);
 
-  const scores = useMemo(() => {
-    const map = (a: Answer | null) => (a === "A" ? 1 : a === "B" ? 2 : a === "C" ? 3 : 0);
-    const pillar = (i: number) => Math.round(((map(answers[i * 2]) + map(answers[i * 2 + 1])) / 6) * 10);
-    const p1 = pillar(0);
-    const p2 = pillar(1);
-    const p3 = pillar(2);
-    const p4 = pillar(3);
-    const overall = Math.round(((p1 + p2 + p3 + p4) / 40) * 100);
-    return { p1, p2, p3, p4, overall };
-  }, [answers]);
+  const currentCat = CATEGORIES[catIdx];
+  const currentQ = currentCat.questions[qInCat];
+
+  const scores = useMemo(() => computeScores(answers), [answers]);
 
   function pickAnswer(a: Answer) {
     const next = [...answers];
     next[qIndex] = a;
     setAnswers(next);
     setTimeout(() => {
-      if (qIndex < 7) setQIndex(qIndex + 1);
+      if (qIndex < TOTAL_Q - 1) setQIndex(qIndex + 1);
       else setStep("about");
-    }, 180);
+    }, 160);
   }
 
   async function submit() {
     setError(null);
     setStep("loading");
-    // Show result immediately, send email in background
     setTimeout(() => setStep("result"), 600);
     try {
       await fetch("/api/public/quiz-submit", {
@@ -196,7 +369,11 @@ function QuizPage() {
           role,
           revenue,
           answers,
-          scores,
+          scores: {
+            perTen: scores.perTen,
+            raw: scores.raw,
+            overall: scores.overall,
+          },
         }),
       });
     } catch (e) {
@@ -225,8 +402,11 @@ function QuizPage() {
 
         {step === "questions" && currentQ && (
           <div>
-            <Progress value={((qIndex + 1) / (totalQ + 2)) * 100} label={`Questão ${qIndex + 1} de ${totalQ + 2}`} />
-            <span className="eyebrow mt-8 inline-block">{currentPillar.name}</span>
+            <Progress
+              value={((qIndex + 1) / (TOTAL_Q + 2)) * 100}
+              label={`Questão ${qIndex + 1} de ${TOTAL_Q}`}
+            />
+            <span className="eyebrow mt-8 inline-block">{currentCat.name}</span>
             <h2 className="text-2xl md:text-3xl mt-4 font-medium leading-snug">{currentQ.q}</h2>
             <div className="mt-8 space-y-3">
               {(["A", "B", "C"] as const).map((k) => (
@@ -259,7 +439,7 @@ function QuizPage() {
 
         {step === "about" && (
           <div>
-            <Progress value={(9 / 10) * 100} label="Quase a terminar" />
+            <Progress value={(21 / 22) * 100} label="Quase a terminar" />
             <span className="eyebrow mt-8 inline-block">Sobre ti</span>
             <h2 className="text-2xl md:text-3xl mt-4 font-medium">Antes do resultado, conta-nos um pouco mais.</h2>
 
@@ -369,8 +549,9 @@ function IntroForm({
         Descobre a <em>pontuação</em> da saúde da tua empresa.
       </h1>
       <p className="mt-6 text-muted-foreground text-lg max-w-xl">
-        8 perguntas rápidas sobre aquisição de clientes, divididas em 4 pilares críticos. Recebes
-        o teu diagnóstico no fim e enviamos-te uma cópia por email.
+        20 perguntas rápidas sobre aquisição de clientes, divididas em 5 categorias críticas:
+        canal de email, ICP & lista, mensagem, previsibilidade e conversão. Recebes o teu diagnóstico
+        no fim e enviamos-te uma cópia detalhada por email.
       </p>
 
       <div className="mt-12 card-surface p-6 md:p-8 space-y-5 max-w-xl">
@@ -418,7 +599,7 @@ function IntroForm({
           disabled={!formValid}
           className="btn-primary w-full justify-center disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          Começar o Quiz <span aria-hidden>→</span>
+          Faz o Quiz <span aria-hidden>→</span>
         </button>
 
         <p className="text-xs text-muted-foreground">
@@ -430,39 +611,36 @@ function IntroForm({
   );
 }
 
-function Result({ firstName, email, scores }: { firstName: string; email: string; scores: { p1: number; p2: number; p3: number; p4: number; overall: number } }) {
-  const data = [
-    { pillar: "Atração", value: scores.p1 },
-    { pillar: "Previsibilidade", value: scores.p2 },
-    { pillar: "Conversão", value: scores.p3 },
-    { pillar: "Retenção", value: scores.p4 },
-  ];
+function statusFromOverall(overall: number) {
+  if (overall >= 80) return { title: "Sistema saudável e escalável", headline: "O teu motor de aquisição está afinado", color: "text-emerald-400" };
+  if (overall >= 60) return { title: "Funciona mas com travões", headline: "Tens travões que limitam o teu crescimento", color: "text-yellow-400" };
+  if (overall >= 40) return { title: "Sistema instável", headline: "O teu pipeline está a vazar — aqui está porquê", color: "text-orange-400" };
+  return { title: "Sistema quebrado", headline: "Estás a investir sem retorno — o problema é estrutural", color: "text-red-400" };
+}
 
-  const lowFunnel = scores.p1 + scores.p2 <= 10;
-  const lowConv = scores.p3 + scores.p4 <= 10;
+function levelFromRaw(raw: number): "low" | "mid" | "high" {
+  if (raw <= 4) return "low";
+  if (raw <= 8) return "mid";
+  return "high";
+}
 
-  const diagnoses: { title: string; body: string }[] = [];
-  if (lowFunnel)
-    diagnoses.push({
-      title: "Travão na Previsibilidade",
-      body:
-        "O teu negócio está em risco porque depende de fatores externos (referências, anúncios, redes sociais). Precisas de um sistema de Email Marketing outbound para gerar volume e controlo previsível do pipeline.",
-    });
-  if (lowConv)
-    diagnoses.push({
-      title: "Travão na Conversão e Nutrição",
-      body:
-        "Estás a deitar dinheiro ao lixo. Ou tens leads que não valem dinheiro, ou estás a deixá-las morrer por falta de sequências automatizadas de Email Marketing que convertem ao longo do tempo.",
-    });
-  if (diagnoses.length === 0)
-    diagnoses.push({
-      title: "Operação Saudável",
-      body:
-        "A base está sólida. O próximo passo é escalar volume e mercados — multiplicar o que já funciona com uma operação dedicada de Email Marketing B2B.",
-    });
+function colorClassFor(perTen: number) {
+  if (perTen >= 8) return "bg-emerald-400";
+  if (perTen >= 5) return "bg-yellow-400";
+  return "bg-red-400";
+}
 
-  const color =
-    scores.overall >= 80 ? "text-emerald-400" : scores.overall >= 45 ? "text-yellow-400" : "text-red-400";
+function Result({
+  firstName,
+  email,
+  scores,
+}: {
+  firstName: string;
+  email: string;
+  scores: Scores;
+}) {
+  const data = CATEGORIES.map((c, i) => ({ pillar: c.short, value: scores.perTen[i] }));
+  const status = statusFromOverall(scores.overall);
 
   return (
     <div>
@@ -477,20 +655,28 @@ function Result({ firstName, email, scores }: { firstName: string; email: string
       <div className="mt-12 grid md:grid-cols-2 gap-8 items-center card-surface p-6 md:p-10">
         <div>
           <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Saúde global</div>
-          <div className={`text-7xl md:text-8xl font-light mt-2 ${color}`}>{scores.overall}%</div>
-          <p className="text-sm text-muted-foreground mt-2">
-            Acima de 80% é saudável · 45% a 80% razoável · abaixo de 45% é grave.
-          </p>
-          <ul className="mt-6 space-y-2 text-sm">
-            {data.map((d) => (
-              <li key={d.pillar} className="flex justify-between border-b border-border py-2">
-                <span>{d.pillar}</span>
-                <span className="text-wave">{d.value}/10</span>
+          <div className={`text-7xl md:text-8xl font-light mt-2 ${status.color}`}>{scores.overall}%</div>
+          <p className={`mt-3 text-lg ${status.color}`}>{status.headline}</p>
+          <p className="text-sm text-muted-foreground mt-1">{status.title}</p>
+
+          <ul className="mt-6 space-y-3 text-sm">
+            {CATEGORIES.map((c, i) => (
+              <li key={c.key}>
+                <div className="flex justify-between mb-1">
+                  <span>{c.short}</span>
+                  <span className="text-wave">{scores.perTen[i]}/10</span>
+                </div>
+                <div className="h-1.5 bg-muted/30 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full ${colorClassFor(scores.perTen[i])}`}
+                    style={{ width: `${scores.perTen[i] * 10}%` }}
+                  />
+                </div>
               </li>
             ))}
           </ul>
         </div>
-        <div className="h-[300px] md:h-[360px]">
+        <div className="h-[300px] md:h-[380px]">
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart data={data} outerRadius="75%">
               <PolarGrid stroke="hsl(0 0% 30%)" />
@@ -508,13 +694,21 @@ function Result({ firstName, email, scores }: { firstName: string; email: string
       </div>
 
       <div className="mt-10 grid md:grid-cols-2 gap-5">
-        {diagnoses.map((d) => (
-          <div key={d.title} className="card-surface p-6 border-wave/40">
-            <div className="text-xs uppercase tracking-[0.18em] text-wave mb-2">Diagnóstico</div>
-            <h3 className="text-xl font-medium">{d.title}</h3>
-            <p className="mt-3 text-muted-foreground leading-relaxed">{d.body}</p>
-          </div>
-        ))}
+        {CATEGORIES.map((c, i) => {
+          const lvl = levelFromRaw(scores.raw[i]);
+          // mostra diagnóstico explícito para abaixo de 6/10; para boas, mostra reforço
+          if (scores.perTen[i] >= 6 && lvl === "high") return null;
+          const body = c.diagnoses[lvl];
+          return (
+            <div key={c.key} className="card-surface p-6 border-wave/40">
+              <div className="text-xs uppercase tracking-[0.18em] text-wave mb-2">
+                {c.short} · {scores.perTen[i]}/10
+              </div>
+              <h3 className="text-xl font-medium">{c.name}</h3>
+              <p className="mt-3 text-muted-foreground leading-relaxed">{body}</p>
+            </div>
+          );
+        })}
       </div>
 
       <div className="mt-12 card-surface p-8 md:p-12 text-center">
