@@ -8,106 +8,161 @@ const PAYLOAD = z.object({
   phone: z.string().trim().min(5).max(30),
   role: z.string().trim().min(1).max(80),
   revenue: z.string().trim().min(1).max(40),
-  answers: z.array(z.enum(["A", "B", "C"])).length(8),
+  answers: z.array(z.enum(["A", "B", "C"])).length(20),
   scores: z.object({
-    p1: z.number().min(0).max(10),
-    p2: z.number().min(0).max(10),
-    p3: z.number().min(0).max(10),
-    p4: z.number().min(0).max(10),
+    perTen: z.array(z.number().min(0).max(10)).length(5),
+    raw: z.array(z.number().min(0).max(12)).length(5),
     overall: z.number().min(0).max(100),
   }),
 });
 
 type Payload = z.infer<typeof PAYLOAD>;
 
-const PILLARS = [
+type Cat = {
+  key: string;
+  name: string;
+  short: string;
+  weight: number;
+  intro: string;
+  practices: { title: string; body: string }[];
+  diagnoses: { low: string; mid: string; high: string };
+};
+
+const CATEGORIES: Cat[] = [
   {
-    name: "Atração & Volume de Leads",
+    key: "canal",
+    name: "Saúde do Canal de Email",
+    short: "Canal",
+    weight: 1.5,
     intro:
-      "Sem volume previsível de leads B2B, o pipeline depende de sorte. Cold Email Marketing bem operado é o canal mais escalável para abrir conversas com decisores fora da tua rede.",
+      "A infraestrutura de envio é o alicerce de toda a operação de Email Marketing B2B. Sem deliverability, nada do resto importa — a melhor copy do mundo perde valor se nunca chega à inbox do decisor.",
     practices: [
       {
-        title: "Listas segmentadas por ICP",
-        body:
-          "Constrói listas a partir de filtros firmográficos (sector, tamanho, geografia) e do cargo do decisor. Cada lista deve representar 1 ICP claro, com no mínimo 500 contactos verificados.",
+        title: "Múltiplos domínios secundários com warm-up",
+        body: "Nunca envies cold email do teu domínio principal. Compra domínios paralelos, configura SPF, DKIM e DMARC corretamente e faz warm-up de 3-4 semanas antes de subir volume.",
       },
       {
-        title: "Infraestrutura de envio dedicada",
-        body:
-          "Domínios secundários, SPF/DKIM/DMARC, warm-up de 3-4 semanas e rotação de inboxes. Sem isto o teu cold email cai em spam e queimas o domínio principal.",
+        title: "Monitorização activa de reputação",
+        body: "Google Postmaster Tools, GlockApps e bounce/spam rate semanal. Tudo acima de 1% de spam complaint exige paragem imediata e investigação antes de continuar a enviar.",
       },
       {
-        title: "Volume controlado e consistente",
-        body:
-          "30 a 50 envios por inbox por dia. Mais inboxes = mais volume, sem perder deliverability. Meta saudável: 3.000 a 6.000 emails personalizados por semana por campanha.",
+        title: "Limites de envio por inbox",
+        body: "30-50 emails por inbox por dia. Mais volume = mais inboxes, não mais envios por inbox. Rotação automática garante consistência e protege a reputação a longo prazo.",
       },
     ],
+    diagnoses: {
+      low: "Canal comprometido. Alta probabilidade de emails a cair em spam sem saberes. Precisas de auditoria técnica urgente antes de escalar volume.",
+      mid: "Canal instável. Funciona mas sem garantias de consistência. Um pico de volume ou uma lista má pode colapsar os resultados.",
+      high: "Canal saudável. A infraestrutura não é o teu problema principal.",
+    },
   },
   {
-    name: "Previsibilidade & Canais",
+    key: "icp",
+    name: "Qualidade do ICP e Lista",
+    short: "ICP & Lista",
+    weight: 1.5,
     intro:
-      "Previsibilidade vive em métricas: open rate, reply rate, positive reply, meetings booked. Quando conheces o teu CAC por reunião, escalar é uma decisão, não uma esperança.",
+      "O ICP é o multiplicador silencioso de toda a operação. Definição vaga = mensagem genérica = resposta fraca. Definição cirúrgica = mensagem hiper-relevante = decisores a marcar reuniões sem hesitar.",
     practices: [
       {
-        title: "Email Marketing outbound como canal primário",
-        body:
-          "Independente de ads e algoritmos. Custo marginal por reunião baixo, dependente apenas da qualidade da copy + lista + infraestrutura.",
+        title: "ICP cirúrgico em 6 dimensões",
+        body: "Sector, dimensão, geografia, cargo do decisor, sinal de intenção (contratações, funding, expansão) e dor mensurável que a tua oferta resolve. Sem todas as 6, não escales.",
       },
       {
-        title: "Métricas mínimas por campanha",
-        body:
-          "Open rate > 50%, Reply rate > 5%, Positive reply > 1%. Abaixo disto o problema é copy, lista ou deliverability — e dá para diagnosticar em 2 semanas.",
+        title: "Listas validadas em 3 camadas",
+        body: "Validação SMTP do email, verificação do cargo actual via LinkedIn, enriquecimento firmográfico. Listas compradas sem este processo destroem domínios em semanas.",
       },
       {
-        title: "Pipeline 90 dias à frente",
-        body:
-          "Reuniões agendadas hoje fecham daqui a 30-90 dias. Operar Email Marketing semanalmente garante que daqui a 3 meses ainda tens pipeline.",
+        title: "Teste antes de escalar",
+        body: "Sempre que mudas de ICP ou geografia, envia 500 emails com critérios de go/no-go definidos (open >50%, reply >5%). Só escalas o que valida.",
       },
     ],
+    diagnoses: {
+      low: "Lista é o teu maior problema. Podes ter o melhor copy do mundo e não vai funcionar. Volume sem qualidade destrói a reputação do canal.",
+      mid: "Lista razoável mas com lacunas que criam inconsistência. Os resultados vão variar muito de campanha para campanha.",
+      high: "Boa qualidade de dados. O problema está noutras áreas do funil.",
+    },
   },
   {
-    name: "Qualidade & Conversão",
+    key: "mensagem",
+    name: "Eficácia da Mensagem",
+    short: "Mensagem",
+    weight: 1,
     intro:
-      "Reunião sem qualificação é tempo perdido. A copy do cold email filtra: quem responde já está minimamente interessado e dentro do ICP. Quanto melhor a copy, melhor o show-rate.",
+      "A copy filtra. Se chegares à inbox certa com a mensagem errada, queimas o lead permanentemente. Cada palavra do subject à assinatura tem de soar como se fosse escrita exclusivamente para aquele decisor.",
     practices: [
       {
-        title: "Copy hiper-específica ao ICP",
-        body:
-          "Linhas de assunto curtas (3-5 palavras). Primeira frase com referência concreta ao prospect (cargo, empresa, sector). Promessa única e mensurável. Nada de templates genéricos.",
+        title: "Abertura com personalização real",
+        body: "Referência concreta à empresa, ao cargo, a um anúncio recente. Templates com {{firstName}} e nada mais são detectados em segundos pelo decisor — e ignorados.",
       },
       {
-        title: "Qualificação no agendamento",
-        body:
-          "Formulário no link de Cal/Calendly com 2-3 perguntas: empresa, número de funcionários, problema atual. Filtra curiosos antes da chamada.",
+        title: "CTA de baixo compromisso",
+        body: "Em vez de pedir reunião, faz uma pergunta provocadora ou oferece uma análise específica. Respostas geram respostas. Pedidos directos de calendário no primeiro email matam a conversa.",
       },
       {
-        title: "Follow-up de 4 a 7 toques",
-        body:
-          "80% das respostas chegam depois do 3.º email. Sequências automatizadas com cadência semanal mantêm a operação a converter sem esforço manual.",
+        title: "Sequências de 4-6 toques com ângulos distintos",
+        body: "Cada follow-up explora um ângulo diferente: dor, prova social, ROI, urgência. 80% das respostas chegam depois do terceiro toque — desistir cedo é desperdiçar o trabalho do topo.",
       },
     ],
+    diagnoses: {
+      low: "A mensagem está a afastar potenciais clientes. O problema não é chegar à caixa de entrada — é o que acontece depois.",
+      mid: "Mensagem funcional mas genérica. Converte em mercados fáceis, falha em mercados competitivos ou com decisores exigentes.",
+      high: "Copy como vantagem competitiva. Se os resultados são maus, o problema está no canal ou na lista.",
+    },
   },
   {
-    name: "Retenção & Nutrição",
+    key: "pipeline",
+    name: "Previsibilidade do Pipeline",
+    short: "Pipeline",
+    weight: 1,
     intro:
-      "Leads que dizem 'agora não' valem ouro a 6 meses. Sem nutrição via Email Marketing, esse pipeline morre e tens de pagar para o reconquistar. Newsletter + sequências automáticas resolvem isto.",
+      "Sem métricas, cada semana é uma roleta. Pipeline previsível significa saber, com 2 semanas de antecedência, quantas reuniões vais ter no próximo mês. É a diferença entre escalar com confiança e contratar comerciais à pressa.",
     practices: [
       {
-        title: "Sequência de nutrição pós-no-show / pós-rejeição",
-        body:
-          "8-12 emails ao longo de 90 dias com casos, insights e provas. Reabre 10-20% das oportunidades sem trabalho comercial extra.",
+        title: "Dashboard de funil semanal",
+        body: "Open rate, reply rate, positive reply, meetings booked, show rate, propostas, fechos. Actualizado todas as segundas. Se um número cai, sabes onde olhar.",
       },
       {
-        title: "Newsletter B2B semanal ou quinzenal",
-        body:
-          "1 insight prático por edição, sem vender. Mantém o teu nome em cima da mesa para quando o prospect tiver budget aprovado.",
+        title: "Métricas-âncora por etapa",
+        body: "Open >50%, reply >5%, positive >1%, show >70%, proposta >30%. Banda saudável definida. Qualquer desvio activa investigação imediata, não esperança.",
       },
       {
-        title: "Reativação de clientes antigos",
-        body:
-          "Campanhas dedicadas para ex-clientes com nova oferta. ROI mais alto da operação porque já confiam na entrega — basta lembrar.",
+        title: "Forecast com ±20% de precisão",
+        body: "3 meses de histórico permitem prever reuniões com margem aceitável. Sem isto, contratar comerciais ou investir em ads é apostar — não escalar.",
       },
     ],
+    diagnoses: {
+      low: "Estás a gerir por intuição. Sem dados, cada semana má é um mistério e cada semana boa é sorte. Impossível escalar.",
+      mid: "Sistema parcial. Tens alguma visibilidade mas lacunas que criam pontos cegos — como o que estás a viver agora.",
+      high: "Pipeline previsível. Consegues tomar decisões baseadas em dados e escalar com confiança.",
+    },
+  },
+  {
+    key: "conversao",
+    name: "Conversão e Qualificação",
+    short: "Conversão",
+    weight: 1,
+    intro:
+      "Cada reunião custa tempo e energia. Se o fundo do funil não converte, todo o trabalho do topo vira frustração. Qualificação rigorosa antes de agendar protege o tempo comercial — e a taxa de fecho.",
+    practices: [
+      {
+        title: "Qualificação BANT no agendamento",
+        body: "Formulário no Calendly com 3 perguntas: orçamento, autoridade, prazo. Filtra curiosos antes de bloquear 30 minutos de calendário comercial.",
+      },
+      {
+        title: "Sequências de nutrição pós-reunião",
+        body: "Para quem disse ‘agora não’, 8-12 emails ao longo de 90 dias com casos, insights e provas. Reabre 10-20% das oportunidades sem trabalho comercial extra.",
+      },
+      {
+        title: "Análise de taxa de fecho por origem",
+        body: "Reuniões por cold email, por LinkedIn, por referência — taxas diferentes, mensagens diferentes. Optimizar cegamente sem segmentar mata a operação inteira.",
+      },
+    ],
+    diagnoses: {
+      low: "O fundo do funil está a desperdiçar o trabalho do topo. Cada reunião custa tempo e energia — se não convertem, o problema pode ser qualificação fraca ou proposta desalinhada.",
+      mid: "Conversão razoável com espaço para optimização. Pequenas melhorias no processo de qualificação têm impacto directo na receita.",
+      high: "Fundo de funil eficiente. O problema de crescimento está no volume ou na consistência do topo.",
+    },
   },
 ];
 
@@ -116,28 +171,20 @@ const BLACK = rgb(0.06, 0.06, 0.06);
 const GREY = rgb(0.45, 0.45, 0.45);
 const LIGHT = rgb(0.92, 0.92, 0.92);
 const WHITE = rgb(1, 1, 1);
+const GREEN = rgb(0.2, 0.7, 0.4);
+const RED = rgb(0.85, 0.2, 0.2);
 
-function diagnose(s: Payload["scores"]) {
-  const tags: { title: string; body: string }[] = [];
-  if (s.p1 + s.p2 <= 10)
-    tags.push({
-      title: "Travão na Previsibilidade",
-      body:
-        "O teu negócio depende de fatores externos (referências, anúncios, redes sociais). Precisas de um sistema de Email Marketing outbound para gerar volume e previsibilidade no pipeline.",
-    });
-  if (s.p3 + s.p4 <= 10)
-    tags.push({
-      title: "Travão na Conversão & Nutrição",
-      body:
-        "Tens leads mas não as que valem dinheiro, ou estás a deixá-las morrer por falta de sequências automatizadas de Email Marketing que convertem ao longo do tempo.",
-    });
-  if (tags.length === 0)
-    tags.push({
-      title: "Operação Saudável",
-      body:
-        "A base está sólida. O próximo passo é escalar volume e mercados — multiplicar o que já funciona com uma operação dedicada de Email Marketing B2B.",
-    });
-  return tags;
+function levelOf(raw: number): "low" | "mid" | "high" {
+  if (raw <= 4) return "low";
+  if (raw <= 8) return "mid";
+  return "high";
+}
+
+function overallStatus(overall: number) {
+  if (overall >= 80) return { title: "Sistema saudável e escalável", headline: "O teu motor de aquisição está afinado" };
+  if (overall >= 60) return { title: "Funciona mas com travões", headline: "Tens travões que limitam o teu crescimento" };
+  if (overall >= 40) return { title: "Sistema instável", headline: "O teu pipeline está a vazar — aqui está porquê" };
+  return { title: "Sistema quebrado", headline: "Estás a investir sem retorno — o problema é estrutural" };
 }
 
 function wrap(text: string, max: number): string[] {
@@ -165,25 +212,22 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
   const H = 842;
   const M = 56;
 
+  const status = overallStatus(d.scores.overall);
+
   // ---------- COVER ----------
   let page = pdf.addPage([W, H]);
   page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: BLACK });
   page.drawRectangle({ x: 0, y: H - 8, width: W, height: 8, color: ORANGE });
 
-  page.drawText("DIGITAL WAVE", {
-    x: M, y: H - 70, size: 12, font: bold, color: ORANGE,
-    // @ts-ignore
-    characterSpacing: 3,
-  });
-  page.drawText("RELATÓRIO DE SAÚDE · EMAIL MARKETING B2B", {
+  page.drawText("DIGITAL WAVE", { x: M, y: H - 70, size: 12, font: bold, color: ORANGE });
+  page.drawText("RELATÓRIO DE SAÚDE · AQUISIÇÃO DE CLIENTES B2B", {
     x: M, y: H - 90, size: 9, font: helv, color: GREY,
-    // @ts-ignore
-    characterSpacing: 2,
   });
 
   page.drawText("Diagnóstico", { x: M, y: H - 260, size: 56, font: bold, color: WHITE });
-  page.drawText("Saúde da tua aquisição", { x: M, y: H - 320, size: 28, font: helv, color: WHITE });
-  page.drawText("de clientes B2B", { x: M, y: H - 352, size: 28, font: helv, color: WHITE });
+  for (const [i, ln] of wrap(status.headline, 28).entries()) {
+    page.drawText(ln, { x: M, y: H - 320 - i * 32, size: 24, font: helv, color: WHITE });
+  }
 
   page.drawRectangle({ x: M, y: 200, width: 60, height: 2, color: ORANGE });
   page.drawText("Preparado para", { x: M, y: 170, size: 10, font: helv, color: GREY });
@@ -197,11 +241,7 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
   // ---------- SUMMARY ----------
   page = pdf.addPage([W, H]);
   page.drawRectangle({ x: 0, y: H - 4, width: W, height: 4, color: ORANGE });
-  page.drawText("DIGITAL WAVE · RESUMO EXECUTIVO", {
-    x: M, y: H - 50, size: 9, font: bold, color: ORANGE,
-    // @ts-ignore
-    characterSpacing: 2,
-  });
+  page.drawText("DIGITAL WAVE · RESUMO EXECUTIVO", { x: M, y: H - 50, size: 9, font: bold, color: ORANGE });
 
   page.drawText(`Olá, ${d.firstName}.`, { x: M, y: H - 110, size: 26, font: bold, color: BLACK });
   page.drawText("Aqui está o retrato da tua operação de aquisição.", {
@@ -209,7 +249,7 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
   });
 
   const intro =
-    "Analisámos as tuas respostas em 4 pilares críticos da aquisição B2B via Email Marketing e atribuímos uma pontuação de 0 a 10 a cada um. Nas páginas seguintes encontras a análise detalhada e as boas práticas que aplicamos a cada operação Digital Wave.";
+    "Analisámos as tuas respostas em 5 categorias críticas da aquisição B2B via Email Marketing. As categorias 'Canal' e 'ICP & Lista' têm peso reforçado por serem as que mais afectam tudo o resto. Nas páginas seguintes encontras o diagnóstico de cada categoria e as boas práticas que aplicamos em cada operação Digital Wave.";
   let y = H - 175;
   for (const ln of wrap(intro, 78)) {
     page.drawText(ln, { x: M, y, size: 11, font: helv, color: BLACK });
@@ -219,80 +259,69 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
   // big score
   y -= 30;
   page.drawText(`${d.scores.overall}%`, { x: M, y: y - 70, size: 96, font: bold, color: ORANGE });
-  page.drawText("SAÚDE GERAL", { x: M, y: y - 95, size: 10, font: bold, color: GREY,
-    // @ts-ignore
-    characterSpacing: 2,
-  });
+  page.drawText("SAÚDE GERAL", { x: M, y: y - 95, size: 10, font: bold, color: GREY });
 
-  const status =
-    d.scores.overall >= 80 ? "Operação saudável" :
-    d.scores.overall >= 45 ? "Travões a corrigir" : "Operação em risco";
-  page.drawText(status, { x: M + 180, y: y - 50, size: 16, font: bold, color: BLACK });
-  const statusBody =
-    d.scores.overall >= 80
-      ? "A base está sólida. Próximo passo: escalar volume e mercados."
-      : d.scores.overall >= 45
-      ? "Existem travões que limitam o crescimento. Foca nos pilares abaixo de 7/10."
-      : "O pipeline está em risco. Precisas de um sistema previsível de Email Marketing B2B.";
-  let sy = y - 75;
-  for (const ln of wrap(statusBody, 50)) {
-    page.drawText(ln, { x: M + 180, y: sy, size: 10, font: helv, color: GREY });
+  page.drawText(status.headline, { x: M + 200, y: y - 50, size: 14, font: bold, color: BLACK });
+  let sy = y - 72;
+  for (const ln of wrap(status.title, 40)) {
+    page.drawText(ln, { x: M + 200, y: sy, size: 10, font: helv, color: GREY });
     sy -= 14;
   }
 
-  // pillars table
+  // table
   y = y - 160;
-  page.drawText("OS 4 PILARES", { x: M, y, size: 10, font: bold, color: GREY,
-    // @ts-ignore
-    characterSpacing: 2,
-  });
+  page.drawText("AS 5 CATEGORIAS", { x: M, y, size: 10, font: bold, color: GREY });
   y -= 25;
 
-  const scoresArr = [d.scores.p1, d.scores.p2, d.scores.p3, d.scores.p4];
-  PILLARS.forEach((p, i) => {
-    const sc = scoresArr[i];
-    const level = sc >= 8 ? "BOA" : sc >= 5 ? "RAZOÁVEL" : "BAIXA";
-    const col = sc >= 8 ? rgb(0.2, 0.7, 0.4) : sc >= 5 ? ORANGE : rgb(0.85, 0.2, 0.2);
+  CATEGORIES.forEach((c, i) => {
+    const sc = d.scores.perTen[i];
+    const lvl = levelOf(d.scores.raw[i]);
+    const label = lvl === "high" ? "SAUDÁVEL" : lvl === "mid" ? "INSTÁVEL" : "CRÍTICO";
+    const col = lvl === "high" ? GREEN : lvl === "mid" ? ORANGE : RED;
 
     page.drawRectangle({ x: M, y: y - 38, width: W - M * 2, height: 1, color: LIGHT });
-    page.drawText(p.name, { x: M, y: y - 18, size: 13, font: bold, color: BLACK });
-    page.drawText(`${sc}/10`, { x: W - M - 110, y: y - 18, size: 16, font: bold, color: ORANGE });
-    page.drawText(level, { x: W - M - 60, y: y - 16, size: 9, font: bold, color: col,
-      // @ts-ignore
-      characterSpacing: 1,
-    });
-    y -= 40;
+    page.drawText(c.name, { x: M, y: y - 18, size: 13, font: bold, color: BLACK });
+    page.drawText(`peso ${c.weight}x`, { x: M, y: y - 32, size: 8, font: helv, color: GREY });
+    page.drawText(`${sc}/10`, { x: W - M - 130, y: y - 22, size: 18, font: bold, color: ORANGE });
+    page.drawText(label, { x: W - M - 70, y: y - 18, size: 9, font: bold, color: col });
+    y -= 44;
   });
 
-  // footer
   page.drawText("tiagodigitalwave.eu · hello@tiagodigitalwave.eu", {
     x: M, y: 40, size: 9, font: helv, color: GREY,
   });
 
   // ---------- CHAPTERS ----------
-  PILLARS.forEach((pillar, idx) => {
-    const sc = scoresArr[idx];
+  CATEGORIES.forEach((cat, idx) => {
+    const sc = d.scores.perTen[idx];
+    const lvl = levelOf(d.scores.raw[idx]);
+    const diag = cat.diagnoses[lvl];
 
     // chapter cover
     let cp = pdf.addPage([W, H]);
     cp.drawRectangle({ x: 0, y: 0, width: W, height: H, color: BLACK });
     cp.drawRectangle({ x: 0, y: H - 6, width: W, height: 6, color: ORANGE });
-    cp.drawText(`CAPÍTULO 0${idx + 1}`, { x: M, y: H - 80, size: 11, font: bold, color: ORANGE,
-      // @ts-ignore
-      characterSpacing: 3,
-    });
-    cp.drawText(pillar.name, { x: M, y: H - 200, size: 38, font: bold, color: WHITE });
-    cp.drawText(`${sc}`, { x: M, y: H - 290, size: 64, font: bold, color: ORANGE });
-    cp.drawText("PONTUAÇÃO", { x: M + 100, y: H - 260, size: 10, font: bold, color: GREY,
-      // @ts-ignore
-      characterSpacing: 2,
-    });
-    cp.drawText("/10", { x: M + 100, y: H - 280, size: 14, font: helv, color: WHITE });
+    cp.drawText(`CATEGORIA 0${idx + 1}`, { x: M, y: H - 80, size: 11, font: bold, color: ORANGE });
+    for (const [i, ln] of wrap(cat.name, 22).entries()) {
+      cp.drawText(ln, { x: M, y: H - 200 - i * 42, size: 34, font: bold, color: WHITE });
+    }
+    cp.drawText(`${sc}`, { x: M, y: H - 340, size: 64, font: bold, color: ORANGE });
+    cp.drawText("/10", { x: M + 100, y: H - 330, size: 14, font: helv, color: WHITE });
+    cp.drawText("DIAGNÓSTICO", { x: M + 100, y: H - 310, size: 10, font: bold, color: GREY });
 
-    let cy = H - 360;
-    for (const ln of wrap(pillar.intro, 70)) {
+    let cy = H - 420;
+    cp.drawText("Estado", { x: M, y: cy, size: 10, font: bold, color: GREY });
+    cy -= 18;
+    for (const ln of wrap(diag, 70)) {
       cp.drawText(ln, { x: M, y: cy, size: 12, font: helv, color: LIGHT });
       cy -= 18;
+    }
+    cy -= 12;
+    cp.drawText("Contexto", { x: M, y: cy, size: 10, font: bold, color: GREY });
+    cy -= 18;
+    for (const ln of wrap(cat.intro, 70)) {
+      cp.drawText(ln, { x: M, y: cy, size: 11, font: helv, color: LIGHT });
+      cy -= 16;
     }
     cp.drawText("Produzido por Digital Wave · hello@tiagodigitalwave.eu", {
       x: M, y: 50, size: 9, font: helv, color: GREY,
@@ -301,15 +330,13 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
     // practices page
     let pp = pdf.addPage([W, H]);
     pp.drawRectangle({ x: 0, y: H - 4, width: W, height: 4, color: ORANGE });
-    pp.drawText(`CAP. 0${idx + 1} · ${pillar.name.toUpperCase()} · BOAS PRÁTICAS`, {
+    pp.drawText(`CAT. 0${idx + 1} · ${cat.name.toUpperCase()} · BOAS PRÁTICAS`, {
       x: M, y: H - 45, size: 8, font: bold, color: ORANGE,
-      // @ts-ignore
-      characterSpacing: 2,
     });
 
     let py = H - 90;
-    pillar.practices.forEach((pr, i) => {
-      if (py < 180) {
+    cat.practices.forEach((pr, i) => {
+      if (py < 200) {
         pp = pdf.addPage([W, H]);
         pp.drawRectangle({ x: 0, y: H - 4, width: W, height: 4, color: ORANGE });
         py = H - 90;
@@ -333,14 +360,11 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
   const cta = pdf.addPage([W, H]);
   cta.drawRectangle({ x: 0, y: 0, width: W, height: H, color: BLACK });
   cta.drawRectangle({ x: 0, y: H - 6, width: W, height: 6, color: ORANGE });
-  cta.drawText("PRÓXIMO PASSO", { x: M, y: H - 110, size: 11, font: bold, color: ORANGE,
-    // @ts-ignore
-    characterSpacing: 3,
-  });
+  cta.drawText("PRÓXIMO PASSO", { x: M, y: H - 110, size: 11, font: bold, color: ORANGE });
   cta.drawText("Vamos discutir o teu", { x: M, y: H - 200, size: 32, font: bold, color: WHITE });
   cta.drawText("diagnóstico em 30 min.", { x: M, y: H - 240, size: 32, font: bold, color: WHITE });
   const ctaBody =
-    "Sem pitch decks. Mostramos exatamente o que faria sentido para o teu caso e o tipo de operação de Email Marketing B2B que conseguiria gerar reuniões previsíveis com decisores.";
+    "Sem pitch decks. Mostramos exactamente o que faria sentido para o teu caso e o tipo de operação de Email Marketing B2B que conseguiria gerar reuniões previsíveis com decisores.";
   let cy2 = H - 290;
   for (const ln of wrap(ctaBody, 70)) {
     cta.drawText(ln, { x: M, y: cy2, size: 12, font: helv, color: LIGHT });
@@ -354,7 +378,7 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
   return await pdf.save();
 }
 
-function userEmailHtml(firstName: string, overall: number) {
+function userEmailHtml(firstName: string, overall: number, status: { title: string; headline: string }) {
   return `<!doctype html><html><body style="margin:0;background:#f5f5f7;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#111">
   <div style="max-width:560px;margin:0 auto;padding:32px 16px">
     <div style="background:#fff;border-radius:16px;padding:40px 36px">
@@ -363,12 +387,14 @@ function userEmailHtml(firstName: string, overall: number) {
       <p style="font-size:15px;line-height:1.6;color:#333;margin:0 0 16px">Olá ${firstName},</p>
       <p style="font-size:15px;line-height:1.6;color:#333;margin:0 0 16px">
         Obrigado por completares o diagnóstico da tua operação de aquisição B2B. Em anexo encontras o teu PDF
-        personalizado com a análise detalhada dos travões que estão a limitar o crescimento — e as boas práticas
+        personalizado com a análise detalhada das 5 categorias críticas — e as boas práticas
         de Email Marketing B2B que aplicamos em cada operação Digital Wave.
       </p>
       <div style="background:#fff7f2;border-left:4px solid #ff6b26;padding:14px 18px;margin:24px 0;border-radius:6px">
         <div style="font-size:11px;letter-spacing:2px;color:#ff6b26;font-weight:700">SAÚDE GERAL</div>
         <div style="font-size:36px;font-weight:700;color:#111;line-height:1.1;margin-top:4px">${overall}%</div>
+        <div style="font-size:14px;color:#333;margin-top:6px"><strong>${status.headline}</strong></div>
+        <div style="font-size:13px;color:#666;margin-top:2px">${status.title}</div>
       </div>
       <p style="font-size:15px;line-height:1.6;color:#333;margin:0 0 16px">
         Se tiveres alguma dúvida sobre os resultados, responde diretamente a este email.
@@ -382,12 +408,10 @@ function userEmailHtml(firstName: string, overall: number) {
 }
 
 function adminEmailHtml(d: Payload) {
-  const pillars = ["Atração", "Previsibilidade", "Conversão", "Retenção"];
-  const scores = [d.scores.p1, d.scores.p2, d.scores.p3, d.scores.p4];
-  const rows = pillars.map((p, i) => `<tr><td style="padding:6px 10px;border:1px solid #2a2a2a">${p}</td><td style="padding:6px 10px;border:1px solid #2a2a2a;text-align:right"><strong>${scores[i]}/10</strong></td></tr>`).join("");
+  const rows = CATEGORIES.map((c, i) => `<tr><td style="padding:6px 10px;border:1px solid #2a2a2a">${c.name}</td><td style="padding:6px 10px;border:1px solid #2a2a2a;text-align:right"><strong>${d.scores.perTen[i]}/10</strong> <span style="color:#888">(raw ${d.scores.raw[i]}/12)</span></td></tr>`).join("");
   return `<div style="font-family:Inter,Arial,sans-serif;background:#0f0f0f;color:#f5f5f5;padding:24px;max-width:640px">
     <h1 style="color:#ff6b26;margin:0 0 8px">Novo Quiz · Digital Wave</h1>
-    <p style="color:#bdbdbd">Pontuação geral: <strong style="color:#ff6b26">${d.scores.overall}%</strong></p>
+    <p style="color:#bdbdbd">Pontuação geral ponderada: <strong style="color:#ff6b26">${d.scores.overall}%</strong></p>
     <h2 style="font-size:16px;margin:24px 0 8px">Contacto</h2>
     <table style="border-collapse:collapse;width:100%;font-size:14px">
       <tr><td style="padding:6px 10px;border:1px solid #2a2a2a">Nome</td><td style="padding:6px 10px;border:1px solid #2a2a2a">${d.firstName}</td></tr>
@@ -396,9 +420,9 @@ function adminEmailHtml(d: Payload) {
       <tr><td style="padding:6px 10px;border:1px solid #2a2a2a">Cargo</td><td style="padding:6px 10px;border:1px solid #2a2a2a">${d.role}</td></tr>
       <tr><td style="padding:6px 10px;border:1px solid #2a2a2a">Faturação</td><td style="padding:6px 10px;border:1px solid #2a2a2a">${d.revenue}</td></tr>
     </table>
-    <h2 style="font-size:16px;margin:24px 0 8px">Pilares</h2>
+    <h2 style="font-size:16px;margin:24px 0 8px">Categorias</h2>
     <table style="border-collapse:collapse;width:100%;font-size:14px">${rows}</table>
-    <p style="color:#888;margin-top:24px">Respostas: ${d.answers.join(" · ")}</p>
+    <p style="color:#888;margin-top:24px">Respostas (Q1→Q20): ${d.answers.join(" · ")}</p>
   </div>`;
 }
 
@@ -408,12 +432,14 @@ function bytesToBase64(bytes: Uint8Array): string {
   for (let i = 0; i < bytes.length; i += chunk) {
     bin += String.fromCharCode(...bytes.subarray(i, i + chunk));
   }
-  // btoa exists in workerd
   return btoa(bin);
 }
 
+const GATEWAY_URL = "https://connector-gateway.lovable.dev/resend";
+
 async function sendEmail(opts: {
-  apiKey: string;
+  lovableKey: string;
+  resendKey: string;
   to: string;
   replyTo?: string;
   subject: string;
@@ -429,24 +455,26 @@ async function sendEmail(opts: {
   if (opts.replyTo) body.reply_to = opts.replyTo;
   if (opts.attachment) body.attachments = [opts.attachment];
 
-  const res = await fetch("https://api.resend.com/emails", {
+  const res = await fetch(`${GATEWAY_URL}/emails`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${opts.apiKey}`,
+      Authorization: `Bearer ${opts.lovableKey}`,
+      "X-Connection-Api-Key": opts.resendKey,
     },
     body: JSON.stringify(body),
   });
   if (!res.ok) {
     const t = await res.text();
-    console.error("Resend error:", res.status, t);
-    throw new Error(`resend ${res.status}`);
+    console.error("Resend gateway error:", res.status, t);
+    throw new Error(`resend ${res.status}: ${t}`);
   }
 }
 
 async function sendEmailSafely(label: string, opts: Parameters<typeof sendEmail>[0]) {
   try {
     await sendEmail(opts);
+    console.log(`Quiz email sent (${label}) to ${opts.to}`);
     return { label, ok: true } as const;
   } catch (error) {
     console.error(`Quiz email failed (${label}):`, error);
@@ -468,27 +496,37 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
         }
         const parsed = PAYLOAD.safeParse(body);
         if (!parsed.success) {
+          console.error("Quiz payload invalid:", parsed.error.flatten());
           return new Response(JSON.stringify({ error: "Invalid payload" }), {
             status: 400, headers: { "Content-Type": "application/json" },
           });
         }
         const d = parsed.data;
 
-        const RESEND_API_KEY = process.env.RESEND_API_KEY;
-        if (!RESEND_API_KEY) {
-          console.error("RESEND_API_KEY not configured");
+        const LOVABLE_API_KEY = process.env.LOVABLE_API_KEY;
+        const RESEND_API_KEY =
+          process.env.RESEND_API_KEY_1 || process.env.RESEND_API_KEY;
+
+        if (!LOVABLE_API_KEY || !RESEND_API_KEY) {
+          console.error("Missing email credentials", {
+            hasLovable: !!LOVABLE_API_KEY,
+            hasResend: !!RESEND_API_KEY,
+          });
           return new Response(JSON.stringify({ error: "Email service not configured" }), {
             status: 500, headers: { "Content-Type": "application/json" },
           });
         }
 
+        const status = overallStatus(d.scores.overall);
+
         const pdfBytes = await buildPdf(d);
         const pdfB64 = bytesToBase64(pdfBytes);
-        const filename = `Digital_Wave_Relatorio_${d.firstName.replace(/\s+/g, "_")}.pdf`;
+        const filename = `Digital_Wave_Diagnostico_${d.firstName.replace(/\s+/g, "_")}.pdf`;
 
         const results = await Promise.all([
           sendEmailSafely("admin", {
-            apiKey: RESEND_API_KEY,
+            lovableKey: LOVABLE_API_KEY,
+            resendKey: RESEND_API_KEY,
             to: "hello@tiagodigitalwave.eu",
             replyTo: d.email,
             subject: `Quiz Digital Wave · ${d.firstName} (${d.scores.overall}%)`,
@@ -496,20 +534,21 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
             attachment: { filename, content: pdfB64 },
           }),
           sendEmailSafely("visitor", {
-            apiKey: RESEND_API_KEY,
+            lovableKey: LOVABLE_API_KEY,
+            resendKey: RESEND_API_KEY,
             to: d.email,
             replyTo: "hello@tiagodigitalwave.eu",
-            subject: "O teu relatório Digital Wave está pronto",
-            html: userEmailHtml(d.firstName, d.scores.overall),
+            subject: "O teu diagnóstico Digital Wave está pronto",
+            html: userEmailHtml(d.firstName, d.scores.overall, status),
             attachment: { filename, content: pdfB64 },
           }),
         ]);
 
-        if (results.some((result) => !result.ok)) {
+        if (results.some((r) => !r.ok)) {
           console.error("Quiz submit email delivery partial/failed:", results);
         }
 
-        return new Response(JSON.stringify({ ok: true }), {
+        return new Response(JSON.stringify({ ok: true, results }), {
           status: 202, headers: { "Content-Type": "application/json" },
         });
       },
