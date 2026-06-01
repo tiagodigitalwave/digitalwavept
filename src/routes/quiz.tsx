@@ -12,254 +12,17 @@ import {
 } from "recharts";
 import { Nav } from "@/components/site/Nav";
 import { Footer, CookieBanner } from "@/components/site/Footer";
+import {
+  SCORED,
+  P2,
+  DIMENSIONS,
+  computeScores,
+  overallProfile,
+  type Answer,
+  type Scores,
+} from "@/lib/quiz-config";
 
 const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
-
-type Answer = "A" | "B" | "C";
-
-type Question = { q: string; opts: Record<Answer, string> };
-type Category = {
-  key: "canal" | "icp" | "mensagem" | "pipeline" | "conversao";
-  name: string;
-  short: string;
-  weight: number;
-  questions: Question[];
-  diagnoses: {
-    low: string;
-    mid: string;
-    high: string;
-  };
-};
-
-const CATEGORIES: Category[] = [
-  {
-    key: "canal",
-    name: "Saúde do Canal de Email",
-    short: "Canal",
-    weight: 1.5,
-    questions: [
-      {
-        q: "Qual é a tua taxa média de abertura de emails frios?",
-        opts: {
-          A: "Abaixo de 20%",
-          B: "Entre 20% e 40%",
-          C: "Acima de 40%",
-        },
-      },
-      {
-        q: "Com que frequência verificas a reputação do teu domínio de envio?",
-        opts: {
-          A: "Nunca verifiquei ou não sei como",
-          B: "Verifico quando os resultados pioram",
-          C: "Tenho monitorização regular (Google Postmaster ou similar)",
-        },
-      },
-      {
-        q: "Como está organizada a tua infraestrutura de envio?",
-        opts: {
-          A: "Envio tudo a partir de um único endereço/domínio principal",
-          B: "Tenho domínios separados mas sem rotação sistemática",
-          C: "Múltiplos domínios aquecidos com rotação e limites diários definidos",
-        },
-      },
-      {
-        q: "Qual é a tua taxa de bounce e spam nos últimos 30 dias?",
-        opts: {
-          A: "Não monitorizo ou está acima de 3%",
-          B: "Entre 1% e 3%",
-          C: "Abaixo de 1% e monitorizo semanalmente",
-        },
-      },
-    ],
-    diagnoses: {
-      low: "Canal comprometido. Alta probabilidade de emails a cair em spam sem saberes. Precisas de auditoria técnica urgente antes de escalar volume.",
-      mid: "Canal instável. Funciona mas sem garantias de consistência. Um pico de volume ou uma lista má pode colapsar os resultados.",
-      high: "Canal saudável. A infraestrutura não é o teu problema principal.",
-    },
-  },
-  {
-    key: "icp",
-    name: "Qualidade do ICP e Lista",
-    short: "ICP & Lista",
-    weight: 1.5,
-    questions: [
-      {
-        q: "Como defines o teu cliente ideal (ICP)?",
-        opts: {
-          A: "Tenho uma ideia geral do sector e dimensão da empresa",
-          B: "Tenho cargo, sector e dimensão definidos",
-          C: "ICP detalhado com cargo, sector, dimensão, sinais de intenção e dores específicas",
-        },
-      },
-      {
-        q: "De onde vêm os contactos que prospetas?",
-        opts: {
-          A: "Listas compradas ou scraped sem verificação",
-          B: "LinkedIn manual ou ferramentas básicas, sem validação de email",
-          C: "Processo sistemático com validação de email, verificação de cargo actual e enriquecimento",
-        },
-      },
-      {
-        q: "Com que frequência actualizas e limpas as tuas listas?",
-        opts: {
-          A: "Raramente ou nunca — uso as mesmas listas durante meses",
-          B: "Removo bounces mas não verifico se os cargos/empresas mudaram",
-          C: "Processo regular de limpeza, remoção de não-respondentes e actualização de dados",
-        },
-      },
-      {
-        q: "Quando mudas de ICP ou segmento, como validas antes de escalar?",
-        opts: {
-          A: "Escalo directamente com volume alto",
-          B: "Faço um teste pequeno mas sem critérios de decisão definidos",
-          C: "Processo de teste com volume mínimo, métricas de validação e threshold de go/no-go",
-        },
-      },
-    ],
-    diagnoses: {
-      low: "Lista é o teu maior problema. Podes ter o melhor copy do mundo e não vai funcionar. Volume sem qualidade destrói a reputação do canal.",
-      mid: "Lista razoável mas com lacunas que criam inconsistência. Os resultados vão variar muito de campanha para campanha.",
-      high: "Boa qualidade de dados. O problema está noutras áreas do funil.",
-    },
-  },
-  {
-    key: "mensagem",
-    name: "Eficácia da Mensagem",
-    short: "Mensagem",
-    weight: 1,
-    questions: [
-      {
-        q: "Como é a abertura dos teus emails frios?",
-        opts: {
-          A: "Apresento a empresa e o que fazemos logo no primeiro parágrafo",
-          B: "Começo com uma dor ou problema do mercado",
-          C: "Começo com algo específico sobre a pessoa ou empresa — personalização real",
-        },
-      },
-      {
-        q: "Qual é o teu CTA principal nos emails frios?",
-        opts: {
-          A: "“Gostaria de agendar uma reunião para apresentar os nossos serviços”",
-          B: "“Tens disponibilidade para uma chamada rápida?”",
-          C: "CTA com valor claro e baixo compromisso — pergunta que gera resposta ou oferta específica",
-        },
-      },
-      {
-        q: "Tens sequências de follow-up estruturadas?",
-        opts: {
-          A: "Envio um email e se não responder abandono",
-          B: "Faço 1-2 follows mas sem sequência definida",
-          C: "Sequência de 4-6 toques com ângulos diferentes, timing definido e saída programada",
-        },
-      },
-      {
-        q: "Como testas e optimizas o copy das mensagens?",
-        opts: {
-          A: "Uso o mesmo copy indefinidamente",
-          B: "Mudo quando os resultados pioram",
-          C: "Testo variáveis sistematicamente (subject, abertura, CTA) com volume estatisticamente significativo",
-        },
-      },
-    ],
-    diagnoses: {
-      low: "A mensagem está a afastar potenciais clientes. O problema não é chegar à caixa de entrada — é o que acontece depois.",
-      mid: "Mensagem funcional mas genérica. Converte em mercados fáceis, falha em mercados competitivos ou com decisores exigentes.",
-      high: "Copy como vantagem competitiva. Se os resultados são maus, o problema está no canal ou na lista.",
-    },
-  },
-  {
-    key: "pipeline",
-    name: "Previsibilidade do Pipeline",
-    short: "Pipeline",
-    weight: 1,
-    questions: [
-      {
-        q: "Consegues prever com razoável precisão quantas reuniões vais ter no próximo mês?",
-        opts: {
-          A: "Não — os resultados variam muito e não consigo antecipar",
-          B: "Tenho uma ideia aproximada mas com grande margem de erro",
-          C: "Sim — tenho dados históricos para previsões com ±20% de precisão",
-        },
-      },
-      {
-        q: "Tens métricas de funil definidas e monitorizadas regularmente?",
-        opts: {
-          A: "Sei quantos emails envio mas não monitorizo taxas de conversão por etapa",
-          B: "Monitorizei algumas métricas mas não de forma sistemática",
-          C: "Dashboard com taxa de abertura, resposta, lead, reunião e cliente — actualizado semanalmente",
-        },
-      },
-      {
-        q: "Quando os resultados pioram, consegues identificar rapidamente onde está o problema no funil?",
-        opts: {
-          A: "Não — é difícil perceber o que está a falhar",
-          B: "Consigo identificar mas demora tempo e é baseado em intuição",
-          C: "Sim — as métricas mostram exactamente em que etapa a conversão quebrou",
-        },
-      },
-      {
-        q: "Os teus resultados de outreach são consistentes semana a semana?",
-        opts: {
-          A: "Variam muito — há semanas boas e semanas a zero sem perceber porquê",
-          B: "Razoavelmente consistentes mas com picos e vales significativos",
-          C: "Consistentes dentro de uma banda previsível — variações têm causa identificável",
-        },
-      },
-    ],
-    diagnoses: {
-      low: "Estás a gerir por intuição. Sem dados, cada semana má é um mistério e cada semana boa é sorte. Impossível escalar.",
-      mid: "Sistema parcial. Tens alguma visibilidade mas lacunas que criam pontos cegos — como o que estás a viver agora.",
-      high: "Pipeline previsível. Consegues tomar decisões baseadas em dados e escalar com confiança.",
-    },
-  },
-  {
-    key: "conversao",
-    name: "Conversão e Qualificação",
-    short: "Conversão",
-    weight: 1,
-    questions: [
-      {
-        q: "Qual é a tua taxa de lead para reunião agendada?",
-        opts: {
-          A: "Abaixo de 30%",
-          B: "Entre 30% e 60%",
-          C: "Acima de 60%",
-        },
-      },
-      {
-        q: "As reuniões que agendam são com decisores reais?",
-        opts: {
-          A: "Frequentemente falo com pessoas sem poder de decisão",
-          B: "Maioritariamente decisores mas com algumas excepções",
-          C: "Quase sempre decisores — tenho critérios de qualificação antes da reunião",
-        },
-      },
-      {
-        q: "Qual é a tua taxa de reunião para proposta enviada?",
-        opts: {
-          A: "Abaixo de 30%",
-          B: "Entre 30% e 60%",
-          C: "Acima de 60%",
-        },
-      },
-      {
-        q: "Tens um processo de qualificação antes de agendar a reunião?",
-        opts: {
-          A: "Agendo com qualquer pessoa que mostre interesse",
-          B: "Faço algumas perguntas básicas mas sem critérios definidos",
-          C: "Critérios de qualificação claros (BANT ou similar) e recuso reuniões que não qualificam",
-        },
-      },
-    ],
-    diagnoses: {
-      low: "O fundo do funil está a desperdiçar o trabalho do topo. Cada reunião custa tempo e energia — se não convertem, o problema pode ser qualificação fraca ou proposta desalinhada.",
-      mid: "Conversão razoável com espaço para optimização. Pequenas melhorias no processo de qualificação têm impacto directo na receita.",
-      high: "Fundo de funil eficiente. O problema de crescimento está no volume ou na consistência do topo.",
-    },
-  },
-];
-
-const TOTAL_Q = CATEGORIES.reduce((a, c) => a + c.questions.length, 0); // 20
 
 const ROLES = ["CEO", "COO", "Founder", "HR Manager", "Head of Sales", "Head of Marketing", "Outro"];
 const REVENUES = [
@@ -276,8 +39,12 @@ const REVENUES = [
 export const Route = createFileRoute("/quiz")({
   head: () => ({
     meta: [
-      { title: "Quiz · Saúde da tua aquisição de clientes — Digital Wave" },
-      { name: "description", content: "Descobre a pontuação da saúde do teu sistema de aquisição de clientes em 20 perguntas, divididas em 5 categorias críticas." },
+      { title: "Quiz · Diagnóstico de Aquisição de Clientes — Digital Wave" },
+      {
+        name: "description",
+        content:
+          "Diagnostica em 17 perguntas se o teu sistema de aquisição de clientes B2B está afinado, com travões ou parado.",
+      },
     ],
   }),
   component: QuizPage,
@@ -285,29 +52,25 @@ export const Route = createFileRoute("/quiz")({
 
 type Step = "intro" | "questions" | "about" | "loading" | "result";
 
-type Scores = {
-  raw: number[]; // per-category raw 4..12
-  perTen: number[]; // per-category /10
-  overall: number; // weighted 0-100
-};
+// Display order: P1, P2 (multi), P3, P4..P10, [P11 if P10=C], P12..P17
+function buildStepList(answers: Record<string, Answer | undefined>): { type: "scored"; id: string }[] | null {
+  // returns the ordered list of *scored* questions (excluding P2, which is handled separately).
+  // P11 only included if P10 === "C".
+  const p10 = answers["P10"];
+  const skipP11 = p10 !== "C";
+  return SCORED.filter((q) => !(skipP11 && q.id === "P11")).map((q) => ({ type: "scored" as const, id: q.id }));
+}
 
-function computeScores(answers: (Answer | null)[]): Scores {
-  const map = (a: Answer | null) => (a === "A" ? 1 : a === "B" ? 2 : a === "C" ? 3 : 0);
-  const raw: number[] = [];
-  const perTen: number[] = [];
-  let i = 0;
-  for (const cat of CATEGORIES) {
-    let s = 0;
-    for (let j = 0; j < cat.questions.length; j++) s += map(answers[i + j]);
-    raw.push(s);
-    perTen.push(Math.round((s / (cat.questions.length * 3)) * 10));
-    i += cat.questions.length;
+type StepItem = { kind: "scored"; id: string } | { kind: "multi"; id: "P2" };
+
+function buildItems(answers: Record<string, Answer | undefined>): StepItem[] {
+  const items: StepItem[] = [];
+  const list = buildStepList(answers) ?? [];
+  for (const it of list) {
+    items.push({ kind: "scored", id: it.id });
+    if (it.id === "P1") items.push({ kind: "multi", id: "P2" });
   }
-  const totalWeight = CATEGORIES.reduce((a, c) => a + c.weight, 0);
-  const weightedMax = totalWeight * 10;
-  const weightedSum = CATEGORIES.reduce((a, c, idx) => a + perTen[idx] * c.weight, 0);
-  const overall = Math.round((weightedSum / weightedMax) * 100);
-  return { raw, perTen, overall };
+  return items;
 }
 
 function QuizPage() {
@@ -317,7 +80,8 @@ function QuizPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState<string | undefined>(undefined);
 
-  const [answers, setAnswers] = useState<(Answer | null)[]>(Array(TOTAL_Q).fill(null));
+  const [answers, setAnswers] = useState<Record<string, Answer | undefined>>({});
+  const [channels, setChannels] = useState<string[]>([]);
   const [qIndex, setQIndex] = useState(0);
 
   const [role, setRole] = useState("");
@@ -329,29 +93,36 @@ function QuizPage() {
   const phoneValid = !!phone && isValidPhoneNumber(phone);
   const formValid = firstName.trim().length >= 2 && emailValid && phoneValid;
 
-  // resolve current category/question from qIndex
-  const { catIdx, qInCat } = useMemo(() => {
-    let n = qIndex;
-    for (let c = 0; c < CATEGORIES.length; c++) {
-      if (n < CATEGORIES[c].questions.length) return { catIdx: c, qInCat: n };
-      n -= CATEGORIES[c].questions.length;
-    }
-    return { catIdx: CATEGORIES.length - 1, qInCat: 0 };
-  }, [qIndex]);
-
-  const currentCat = CATEGORIES[catIdx];
-  const currentQ = currentCat.questions[qInCat];
+  const items = useMemo(() => buildItems(answers), [answers]);
+  const currentItem = items[qIndex];
+  const totalItems = items.length;
 
   const scores = useMemo(() => computeScores(answers), [answers]);
 
-  function pickAnswer(a: Answer) {
-    const next = [...answers];
-    next[qIndex] = a;
-    setAnswers(next);
-    setTimeout(() => {
-      if (qIndex < TOTAL_Q - 1) setQIndex(qIndex + 1);
-      else setStep("about");
-    }, 160);
+  function pickAnswer(qId: string, a: Answer) {
+    setAnswers((prev) => {
+      const next = { ...prev, [qId]: a };
+      // If user revises P10 away from C, drop P11 answer
+      if (qId === "P10" && a !== "C") delete next["P11"];
+      return next;
+    });
+    setTimeout(() => goNext(), 160);
+  }
+
+  function toggleChannel(id: string) {
+    setChannels((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  }
+
+  function goNext() {
+    // Recompute items based on latest answers; advance.
+    const latest = buildItems({ ...answers });
+    if (qIndex < latest.length - 1) setQIndex(qIndex + 1);
+    else setStep("about");
+  }
+
+  function continueFromMulti() {
+    if (channels.length < P2.minSelect) return;
+    goNext();
   }
 
   async function submit() {
@@ -368,10 +139,10 @@ function QuizPage() {
           phone,
           role,
           revenue,
+          channels,
           answers,
           scores: {
-            perTen: scores.perTen,
-            raw: scores.raw,
+            perTen: scores.perTenList,
             overall: scores.overall,
           },
         }),
@@ -380,6 +151,10 @@ function QuizPage() {
       console.error("Email send failed", e);
     }
   }
+
+  const allScoredAnswered =
+    items.filter((i) => i.kind === "scored").every((i) => !!answers[(i as { id: string }).id]) &&
+    channels.length >= P2.minSelect;
 
   return (
     <div className="dark min-h-screen">
@@ -400,48 +175,37 @@ function QuizPage() {
           />
         )}
 
-        {step === "questions" && currentQ && (
+        {step === "questions" && currentItem && (
           <div>
             <Progress
-              value={((qIndex + 1) / (TOTAL_Q + 2)) * 100}
-              label={`Questão ${qIndex + 1} de ${TOTAL_Q}`}
+              value={((qIndex + 1) / (totalItems + 1)) * 100}
+              label={`Pergunta ${qIndex + 1} de ${totalItems}`}
             />
-            <span className="eyebrow mt-8 inline-block">{currentCat.name}</span>
-            <h2 className="text-2xl md:text-3xl mt-4 font-medium leading-snug">{currentQ.q}</h2>
-            <div className="mt-8 space-y-3">
-              {(["A", "B", "C"] as const).map((k) => (
-                <button
-                  key={k}
-                  type="button"
-                  onClick={() => pickAnswer(k)}
-                  className={`w-full text-left card-surface p-5 hover:border-wave/60 transition flex gap-4 items-start ${
-                    answers[qIndex] === k ? "border-wave bg-wave/10" : ""
-                  }`}
-                >
-                  <span className="w-8 h-8 rounded-full bg-muted/40 grid place-items-center text-sm shrink-0">{k}</span>
-                  <span className="text-base leading-relaxed">{currentQ.opts[k]}</span>
-                </button>
-              ))}
-            </div>
-            <div className="mt-8 flex justify-between text-sm text-muted-foreground">
-              <button
-                type="button"
-                disabled={qIndex === 0}
-                onClick={() => setQIndex(qIndex - 1)}
-                className="disabled:opacity-30"
-              >
-                ← Anterior
-              </button>
-              <span>Seleciona uma resposta para continuar</span>
-            </div>
+            {currentItem.kind === "scored" ? (
+              <ScoredView
+                qId={currentItem.id}
+                current={answers[currentItem.id]}
+                onPick={(a) => pickAnswer(currentItem.id, a)}
+                onPrev={qIndex > 0 ? () => setQIndex(qIndex - 1) : undefined}
+              />
+            ) : (
+              <MultiView
+                selected={channels}
+                onToggle={toggleChannel}
+                onContinue={continueFromMulti}
+                onPrev={qIndex > 0 ? () => setQIndex(qIndex - 1) : undefined}
+              />
+            )}
           </div>
         )}
 
         {step === "about" && (
           <div>
-            <Progress value={(21 / 22) * 100} label="Quase a terminar" />
+            <Progress value={((totalItems + 1) / (totalItems + 1)) * 100} label="Quase a terminar" />
             <span className="eyebrow mt-8 inline-block">Sobre ti</span>
-            <h2 className="text-2xl md:text-3xl mt-4 font-medium">Antes do resultado, conta-nos um pouco mais.</h2>
+            <h2 className="text-2xl md:text-3xl mt-4 font-medium">
+              Antes do resultado, conta-nos um pouco mais.
+            </h2>
 
             <div className="mt-8 space-y-6">
               <div>
@@ -481,10 +245,10 @@ function QuizPage() {
               <button
                 type="button"
                 onClick={submit}
-                disabled={!role || !revenue}
+                disabled={!role || !revenue || !allScoredAnswered}
                 className="btn-primary disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Ver a minha pontuação <span aria-hidden>→</span>
+                Ver o meu diagnóstico <span aria-hidden>→</span>
               </button>
             </div>
           </div>
@@ -501,6 +265,100 @@ function QuizPage() {
       </main>
       <Footer />
       <CookieBanner />
+    </div>
+  );
+}
+
+function ScoredView({
+  qId,
+  current,
+  onPick,
+  onPrev,
+}: {
+  qId: string;
+  current: Answer | undefined;
+  onPick: (a: Answer) => void;
+  onPrev?: () => void;
+}) {
+  const q = SCORED.find((x) => x.id === qId)!;
+  return (
+    <div>
+      <span className="eyebrow mt-8 inline-block">{q.block}</span>
+      <h2 className="text-2xl md:text-3xl mt-4 font-medium leading-snug">{q.q}</h2>
+      <div className="mt-8 space-y-3">
+        {(["A", "B", "C"] as const).map((k) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => onPick(k)}
+            className={`w-full text-left card-surface p-5 hover:border-wave/60 transition flex gap-4 items-start ${
+              current === k ? "border-wave bg-wave/10" : ""
+            }`}
+          >
+            <span className="w-8 h-8 rounded-full bg-muted/40 grid place-items-center text-sm shrink-0">{k}</span>
+            <span className="text-base leading-relaxed">{q.opts[k]}</span>
+          </button>
+        ))}
+      </div>
+      <div className="mt-8 flex justify-between text-sm text-muted-foreground">
+        <button type="button" disabled={!onPrev} onClick={onPrev} className="disabled:opacity-30">
+          ← Anterior
+        </button>
+        <span>Seleciona uma resposta para continuar</span>
+      </div>
+    </div>
+  );
+}
+
+function MultiView({
+  selected,
+  onToggle,
+  onContinue,
+  onPrev,
+}: {
+  selected: string[];
+  onToggle: (id: string) => void;
+  onContinue: () => void;
+  onPrev?: () => void;
+}) {
+  return (
+    <div>
+      <span className="eyebrow mt-8 inline-block">{P2.block}</span>
+      <h2 className="text-2xl md:text-3xl mt-4 font-medium leading-snug">{P2.q}</h2>
+      <p className="text-sm text-muted-foreground mt-2">Seleciona todos os que se aplicam.</p>
+      <div className="mt-6 grid sm:grid-cols-2 gap-2">
+        {P2.options.map((o) => {
+          const on = selected.includes(o.id);
+          return (
+            <button
+              key={o.id}
+              type="button"
+              onClick={() => onToggle(o.id)}
+              className={`card-surface p-4 text-left flex items-center gap-3 ${on ? "border-wave bg-wave/10" : ""}`}
+            >
+              <span
+                className={`w-5 h-5 rounded border ${on ? "bg-wave border-wave" : "border-border"} grid place-items-center text-xs`}
+              >
+                {on ? "✓" : ""}
+              </span>
+              <span>{o.label}</span>
+            </button>
+          );
+        })}
+      </div>
+      <div className="mt-8 flex items-center justify-between">
+        <button type="button" disabled={!onPrev} onClick={onPrev} className="text-sm text-muted-foreground disabled:opacity-30">
+          ← Anterior
+        </button>
+        <button
+          type="button"
+          disabled={selected.length === 0}
+          onClick={onContinue}
+          className="btn-primary disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          Continuar <span aria-hidden>→</span>
+        </button>
+      </div>
     </div>
   );
 }
@@ -546,12 +404,11 @@ function IntroForm({
     <div>
       <span className="eyebrow">Quiz · Diagnóstico</span>
       <h1 className="display mt-6">
-        Descobre a <em>pontuação</em> da saúde da tua empresa.
+        Descobre se o teu sistema de <em>aquisição</em> está afinado, com travões ou parado.
       </h1>
       <p className="mt-6 text-muted-foreground text-lg max-w-xl">
-        20 perguntas rápidas sobre aquisição de clientes, divididas em 5 categorias críticas:
-        canal de email, ICP & lista, mensagem, previsibilidade e conversão. Recebes o teu diagnóstico
-        no fim e enviamos-te uma cópia detalhada por email.
+        17 perguntas rápidas sobre como geras novos clientes hoje. No fim recebes um diagnóstico
+        em 5 dimensões e enviamos-te um relatório personalizado por email.
       </p>
 
       <div className="mt-12 card-surface p-6 md:p-8 space-y-5 max-w-xl">
@@ -581,13 +438,7 @@ function IntroForm({
         </div>
         <div>
           <label className="text-sm text-muted-foreground mb-2 block">Número de telefone *</label>
-          <PhoneInput
-            international
-            defaultCountry="PT"
-            value={phone}
-            onChange={setPhone}
-            className="dw-phone"
-          />
+          <PhoneInput international defaultCountry="PT" value={phone} onChange={setPhone} className="dw-phone" />
           {phone && !phoneValid && (
             <p className="text-xs text-red-400 mt-2">Número inválido para o país selecionado.</p>
           )}
@@ -604,43 +455,39 @@ function IntroForm({
 
         <p className="text-xs text-muted-foreground">
           Ao continuar aceitas a nossa{" "}
-          <Link to="/politica-de-privacidade" className="underline">política de privacidade</Link>.
+          <Link to="/politica-de-privacidade" className="underline">
+            política de privacidade
+          </Link>
+          .
         </p>
       </div>
     </div>
   );
 }
 
-function statusFromOverall(overall: number) {
-  if (overall >= 80) return { title: "Sistema saudável e escalável", headline: "O teu motor de aquisição está afinado", color: "text-emerald-400" };
-  if (overall >= 60) return { title: "Funciona mas com travões", headline: "Tens travões que limitam o teu crescimento", color: "text-yellow-400" };
-  if (overall >= 40) return { title: "Sistema instável", headline: "O teu pipeline está a vazar — aqui está porquê", color: "text-orange-400" };
-  return { title: "Sistema quebrado", headline: "Estás a investir sem retorno — o problema é estrutural", color: "text-red-400" };
-}
-
-function levelFromRaw(raw: number): "low" | "mid" | "high" {
-  if (raw <= 4) return "low";
-  if (raw <= 8) return "mid";
-  return "high";
-}
-
 function colorClassFor(perTen: number) {
-  if (perTen >= 8) return "bg-emerald-400";
+  if (perTen >= 7) return "bg-emerald-400";
   if (perTen >= 5) return "bg-yellow-400";
   return "bg-red-400";
 }
 
-function Result({
-  firstName,
-  email,
-  scores,
-}: {
-  firstName: string;
-  email: string;
-  scores: Scores;
-}) {
-  const data = CATEGORIES.map((c, i) => ({ pillar: c.short, value: scores.perTen[i] }));
-  const status = statusFromOverall(scores.overall);
+function profileColor(key: string) {
+  switch (key) {
+    case "afinado":
+      return "text-emerald-400";
+    case "travoes":
+      return "text-yellow-400";
+    case "tremer":
+      return "text-orange-400";
+    default:
+      return "text-red-400";
+  }
+}
+
+function Result({ firstName, email, scores }: { firstName: string; email: string; scores: Scores }) {
+  const data = DIMENSIONS.map((d, i) => ({ pillar: d.short, value: scores.perTenList[i] }));
+  const profile = overallProfile(scores);
+  const colorClass = profileColor(profile.key);
 
   return (
     <div>
@@ -649,27 +496,27 @@ function Result({
         Obrigado, <em>{firstName}</em>.
       </h1>
       <p className="mt-4 text-muted-foreground">
-        Enviámos uma cópia detalhada para <span className="text-wave">{email}</span> e para a nossa equipa.
+        Enviámos uma cópia detalhada do teu diagnóstico para <span className="text-wave">{email}</span>.
       </p>
 
       <div className="mt-12 grid md:grid-cols-2 gap-8 items-center card-surface p-6 md:p-10">
         <div>
           <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Saúde global</div>
-          <div className={`text-7xl md:text-8xl font-light mt-2 ${status.color}`}>{scores.overall}%</div>
-          <p className={`mt-3 text-lg ${status.color}`}>{status.headline}</p>
-          <p className="text-sm text-muted-foreground mt-1">{status.title}</p>
+          <div className={`text-7xl md:text-8xl font-light mt-2 ${colorClass}`}>{scores.overall}%</div>
+          <p className={`mt-3 text-lg ${colorClass}`}>{profile.headline}</p>
+          <p className="text-sm text-muted-foreground mt-1">{profile.title}</p>
 
           <ul className="mt-6 space-y-3 text-sm">
-            {CATEGORIES.map((c, i) => (
-              <li key={c.key}>
+            {DIMENSIONS.map((d, i) => (
+              <li key={d.key}>
                 <div className="flex justify-between mb-1">
-                  <span>{c.short}</span>
-                  <span className="text-wave">{scores.perTen[i]}/10</span>
+                  <span>{d.short}</span>
+                  <span className="text-wave">{scores.perTenList[i]}/10</span>
                 </div>
                 <div className="h-1.5 bg-muted/30 rounded-full overflow-hidden">
                   <div
-                    className={`h-full ${colorClassFor(scores.perTen[i])}`}
-                    style={{ width: `${scores.perTen[i] * 10}%` }}
+                    className={`h-full ${colorClassFor(scores.perTenList[i])}`}
+                    style={{ width: `${scores.perTenList[i] * 10}%` }}
                   />
                 </div>
               </li>
@@ -682,29 +529,30 @@ function Result({
               <PolarGrid stroke="hsl(0 0% 30%)" />
               <PolarAngleAxis dataKey="pillar" tick={{ fill: "#e5e5e5", fontSize: 12 }} />
               <PolarRadiusAxis domain={[0, 10]} tick={false} axisLine={false} />
-              <Radar
-                dataKey="value"
-                stroke="var(--color-wave)"
-                fill="var(--color-wave)"
-                fillOpacity={0.35}
-              />
+              <Radar dataKey="value" stroke="var(--color-wave)" fill="var(--color-wave)" fillOpacity={0.35} />
             </RadarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      <div className="mt-10 grid md:grid-cols-2 gap-5">
-        {CATEGORIES.map((c, i) => {
-          const lvl = levelFromRaw(scores.raw[i]);
-          // mostra diagnóstico explícito para abaixo de 6/10; para boas, mostra reforço
-          if (scores.perTen[i] >= 6 && lvl === "high") return null;
-          const body = c.diagnoses[lvl];
+      <div className="mt-10 card-surface p-8 border-wave/40">
+        <div className="text-xs uppercase tracking-[0.18em] text-wave mb-2">Diagnóstico geral</div>
+        <h3 className="text-2xl font-medium">{profile.title}</h3>
+        <p className="mt-3 text-muted-foreground leading-relaxed">{profile.body}</p>
+      </div>
+
+      <div className="mt-6 grid md:grid-cols-2 gap-5">
+        {DIMENSIONS.map((d, i) => {
+          const sc = scores.perTenList[i];
+          if (sc >= 7) return null; // só mostra dimensões abaixo de saudável
+          const lvl = scores.perDim[d.key].level;
+          const body = d.diagnoses[lvl];
           return (
-            <div key={c.key} className="card-surface p-6 border-wave/40">
+            <div key={d.key} className="card-surface p-6 border-wave/40">
               <div className="text-xs uppercase tracking-[0.18em] text-wave mb-2">
-                {c.short} · {scores.perTen[i]}/10
+                {d.short} · {sc}/10
               </div>
-              <h3 className="text-xl font-medium">{c.name}</h3>
+              <h3 className="text-xl font-medium">{d.name}</h3>
               <p className="mt-3 text-muted-foreground leading-relaxed">{body}</p>
             </div>
           );
