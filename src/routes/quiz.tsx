@@ -268,7 +268,7 @@ function QuizPage() {
           </div>
         )}
 
-        {step === "result" && <Result firstName={firstName} email={email} scores={scores} />}
+        {step === "result" && <Result firstName={firstName} scores={scores} pdfData={pdfData} />}
       </main>
       <Footer />
       <CookieBanner />
