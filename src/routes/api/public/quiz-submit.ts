@@ -395,79 +395,94 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        let body: unknown;
         try {
-          body = await request.json();
-        } catch {
-          return new Response(JSON.stringify({ error: "Invalid JSON" }), {
-            status: 400,
-            headers: { "Content-Type": "application/json" },
-          });
-        }
-        const parsed = PAYLOAD.safeParse(body);
-        if (!parsed.success) {
-          console.error("Quiz payload invalid:", parsed.error.flatten());
-          return new Response(JSON.stringify({ error: "Invalid payload" }), {
-            status: 400,
-            headers: { "Content-Type": "application/json" },
-          });
-        }
-        const d = parsed.data;
+          let body: unknown;
+          try {
+            body = await request.json();
+          } catch {
+            return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+              status: 400,
+              headers: { "Content-Type": "application/json" },
+            });
+          }
+          const parsed = PAYLOAD.safeParse(body);
+          if (!parsed.success) {
+            console.error("Quiz payload invalid:", parsed.error.flatten());
+            return new Response(JSON.stringify({ error: "Invalid payload" }), {
+              status: 400,
+              headers: { "Content-Type": "application/json" },
+            });
+          }
+          const d = parsed.data;
 
-        const LOVABLE_API_KEY = process.env.LOVABLE_API_KEY;
-        const RESEND_API_KEY = process.env.RESEND_API_KEY_1 || process.env.RESEND_API_KEY;
+          const LOVABLE_API_KEY = process.env.LOVABLE_API_KEY;
+          const RESEND_API_KEY = process.env.RESEND_API_KEY_1 || process.env.RESEND_API_KEY;
 
-        if (!LOVABLE_API_KEY || !RESEND_API_KEY) {
-          console.error("Missing email credentials", {
-            hasLovable: !!LOVABLE_API_KEY,
-            hasResend: !!RESEND_API_KEY,
-          });
-          return new Response(JSON.stringify({ error: "Email service not configured" }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-          });
-        }
+          if (!LOVABLE_API_KEY || !RESEND_API_KEY) {
+            console.error("Missing email credentials", {
+              hasLovable: !!LOVABLE_API_KEY,
+              hasResend: !!RESEND_API_KEY,
+            });
+            return new Response(JSON.stringify({ error: "Email service not configured" }), {
+              status: 500,
+              headers: { "Content-Type": "application/json" },
+            });
+          }
 
-        // Recompute scores server-side from answers (canonical source).
-        const answerMap: Record<string, Answer> = {};
-        for (const [k, v] of Object.entries(d.answers)) answerMap[k] = v;
-        const scores = computeScores(answerMap);
-        const profile = overallProfile(scores);
+          // Recompute scores server-side from answers (canonical source).
+          const answerMap: Record<string, Answer> = {};
+          for (const [k, v] of Object.entries(d.answers)) answerMap[k] = v;
+          const scores = computeScores(answerMap);
+          const profile = overallProfile(scores);
 
-        const pdfBytes = await buildPdf(d);
-        const pdfB64 = bytesToBase64(pdfBytes);
-        const filename = `Digital_Wave_Diagnostico_${d.firstName.replace(/\s+/g, "_")}.pdf`;
-
-        const results = await Promise.all([
-          // Admin: lead info only, no PDF attached.
-          sendEmailSafely("admin", {
+          // 1) ALWAYS send admin lead email first (no PDF dependency).
+          const adminResult = await sendEmailSafely("admin", {
             lovableKey: LOVABLE_API_KEY,
             resendKey: RESEND_API_KEY,
             to: "hello@tiagodigitalwave.eu",
             replyTo: d.email,
             subject: `Novo lead Quiz · ${d.firstName} (${scores.overall}%)`,
             html: adminEmailHtml(d, scores.overall, scores.perTenList, profile),
-          }),
-          // Visitor: receives the PDF diagnostic.
-          sendEmailSafely("visitor", {
+          });
+
+          // 2) Try to build the PDF. If it fails, still email the visitor
+          //    with an HTML diagnostic so delivery never silently breaks.
+          let pdfAttachment: { filename: string; content: string } | undefined;
+          try {
+            const pdfBytes = await buildPdf(d);
+            const pdfB64 = bytesToBase64(pdfBytes);
+            const filename = `Digital_Wave_Diagnostico_${d.firstName.replace(/\s+/g, "_")}.pdf`;
+            pdfAttachment = { filename, content: pdfB64 };
+          } catch (err) {
+            console.error("PDF build failed, sending visitor email without attachment:", err);
+          }
+
+          const visitorResult = await sendEmailSafely("visitor", {
             lovableKey: LOVABLE_API_KEY,
             resendKey: RESEND_API_KEY,
             to: d.email,
             replyTo: "hello@tiagodigitalwave.eu",
             subject: "O teu diagnóstico Digital Wave está pronto",
             html: userEmailHtml(d.firstName, scores.overall, profile),
-            attachment: { filename, content: pdfB64 },
-          }),
-        ]);
+            attachment: pdfAttachment,
+          });
 
-        if (results.some((r) => !r.ok)) {
-          console.error("Quiz submit email delivery partial/failed:", results);
+          const results = [adminResult, visitorResult];
+          if (results.some((r) => !r.ok)) {
+            console.error("Quiz submit email delivery partial/failed:", results);
+          }
+
+          return new Response(JSON.stringify({ ok: true, results }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          });
+        } catch (err) {
+          console.error("Quiz submit unhandled error:", err);
+          return new Response(
+            JSON.stringify({ error: "Internal error", detail: String(err) }),
+            { status: 500, headers: { "Content-Type": "application/json" } },
+          );
         }
-
-        return new Response(JSON.stringify({ ok: true, results }), {
-          status: 202,
-          headers: { "Content-Type": "application/json" },
-        });
       },
     },
   },
