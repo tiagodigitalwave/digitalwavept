@@ -88,6 +88,7 @@ function QuizPage() {
   const [revenue, setRevenue] = useState("");
 
   const [error, setError] = useState<string | null>(null);
+  const [pdfData, setPdfData] = useState<{ base64: string; filename: string } | null>(null);
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const phoneValid = !!phone && isValidPhoneNumber(phone);
@@ -128,9 +129,8 @@ function QuizPage() {
   async function submit() {
     setError(null);
     setStep("loading");
-    setTimeout(() => setStep("result"), 600);
     try {
-      await fetch("/api/public/quiz-submit", {
+      const res = await fetch("/api/public/quiz-submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -147,10 +147,17 @@ function QuizPage() {
           },
         }),
       });
+      const json = (await res.json()) as { pdfBase64?: string | null; filename?: string | null };
+      if (json.pdfBase64 && json.filename) {
+        setPdfData({ base64: json.pdfBase64, filename: json.filename });
+      }
     } catch (e) {
-      console.error("Email send failed", e);
+      console.error("Quiz submit failed", e);
+    } finally {
+      setStep("result");
     }
   }
+
 
   const allScoredAnswered =
     items.filter((i) => i.kind === "scored").every((i) => !!answers[(i as { id: string }).id]) &&
