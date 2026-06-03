@@ -88,6 +88,7 @@ function QuizPage() {
   const [revenue, setRevenue] = useState("");
 
   const [error, setError] = useState<string | null>(null);
+  const [pdfData, setPdfData] = useState<{ base64: string; filename: string } | null>(null);
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const phoneValid = !!phone && isValidPhoneNumber(phone);
@@ -128,9 +129,8 @@ function QuizPage() {
   async function submit() {
     setError(null);
     setStep("loading");
-    setTimeout(() => setStep("result"), 600);
     try {
-      await fetch("/api/public/quiz-submit", {
+      const res = await fetch("/api/public/quiz-submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -147,10 +147,17 @@ function QuizPage() {
           },
         }),
       });
+      const json = (await res.json()) as { pdfBase64?: string | null; filename?: string | null };
+      if (json.pdfBase64 && json.filename) {
+        setPdfData({ base64: json.pdfBase64, filename: json.filename });
+      }
     } catch (e) {
-      console.error("Email send failed", e);
+      console.error("Quiz submit failed", e);
+    } finally {
+      setStep("result");
     }
   }
+
 
   const allScoredAnswered =
     items.filter((i) => i.kind === "scored").every((i) => !!answers[(i as { id: string }).id]) &&
@@ -261,7 +268,7 @@ function QuizPage() {
           </div>
         )}
 
-        {step === "result" && <Result firstName={firstName} email={email} scores={scores} />}
+        {step === "result" && <Result firstName={firstName} scores={scores} pdfData={pdfData} />}
       </main>
       <Footer />
       <CookieBanner />
@@ -484,10 +491,34 @@ function profileColor(key: string) {
   }
 }
 
-function Result({ firstName, email, scores }: { firstName: string; email: string; scores: Scores }) {
+function Result({
+  firstName,
+  scores,
+  pdfData,
+}: {
+  firstName: string;
+  scores: Scores;
+  pdfData: { base64: string; filename: string } | null;
+}) {
   const data = DIMENSIONS.map((d, i) => ({ pillar: d.short, value: scores.perTenList[i] }));
   const profile = overallProfile(scores);
   const colorClass = profileColor(profile.key);
+
+  function downloadPdf() {
+    if (!pdfData) return;
+    const bin = atob(pdfData.base64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const blob = new Blob([bytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = pdfData.filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div>
@@ -496,8 +527,17 @@ function Result({ firstName, email, scores }: { firstName: string; email: string
         Obrigado, <em>{firstName}</em>.
       </h1>
       <p className="mt-4 text-muted-foreground">
-        Enviámos uma cópia detalhada do teu diagnóstico para <span className="text-wave">{email}</span>.
+        O teu diagnóstico está pronto. Descarrega o PDF completo com a análise das 5 dimensões e as boas práticas a aplicar.
       </p>
+      <button
+        type="button"
+        onClick={downloadPdf}
+        disabled={!pdfData}
+        className="btn-primary mt-6 disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        {pdfData ? "Descarregar diagnóstico (PDF)" : "A preparar PDF..."} <span aria-hidden>↓</span>
+      </button>
+
 
       <div className="mt-12 grid md:grid-cols-2 gap-8 items-center card-surface p-6 md:p-10">
         <div>

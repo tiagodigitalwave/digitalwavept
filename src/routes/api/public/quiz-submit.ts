@@ -435,7 +435,7 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
           const scores = computeScores(answerMap);
           const profile = overallProfile(scores);
 
-          // 1) ALWAYS send admin lead email first (no PDF dependency).
+          // 1) Send admin lead email (no PDF dependency).
           const adminResult = await sendEmailSafely("admin", {
             lovableKey: LOVABLE_API_KEY,
             resendKey: RESEND_API_KEY,
@@ -445,37 +445,21 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
             html: adminEmailHtml(d, scores.overall, scores.perTenList, profile),
           });
 
-          // 2) Try to build the PDF. If it fails, still email the visitor
-          //    with an HTML diagnostic so delivery never silently breaks.
-          let pdfAttachment: { filename: string; content: string } | undefined;
+          // 2) Build the PDF and return it to the client for direct download.
+          let pdfBase64: string | null = null;
+          let filename: string | null = null;
           try {
             const pdfBytes = await buildPdf(d);
-            const pdfB64 = bytesToBase64(pdfBytes);
-            const filename = `Digital_Wave_Diagnostico_${d.firstName.replace(/\s+/g, "_")}.pdf`;
-            pdfAttachment = { filename, content: pdfB64 };
+            pdfBase64 = bytesToBase64(pdfBytes);
+            filename = `Digital_Wave_Diagnostico_${d.firstName.replace(/\s+/g, "_")}.pdf`;
           } catch (err) {
-            console.error("PDF build failed, sending visitor email without attachment:", err);
+            console.error("PDF build failed:", err);
           }
 
-          const visitorResult = await sendEmailSafely("visitor", {
-            lovableKey: LOVABLE_API_KEY,
-            resendKey: RESEND_API_KEY,
-            to: d.email,
-            replyTo: "hello@tiagodigitalwave.eu",
-            subject: "O teu diagnóstico Digital Wave está pronto",
-            html: userEmailHtml(d.firstName, scores.overall, profile),
-            attachment: pdfAttachment,
-          });
-
-          const results = [adminResult, visitorResult];
-          if (results.some((r) => !r.ok)) {
-            console.error("Quiz submit email delivery partial/failed:", results);
-          }
-
-          return new Response(JSON.stringify({ ok: true, results }), {
-            status: 200,
-            headers: { "Content-Type": "application/json" },
-          });
+          return new Response(
+            JSON.stringify({ ok: true, adminEmailSent: adminResult.ok, pdfBase64, filename }),
+            { status: 200, headers: { "Content-Type": "application/json" } },
+          );
         } catch (err) {
           console.error("Quiz submit unhandled error:", err);
           return new Response(
