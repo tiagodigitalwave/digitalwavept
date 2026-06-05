@@ -37,8 +37,24 @@ const WHITE = rgb(1, 1, 1);
 const GREEN = rgb(0.2, 0.7, 0.4);
 const RED = rgb(0.85, 0.2, 0.2);
 
+// Replace characters not encodable by pdf-lib's WinAnsi standard fonts.
+function sanitize(s: string): string {
+  return s
+    .replace(/→/g, "->")
+    .replace(/←/g, "<-")
+    .replace(/↑/g, "^")
+    .replace(/↓/g, "v")
+    .replace(/[\u2010-\u2015]/g, "-")
+    .replace(/[\u2018\u2019\u201A\u201B]/g, "'")
+    .replace(/[\u201C\u201D\u201E\u201F]/g, '"')
+    .replace(/\u2026/g, "...")
+    .replace(/\u2022/g, "*")
+    .replace(/\u00A0/g, " ")
+    .replace(/[^\x00-\xFF]/g, "?");
+}
+
 function wrap(text: string, max: number): string[] {
-  const words = text.split(/\s+/);
+  const words = sanitize(text).split(/\s+/);
   const lines: string[] = [];
   let cur = "";
   for (const w of words) {
@@ -57,6 +73,17 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
   const pdf = await PDFDocument.create();
   const helv = await pdf.embedFont(StandardFonts.Helvetica);
   const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
+
+  // Auto-sanitize text on every page created in this document.
+  const origAddPage = pdf.addPage.bind(pdf);
+  pdf.addPage = ((...args: Parameters<typeof origAddPage>) => {
+    const page = origAddPage(...args);
+    const origDraw = page.drawText.bind(page);
+    page.drawText = ((text: string, options?: Parameters<typeof origDraw>[1]) =>
+      origDraw(sanitize(text ?? ""), options)) as typeof page.drawText;
+    return page;
+  }) as typeof pdf.addPage;
+
 
   const W = 595;
   const H = 842;
