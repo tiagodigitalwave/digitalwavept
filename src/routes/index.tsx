@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Nav } from "@/components/site/Nav";
+import { CountUp } from "@/components/site/CountUp";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
+import tiagoVideo from "@/assets/tiago-video.mp4";
 import tiagoVideo from "@/assets/tiago-video.mp4";
 
 const YT_ID = "1r3yGX4nPnc";
