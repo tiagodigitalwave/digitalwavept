@@ -41,7 +41,7 @@ function CtaButton({ children = "Agendar uma reunião", variant = "primary" as "
 }
 
 function Hero() {
-  const stats: { node: React.ReactNode; label: string }[] = [
+  const stats = [
     {
       node: <CountUp end={200} prefix="+" />,
       label: "Reuniões agendadas",
