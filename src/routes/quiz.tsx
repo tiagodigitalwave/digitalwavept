@@ -599,6 +599,8 @@ function Result({
         })}
       </div>
 
+      {scores.overall < 70 && <NextStepBlock scores={scores} />}
+
       <div className="mt-12 card-surface p-8 md:p-12 text-center">
         <h2 className="text-2xl md:text-3xl">Queres discutir o teu diagnóstico em 30 min?</h2>
         <p className="mt-3 text-muted-foreground">Sem pitch decks. Mostramos o que faria sentido para o teu caso.</p>
@@ -606,6 +608,117 @@ function Result({
           Agendar uma reunião <span aria-hidden>→</span>
         </a>
       </div>
+    </div>
+  );
+}
+
+function NextStepBlock({ scores }: { scores: Scores }) {
+  // Weakest two dimensions to personalise the message
+  const ranked = DIMENSIONS
+    .map((d, i) => ({ d, sc: scores.perTenList[i] }))
+    .sort((a, b) => a.sc - b.sc);
+  const weak = ranked.slice(0, 2).map((x) => x.d.short);
+  const focus =
+    weak.length === 2 ? `${weak[0]} e ${weak[1]}` : weak[0] ?? "o teu sistema de aquisição";
+
+  const TOTAL = 8;
+  const TAKEN = 5; // 5/8 ocupadas → restam 3
+  const REMAINING = TOTAL - TAKEN;
+
+  return (
+    <div className="mt-12 card-surface p-6 md:p-10 border-wave/40 relative overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-20 -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 50% at 20% 0%, oklch(0.72 0.19 47 / 0.18), transparent 70%), radial-gradient(ellipse 50% 50% at 90% 100%, oklch(0.78 0.17 55 / 0.14), transparent 70%)",
+          filter: "blur(20px)",
+        }}
+      />
+
+      <div className="text-xs uppercase tracking-[0.18em] text-wave font-medium">
+        Próximo passo recomendado
+      </div>
+      <p className="text-sm text-muted-foreground mt-2">
+        A acção com maior retorno imediato a partir deste diagnóstico.
+      </p>
+
+      <p className="mt-6 text-base md:text-lg leading-relaxed">
+        Os teus resultados mostram que <strong>{focus}</strong> são as dimensões com maior margem
+        de impacto. Marca uma sessão estratégica com a <strong>Digital Wave</strong> para
+        identificarmos contigo as alavancas com maior retorno imediato.
+      </p>
+
+      <div className="mt-6 card-surface p-5 flex gap-3 items-start bg-wave/5">
+        <div className="w-7 h-7 rounded-full bg-wave/20 text-wave grid place-items-center shrink-0">⚡</div>
+        <p className="text-sm md:text-base text-foreground/90 leading-relaxed">
+          Abrimos <strong>{TOTAL} vagas gratuitas</strong> por semana para uma sessão estratégica
+          e análise detalhada do diagnóstico com o Tiago Barbosa.
+        </p>
+      </div>
+
+      <p className="mt-4 text-sm text-muted-foreground">
+        Se fizer sentido para o teu caso, podes candidatar-te a uma sessão.
+      </p>
+
+      <div className="mt-6 card-surface p-5 md:p-6 bg-background/40">
+        <div className="grid md:grid-cols-[auto_1fr_auto] gap-5 md:gap-6 items-center">
+          <div className="card-surface p-5 md:p-6 bg-wave/5 border-wave/30 min-w-[160px]">
+            <div className="text-[10px] uppercase tracking-[0.18em] text-wave font-medium">Últimas vagas</div>
+            <div className="flex items-end gap-2 mt-2">
+              <span className="text-5xl md:text-6xl font-light leading-none">{REMAINING}</span>
+              <span className="text-xs text-muted-foreground pb-1 leading-tight">
+                de {TOTAL} vagas<br />ainda disponíveis
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <div className="text-base md:text-lg font-medium leading-snug">
+              Restam apenas {REMAINING} vagas para esta semana
+            </div>
+            <div className="mt-4 flex gap-1.5 flex-wrap">
+              {Array.from({ length: TOTAL }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`w-8 h-8 rounded-md ${
+                    i < TAKEN ? "bg-wave/70" : "bg-muted/40 border border-border"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="text-right shrink-0">
+            <div className="text-2xl font-light">{TAKEN}/{TOTAL}</div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Ocupadas</div>
+          </div>
+        </div>
+
+        <div className="mt-5">
+          <div className="h-1.5 bg-muted/30 rounded-full overflow-hidden">
+            <div className="h-full bg-wave transition-all" style={{ width: `${(TAKEN / TOTAL) * 100}%` }} />
+          </div>
+          <div className="mt-2 flex flex-wrap gap-x-2 text-[11px]">
+            <span className="uppercase tracking-[0.18em] text-wave font-medium">
+              Restam poucas vagas esta semana
+            </span>
+            <span className="text-muted-foreground">
+              quando estas {REMAINING} forem preenchidas, encerramos as marcações gratuitas
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <a
+        href={CAL_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn-primary mt-6 w-full justify-center"
+      >
+        📅 Candidatar-me à Sessão Estratégica <span aria-hidden>→</span>
+      </a>
     </div>
   );
 }
