@@ -41,6 +41,20 @@ function CtaButton({ children = "Agendar uma reunião", variant = "primary" as "
 }
 
 function Hero() {
+  const stats: { node: React.ReactNode; label: string }[] = [
+    {
+      node: <CountUp end={200} prefix="+" />,
+      label: "Reuniões agendadas",
+    },
+    {
+      node: <CountUp end={20} prefix="+" />,
+      label: "Mercados alcançados",
+    },
+    {
+      node: <CountUp end={7} suffix=" dígitos" />,
+      label: "Gerados a parceiros",
+    },
+  ];
   return (
     <section id="top" className="relative pt-32 sm:pt-36 md:pt-44 pb-16 md:pb-20 px-6 max-w-7xl mx-auto">
       <span className="eyebrow">Email Marketing · B2B</span>
@@ -52,22 +66,31 @@ function Hero() {
         escrevemos mensagens que geram resposta, garantimos que chegam à caixa de entrada
         e marcamos as reuniões diretamente no teu calendário. Tu fechas, nós abastecemos o pipeline.
       </p>
-      <div className="mt-10 flex flex-wrap gap-3">
-        <CtaButton />
-        <a href="#cases" className="btn-ghost">Ver casos de sucesso</a>
-      </div>
 
-      <div className="mt-24 grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-16 border-t border-border pt-10">
-        {[
-          { n: "+200", label: "Reuniões agendadas" },
-          { n: "+20", label: "Mercados alcançados" },
-          { n: "7 dígitos", label: "Gerados a parceiros" },
-        ].map((s) => (
-          <div key={s.label}>
-            <div className="num-display">{s.n}</div>
-            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mt-3">{s.label}</div>
-          </div>
-        ))}
+      <div className="relative mt-10">
+        {/* Soft radial glow inspired by bejoyn — sits behind CTA + stats */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -inset-x-20 -top-10 -bottom-10 -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 50% at 30% 60%, oklch(0.72 0.19 47 / 0.22), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 90%, oklch(0.78 0.17 55 / 0.18), transparent 70%)",
+            filter: "blur(20px)",
+          }}
+        />
+        <div className="flex flex-wrap gap-3">
+          <CtaButton />
+          <a href="#cases" className="btn-ghost">Ver casos de sucesso</a>
+        </div>
+
+        <div className="mt-20 grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-16 border-t border-border pt-10">
+          {stats.map((s) => (
+            <div key={s.label}>
+              <div className="num-display">{s.node}</div>
+              <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mt-3">{s.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
