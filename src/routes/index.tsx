@@ -5,7 +5,6 @@ import { CountUp } from "@/components/site/CountUp";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import tiagoVideo from "@/assets/tiago-video.mp4";
-import tiagoVideo from "@/assets/tiago-video.mp4";
 
 const YT_ID = "1r3yGX4nPnc";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
