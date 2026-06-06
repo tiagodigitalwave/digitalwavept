@@ -5,6 +5,11 @@ import { CountUp } from "@/components/site/CountUp";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import tiagoVideo from "@/assets/tiago-video.mp4";
+import testimonial1 from "@/assets/testimonials/t1.jpeg.asset.json";
+import testimonial2 from "@/assets/testimonials/t2.jpeg.asset.json";
+import testimonial3 from "@/assets/testimonials/t3.jpg.asset.json";
+
+const TESTIMONIALS = [testimonial1, testimonial2, testimonial3];
 
 const YT_ID = "1r3yGX4nPnc";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
@@ -43,7 +48,7 @@ function CtaButton({ children = "Agendar uma reunião", variant = "primary" as "
 function Hero() {
   const stats = [
     {
-      node: <CountUp end={200} prefix="+" />,
+      node: <CountUp end={250} prefix="+" />,
       label: "Reuniões agendadas",
     },
     {
@@ -68,16 +73,28 @@ function Hero() {
       </p>
 
       <div className="relative mt-10">
-        {/* Soft radial glow inspired by bejoyn — sits behind CTA + stats */}
+        {/* Animated radial glow inspired by bejoyn — sits behind CTA + stats */}
         <div
           aria-hidden
-          className="pointer-events-none absolute -inset-x-20 -top-10 -bottom-10 -z-10"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 50% at 30% 60%, oklch(0.72 0.19 47 / 0.22), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 90%, oklch(0.78 0.17 55 / 0.18), transparent 70%)",
-            filter: "blur(20px)",
-          }}
-        />
+          className="pointer-events-none absolute -inset-x-20 -top-20 -bottom-20 -z-10 overflow-hidden"
+        >
+          <div
+            className="absolute inset-0 hero-glow-anim"
+            style={{
+              background:
+                "radial-gradient(ellipse 55% 55% at 28% 55%, oklch(0.72 0.19 47 / 0.35), transparent 70%)",
+              filter: "blur(40px)",
+            }}
+          />
+          <div
+            className="absolute inset-0 hero-glow-anim-2"
+            style={{
+              background:
+                "radial-gradient(ellipse 50% 55% at 78% 85%, oklch(0.78 0.17 55 / 0.28), transparent 70%)",
+              filter: "blur(50px)",
+            }}
+          />
+        </div>
         <div className="flex flex-wrap gap-3">
           <CtaButton />
           <a href="#cases" className="btn-ghost">Ver casos de sucesso</a>
@@ -342,26 +359,26 @@ function Testimonials() {
         </h2>
       </div>
 
-      {/* Placeholder marquee, replace with email screenshots */}
+      {/* Marquee with real client message screenshots */}
       <div className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
-        <div className="flex gap-6 marquee-track-slow whitespace-nowrap py-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              data-email-screenshot-placeholder
-              className="card-surface w-[min(420px,85vw)] h-[260px] sm:h-[280px] shrink-0 grid place-items-center text-center p-6"
-            >
-              <div>
-                <div className="text-xs uppercase tracking-[0.18em] text-wave mb-2">Print de email #{i + 1}</div>
-                <div className="text-sm text-muted-foreground whitespace-normal">
-                  Espaço para print de email real do cliente.<br />
-                  (faz upload e substitui este placeholder)
-                </div>
+        <div className="flex gap-6 marquee-track-slow py-4">
+          {Array.from({ length: 3 }).flatMap((_, loop) =>
+            TESTIMONIALS.map((img, i) => (
+              <div
+                key={`${loop}-${i}`}
+                className="card-surface w-[340px] sm:w-[380px] h-[460px] sm:h-[500px] shrink-0 overflow-hidden bg-[#0a0a0a] grid place-items-center p-3"
+              >
+                <img
+                  src={img.url}
+                  alt={`Mensagem de cliente ${i + 1}`}
+                  loading="lazy"
+                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-md"
+                />
               </div>
-            </div>
-          ))}
+            )),
+          )}
         </div>
       </div>
     </section>
