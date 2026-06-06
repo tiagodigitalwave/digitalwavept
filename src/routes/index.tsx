@@ -359,26 +359,26 @@ function Testimonials() {
         </h2>
       </div>
 
-      {/* Placeholder marquee, replace with email screenshots */}
+      {/* Marquee with real client message screenshots */}
       <div className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
-        <div className="flex gap-6 marquee-track-slow whitespace-nowrap py-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              data-email-screenshot-placeholder
-              className="card-surface w-[min(420px,85vw)] h-[260px] sm:h-[280px] shrink-0 grid place-items-center text-center p-6"
-            >
-              <div>
-                <div className="text-xs uppercase tracking-[0.18em] text-wave mb-2">Print de email #{i + 1}</div>
-                <div className="text-sm text-muted-foreground whitespace-normal">
-                  Espaço para print de email real do cliente.<br />
-                  (faz upload e substitui este placeholder)
-                </div>
+        <div className="flex gap-6 marquee-track-slow py-4">
+          {Array.from({ length: 3 }).flatMap((_, loop) =>
+            TESTIMONIALS.map((img, i) => (
+              <div
+                key={`${loop}-${i}`}
+                className="card-surface w-[340px] sm:w-[380px] h-[460px] sm:h-[500px] shrink-0 overflow-hidden bg-[#0a0a0a] grid place-items-center p-3"
+              >
+                <img
+                  src={img.url}
+                  alt={`Mensagem de cliente ${i + 1}`}
+                  loading="lazy"
+                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-md"
+                />
               </div>
-            </div>
-          ))}
+            )),
+          )}
         </div>
       </div>
     </section>
