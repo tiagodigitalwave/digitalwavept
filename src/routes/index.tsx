@@ -5,11 +5,14 @@ import { CountUp } from "@/components/site/CountUp";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import tiagoVideo from "@/assets/tiago-video.mp4";
+import heroMeeting from "@/assets/hero-meeting.mp4.asset.json";
 import testimonial1 from "@/assets/testimonials/t1.jpeg.asset.json";
 import testimonial2 from "@/assets/testimonials/t2.jpeg.asset.json";
 import testimonial3 from "@/assets/testimonials/t3.jpg.asset.json";
+import testimonial4 from "@/assets/testimonials/t4.jpg.asset.json";
+import testimonial5 from "@/assets/testimonials/t5.jpg.asset.json";
 
-const TESTIMONIALS = [testimonial1, testimonial2, testimonial3];
+const TESTIMONIALS = [testimonial1, testimonial2, testimonial3, testimonial4, testimonial5];
 
 const YT_ID = "1r3yGX4nPnc";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
