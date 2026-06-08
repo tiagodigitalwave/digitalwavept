@@ -5,11 +5,14 @@ import { CountUp } from "@/components/site/CountUp";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import tiagoVideo from "@/assets/tiago-video.mp4";
+import heroMeeting from "@/assets/hero-meeting.mp4.asset.json";
 import testimonial1 from "@/assets/testimonials/t1.jpeg.asset.json";
 import testimonial2 from "@/assets/testimonials/t2.jpeg.asset.json";
 import testimonial3 from "@/assets/testimonials/t3.jpg.asset.json";
+import testimonial4 from "@/assets/testimonials/t4.jpg.asset.json";
+import testimonial5 from "@/assets/testimonials/t5.jpg.asset.json";
 
-const TESTIMONIALS = [testimonial1, testimonial2, testimonial3];
+const TESTIMONIALS = [testimonial1, testimonial2, testimonial3, testimonial4, testimonial5];
 
 const YT_ID = "1r3yGX4nPnc";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
@@ -62,10 +65,29 @@ function Hero() {
   ];
   return (
     <section id="top" className="relative pt-32 sm:pt-36 md:pt-44 pb-16 md:pb-20 px-6 max-w-7xl mx-auto">
-      <span className="eyebrow">Email Marketing · B2B</span>
-      <h1 className="display mt-6 max-w-5xl">
-        Encontramos e agendamos reuniões com os teus <em>clientes ideais</em> através de Email Marketing.
-      </h1>
+      <span className="eyebrow relative z-10">Email Marketing · B2B</span>
+      <div className="relative mt-6">
+        {/* Animated meeting video as background of the headline */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -inset-x-6 sm:-inset-x-10 -inset-y-6 sm:-inset-y-10 -z-10 overflow-hidden rounded-3xl"
+        >
+          <video
+            src={heroMeeting.url}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/90" />
+        </div>
+        <h1 className="display max-w-5xl relative">
+          Encontramos e agendamos reuniões com os teus <em>clientes ideais</em> através de Email Marketing.
+        </h1>
+      </div>
       <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
         Operamos toda a tua máquina de Email Marketing B2B: identificamos os decisores certos,
         escrevemos mensagens que geram resposta, garantimos que chegam à caixa de entrada
