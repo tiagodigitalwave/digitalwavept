@@ -22,10 +22,10 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave, Email Marketing B2B que agenda reuniões com decisores" },
-      { name: "description", content: "Digital Wave é a operação de Email Marketing para empresas B2B. +200 reuniões agendadas, +20 mercados, 7 dígitos gerados a parceiros." },
-      { property: "og:title", content: "Digital Wave, Email Marketing B2B que agenda reuniões" },
-      { property: "og:description", content: "Encontramos e agendamos reuniões com os teus clientes ideais através de Email Marketing, todos os meses." },
+      { title: "Digital Wave — Estruturação de Outreach B2B (Cold Email + LinkedIn)" },
+      { name: "description", content: "Ajudamos empresas B2B a criar um sistema previsível de reuniões com decisores. Estruturamos o outreach via Cold Email e LinkedIn, sem depender do fundador nem de tráfego pago." },
+      { property: "og:title", content: "Digital Wave — Estruturação de Outreach B2B" },
+      { property: "og:description", content: "Um sistema previsível de reuniões com decisores B2B. Cold Email + LinkedIn, operado ponta a ponta." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
@@ -50,24 +50,14 @@ function CtaButton({ children = "Agendar uma reunião", variant = "primary" as "
 
 function Hero() {
   const stats = [
-    {
-      node: <CountUp end={250} prefix="+" />,
-      label: "Reuniões agendadas",
-    },
-    {
-      node: <CountUp end={20} prefix="+" />,
-      label: "Mercados alcançados",
-    },
-    {
-      node: <CountUp end={7} suffix=" dígitos" />,
-      label: "Gerados a parceiros",
-    },
+    { node: <CountUp end={250} prefix="+" />, label: "Reuniões agendadas" },
+    { node: <CountUp end={20} prefix="+" />, label: "Mercados alcançados" },
+    { node: <CountUp end={7} suffix=" dígitos" />, label: "Gerados a parceiros" },
   ];
   return (
     <section id="top" className="relative pt-32 sm:pt-36 md:pt-44 pb-16 md:pb-20 px-6 max-w-7xl mx-auto">
-      <span className="eyebrow relative z-10">Email Marketing · B2B</span>
+      <span className="eyebrow relative z-10">Estruturação de Outreach · B2B</span>
       <div className="relative mt-6">
-        {/* Animated meeting video as background of the headline */}
         <div
           aria-hidden
           className="pointer-events-none absolute -inset-x-6 sm:-inset-x-10 -inset-y-6 sm:-inset-y-10 -z-10 overflow-hidden rounded-3xl"
@@ -79,23 +69,24 @@ function Hero() {
             loop
             playsInline
             preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            className="absolute inset-0 w-full h-full object-cover opacity-30 grayscale"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/40" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/90" />
         </div>
         <h1 className="display max-w-5xl relative">
-          Encontramos e agendamos reuniões com os teus <em>clientes ideais</em> através de Email Marketing.
+          Um sistema previsível de <em>reuniões B2B</em> com decisores.
         </h1>
       </div>
       <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-        Operamos toda a tua máquina de Email Marketing B2B: identificamos os decisores certos,
-        escrevemos mensagens que geram resposta, garantimos que chegam à caixa de entrada
-        e marcamos as reuniões diretamente no teu calendário. Tu fechas, nós abastecemos o pipeline.
+        Estruturamos o outreach da tua empresa em dois canais que trabalham em conjunto:
+        <span className="text-foreground"> Cold Email </span>
+        e
+        <span className="text-foreground"> LinkedIn</span>.
+        Reuniões agendadas todos os meses, sem depender do fundador nem de tráfego pago.
       </p>
 
       <div className="relative mt-10">
-        {/* Animated radial glow inspired by bejoyn — sits behind CTA + stats */}
         <div
           aria-hidden
           className="pointer-events-none absolute -inset-x-20 -top-20 -bottom-20 -z-10 overflow-hidden"
@@ -104,7 +95,7 @@ function Hero() {
             className="absolute inset-0 hero-glow-anim"
             style={{
               background:
-                "radial-gradient(ellipse 55% 55% at 28% 55%, oklch(0.72 0.19 47 / 0.35), transparent 70%)",
+                "radial-gradient(ellipse 55% 55% at 28% 55%, oklch(1 0 0 / 0.10), transparent 70%)",
               filter: "blur(40px)",
             }}
           />
@@ -112,7 +103,7 @@ function Hero() {
             className="absolute inset-0 hero-glow-anim-2"
             style={{
               background:
-                "radial-gradient(ellipse 50% 55% at 78% 85%, oklch(0.78 0.17 55 / 0.28), transparent 70%)",
+                "radial-gradient(ellipse 50% 55% at 78% 85%, oklch(1 0 0 / 0.08), transparent 70%)",
               filter: "blur(50px)",
             }}
           />
@@ -168,11 +159,11 @@ function VslPlayer() {
           <img
             src={YT_THUMB}
             alt="Pré-visualização do vídeo"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 blur-[2px] group-hover:opacity-70 transition"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 blur-[2px] grayscale group-hover:opacity-70 transition"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
           <div className="relative grid place-items-center h-full">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-wave text-primary-foreground grid place-items-center shadow-[0_0_60px_var(--color-wave)] group-hover:scale-110 transition">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-foreground text-background grid place-items-center shadow-[0_0_60px_oklch(1_0_0/0.4)] group-hover:scale-110 transition">
               <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
             </div>
           </div>
@@ -190,62 +181,156 @@ function VideoBlock() {
   );
 }
 
-function Mission() {
+function Problem() {
+  const items = [
+    {
+      t: "Depende do fundador",
+      d: "As novas oportunidades param sempre que o fundador (ou o comercial mais experiente) deixa de prospetar manualmente.",
+    },
+    {
+      t: "Reuniões com quem não decide",
+      d: "Investe-se tempo em conversas com pessoas sem poder de compra. O ciclo de venda arrasta-se ou morre.",
+    },
+    {
+      t: "Custo de aquisição alto",
+      d: "Tráfego pago e agências generalistas tornam cada cliente cada vez mais caro, sem previsibilidade.",
+    },
+    {
+      t: "Pipeline imprevisível",
+      d: "Uns meses cheios, outros vazios. Impossível planear equipa, entrega e crescimento.",
+    },
+  ];
   return (
     <section id="sobre" className="section">
-      <span className="eyebrow">A Digital Wave</span>
-      <h2 className="display mt-6 max-w-4xl">Missão.</h2>
-      <div className="mt-10 grid md:grid-cols-2 gap-10 max-w-5xl">
-        <p className="text-lg text-foreground leading-relaxed">
-          A Digital Wave é a operação de Email Marketing B2B que está por trás de
-          empresas que querem crescer de forma previsível, sem depender de referências,
-          anúncios pagos ou comerciais a "procurar leads no LinkedIn".
-        </p>
-        <p className="text-lg text-muted-foreground leading-relaxed">
-          Construímos, do zero, todo o sistema de Email Marketing da tua empresa: infraestrutura
-          técnica, listas de decisores verificadas, mensagens e cadências testadas. O resultado é
-          simples e mensurável, reuniões com decisores qualificados marcadas no teu calendário,
-          todos os meses, em vários mercados.
-        </p>
+      <span className="eyebrow">O problema</span>
+      <h2 className="display mt-6 max-w-4xl">
+        Por que razão a maioria das empresas B2B <em>não cresce de forma previsível.</em>
+      </h2>
+      <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
+        A geração de reuniões continua presa a esforço manual, referências ou anúncios pagos.
+        Isto cria quatro problemas que travam o crescimento.
+      </p>
+
+      <div className="mt-12 grid sm:grid-cols-2 gap-5">
+        {items.map((it, i) => (
+          <div key={it.t} className="card-surface p-8">
+            <div className="num-display text-2xl text-muted-foreground/60">{String(i + 1).padStart(2, "0")}</div>
+            <h3 className="text-2xl mt-3">{it.t}</h3>
+            <p className="mt-3 text-muted-foreground leading-relaxed">{it.d}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
 
-function Pilar() {
+function Offer() {
   return (
     <section id="pilar" className="section">
-      <span className="eyebrow">O nosso pilar</span>
+      <span className="eyebrow">A nossa oferta</span>
       <h2 className="display mt-6 max-w-4xl">
-        Uma só promessa:<br /><em>reuniões agendadas</em> com decisores B2B.
+        <em>Estruturação de outreach</em> ponta a ponta.
+      </h2>
+      <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
+        Não somos uma agência de e-mail marketing nem uma agência de LinkedIn.
+        Estruturamos, dentro da tua empresa, um sistema de outreach que junta os dois canais
+        para gerar reuniões com decisores, todos os meses, de forma previsível.
+      </p>
+
+      <div className="mt-12 grid md:grid-cols-2 gap-6">
+        <article className="card-surface p-8 md:p-10">
+          <div className="flex items-baseline gap-4">
+            <span className="num-display">01</span>
+            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 1</div>
+          </div>
+          <h3 className="text-3xl mt-4">Cold Email</h3>
+          <p className="mt-4 text-muted-foreground leading-relaxed">
+            O mesmo canal com que chegámos até ti. Identificamos decisores, escrevemos mensagens
+            que geram resposta e garantimos que chegam à caixa de entrada certa.
+          </p>
+          <ul className="mt-6 space-y-2 text-sm">
+            {[
+              "Infraestrutura de envio dedicada",
+              "Listas verificadas por ICP e mercado",
+              "Copy testado com foco em resposta",
+              "Cadências multi-toque otimizadas",
+            ].map((i) => (
+              <li key={i} className="flex gap-2 items-start text-muted-foreground">
+                <span className="text-foreground mt-0.5">→</span>
+                <span>{i}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article className="card-surface p-8 md:p-10">
+          <div className="flex items-baseline gap-4">
+            <span className="num-display">02</span>
+            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 2</div>
+          </div>
+          <h3 className="text-3xl mt-4">LinkedIn Outbound</h3>
+          <p className="mt-4 text-muted-foreground leading-relaxed">
+            Pedidos de ligação, mensagens diretas e follow-ups estratégicos com os decisores
+            certos. Coordenado com o e-mail para multiplicar respostas.
+          </p>
+          <ul className="mt-6 space-y-2 text-sm">
+            {[
+              "Segmentação por cargo e empresa-alvo",
+              "Pedidos de ligação personalizados",
+              "Sequências de mensagens e follow-up",
+              "Sincronização com a cadência de e-mail",
+            ].map((i) => (
+              <li key={i} className="flex gap-2 items-start text-muted-foreground">
+                <span className="text-foreground mt-0.5">→</span>
+                <span>{i}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+
+      <p className="mt-10 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
+        Os dois canais funcionam em conjunto e alimentam o mesmo objetivo: colocar reuniões
+        qualificadas no teu calendário, semana após semana.
+      </p>
+    </section>
+  );
+}
+
+function Benefits() {
+  const items = [
+    {
+      t: "Previsibilidade",
+      d: "Reuniões marcadas todos os meses, com um volume que passas a saber prever.",
+    },
+    {
+      t: "Sem dependência do fundador",
+      d: "A geração de novas oportunidades deixa de depender do teu tempo ou do da tua equipa.",
+    },
+    {
+      t: "Só falas com decisores",
+      d: "Filtramos e qualificamos antes da reunião. Chegas ao calendário apenas com quem decide.",
+    },
+    {
+      t: "Custo de aquisição mais baixo",
+      d: "Muito mais eficiente do que tráfego pago. Cada reunião passa a custar uma fração do que custava.",
+    },
+  ];
+  return (
+    <section id="beneficios" className="section">
+      <span className="eyebrow">O que ganhas</span>
+      <h2 className="display mt-6 max-w-4xl">
+        Quatro coisas mudam <em>na tua empresa.</em>
       </h2>
 
-      <div className="mt-12 card-surface p-8 md:p-12 max-w-4xl">
-        <div className="flex items-baseline gap-6">
-          <span className="num-display text-wave">01</span>
-          <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Email Marketing como serviço</div>
-        </div>
-        <h3 className="text-3xl md:text-4xl mt-4">Sistema completo de Email Marketing B2B, ponta a ponta.</h3>
-        <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
-          Não somos uma "ferramenta" nem mais um curso. Operamos o canal por ti, do dia 1 ao envio diário:
-          definimos o cliente ideal, preparamos a infraestrutura, escrevemos as mensagens, enviamos,
-          respondemos e qualificamos. Tu só apareces às reuniões.
-        </p>
-        <ul className="mt-8 grid sm:grid-cols-2 gap-3 text-sm">
-          {[
-            "Setup de domínios e infraestrutura de envio",
-            "Listas verificadas por ICP e mercado",
-            "Copy testado A/B com foco em resposta",
-            "Cadências multi-toque otimizadas",
-            "Gestão de respostas e qualificação",
-            "Reuniões marcadas direto no teu calendário",
-          ].map((i) => (
-            <li key={i} className="flex gap-2 items-start text-muted-foreground">
-              <span className="text-wave mt-0.5">→</span>
-              <span>{i}</span>
-            </li>
-          ))}
-        </ul>
+      <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {items.map((it, i) => (
+          <div key={it.t} className="card-surface p-8">
+            <div className="num-display text-2xl text-muted-foreground/60">{String(i + 1).padStart(2, "0")}</div>
+            <h3 className="text-xl mt-3">{it.t}</h3>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{it.d}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -255,37 +340,37 @@ const STEPS = [
   {
     tag: "Estratégia",
     title: "ICP & posicionamento",
-    body: "Definimos contigo o perfil de cliente ideal por mercado, vertical, dimensão e dor. Mapeamos a tua proposta de valor em ângulos de email que provocam resposta.",
-    points: ["Workshop de ICP e personas", "Mapeamento de mercados-alvo", "Definição de ângulos de copy"],
+    body: "Definimos contigo o perfil de cliente ideal por mercado, vertical e dor. Mapeamos os ângulos de comunicação que fazem sentido para cada decisor.",
+    points: ["Workshop de ICP e personas", "Mapeamento de mercados-alvo", "Ângulos de mensagem por segmento"],
   },
   {
     tag: "Infraestrutura",
-    title: "Setup técnico de envio",
-    body: "Compramos e configuramos domínios secundários, fazemos o aquecimento (warm-up) e garantimos SPF, DKIM e DMARC. Zero risco para o teu domínio principal.",
-    points: ["Domínios dedicados ao Email Marketing", "Warm-up automático 2-3 semanas", "Autenticação SPF/DKIM/DMARC"],
+    title: "Setup técnico dos canais",
+    body: "Preparamos a infraestrutura de envio de e-mail (domínios secundários, autenticação, warm-up) e configuramos os perfis de LinkedIn a utilizar.",
+    points: ["Domínios dedicados ao outreach", "Autenticação SPF/DKIM/DMARC", "Preparação dos perfis de LinkedIn"],
   },
   {
     tag: "Dados",
-    title: "Listas verificadas por ICP",
-    body: "Construímos listas de decisores com dados enriquecidos e verificados em múltiplas camadas. Bounce rate abaixo de 2% como standard.",
-    points: ["Scraping multi-fonte", "Verificação em cascata", "Enriquecimento com sinais de compra"],
+    title: "Listas de decisores",
+    body: "Construímos listas com dados enriquecidos e verificados. O mesmo contacto entra na cadência de e-mail e na sequência de LinkedIn.",
+    points: ["Segmentação por cargo e empresa", "Verificação em cascata", "Sinais de compra e contexto"],
   },
   {
-    tag: "Copy & Cadência",
-    title: "Sequências testadas A/B",
-    body: "Escrevemos cadências de 3-5 toques com personalização à escala. Testamos linhas de assunto, ângulos e CTAs todas as semanas.",
-    points: ["Personalização 1:1 com IA", "Variantes A/B contínuas", "Otimização por taxa de resposta"],
+    tag: "Mensagens",
+    title: "Copy para e-mail e LinkedIn",
+    body: "Escrevemos as mensagens para os dois canais. Testamos ângulos, assuntos e CTAs todas as semanas até maximizar respostas.",
+    points: ["Cadências de e-mail 3-5 toques", "Pedidos e follow-ups no LinkedIn", "Testes A/B contínuos"],
   },
   {
-    tag: "Envio & Gestão",
-    title: "Operação diária do canal",
-    body: "Enviamos, monitorizamos deliverability, gerimos respostas, qualificamos interesse e marcamos a reunião direto no calendário do cliente.",
-    points: ["Envio diário gerido por nós", "Monitorização de inbox placement", "Triagem e qualificação humana"],
+    tag: "Operação",
+    title: "Envio e gestão diária",
+    body: "Enviamos, monitorizamos entregabilidade, gerimos as respostas dos dois canais e qualificamos manualmente cada interessado.",
+    points: ["Envio diário gerido por nós", "Monitorização de inbox e LinkedIn", "Triagem e qualificação humana"],
   },
   {
     tag: "Reuniões",
     title: "Agendamento no teu calendário",
-    body: "Apenas as leads qualificadas chegam até ti, já com contexto, agenda confirmada e link da reunião. Tu só fazes aquilo que sabes melhor: fechar.",
+    body: "Apenas leads qualificadas chegam até ti, com contexto, agenda confirmada e link da reunião. Tu só apareces para fechar.",
     points: ["Briefing pré-reunião", "Confirmações automáticas", "Reporting semanal de pipeline"],
   },
 ];
@@ -295,18 +380,18 @@ function Ecosystem() {
     <section id="ecossistema" className="section">
       <span className="eyebrow">Como funciona</span>
       <h2 className="display mt-6 max-w-4xl">
-        Ecossistema de Email Marketing B2B. <em>Passo a passo.</em>
+        Seis passos. <em>Um sistema.</em>
       </h2>
       <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
-        Seis etapas que cobrem todo o ciclo, do perfil de cliente ideal até à reunião marcada.
-        Nada é terceirizado, nada é genérico. Cada conta tem a sua operação dedicada.
+        Cobrimos todo o ciclo, do perfil de cliente ideal até à reunião marcada.
+        Cada conta tem uma operação dedicada, com os dois canais a trabalhar em conjunto.
       </p>
 
       <div className="mt-16 grid md:grid-cols-2 gap-5">
         {STEPS.map((s, i) => (
-          <article key={s.title} className="card-surface p-8 hover:border-wave/40 transition">
+          <article key={s.title} className="card-surface p-8 hover:border-foreground/40 transition">
             <div className="flex items-baseline justify-between">
-              <span className="num-display text-wave/80">{String(i + 1).padStart(2, "0")}</span>
+              <span className="num-display text-foreground/80">{String(i + 1).padStart(2, "0")}</span>
               <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{s.tag}</span>
             </div>
             <h3 className="text-2xl mt-4">{s.title}</h3>
@@ -314,7 +399,7 @@ function Ecosystem() {
             <ul className="mt-5 space-y-2 text-sm">
               {s.points.map((p) => (
                 <li key={p} className="flex gap-2 text-muted-foreground">
-                  <span className="text-wave">·</span>{p}
+                  <span className="text-foreground">·</span>{p}
                 </li>
               ))}
             </ul>
@@ -327,13 +412,13 @@ function Ecosystem() {
 
 const METHOD = [
   { phase: "FASE 1 · ARRANQUE", window: "Semana 0 → Semana 3", items: [
-    { t: "Onboarding & ICP", d: "Workshop inicial, definição de ICP, mercados-alvo e ângulos de comunicação." },
-    { t: "Setup técnico", d: "Compra e configuração de domínios secundários, autenticação e warm-up." },
-    { t: "Listas + Copy v1", d: "Primeira lista verificada e primeira cadência de email pronta a enviar." },
+    { t: "Onboarding & ICP", d: "Workshop inicial, definição de ICP, mercados-alvo e ângulos de mensagem." },
+    { t: "Setup técnico", d: "Domínios de e-mail, autenticação, warm-up e preparação dos perfis de LinkedIn." },
+    { t: "Listas + Mensagens v1", d: "Primeira lista de decisores e primeiras cadências (e-mail e LinkedIn) prontas." },
   ]},
   { phase: "FASE 2 · ESCALA", window: "Semana 4 → contínuo", items: [
-    { t: "Envio em escala", d: "Volume diário ajustado por inbox, com monitorização de deliverability." },
-    { t: "Otimização semanal", d: "Análise de KPIs, novos testes A/B, refinamento de listas e copy." },
+    { t: "Envio em escala", d: "Volume diário ajustado, com monitorização de entregabilidade e limites do LinkedIn." },
+    { t: "Otimização semanal", d: "Análise de KPIs, novos testes, refinamento de listas e mensagens." },
     { t: "Reuniões consistentes", d: "Reporting semanal, briefings de leads e marcações no teu calendário." },
   ]},
 ];
@@ -343,14 +428,14 @@ function Method() {
     <section id="metodo" className="section">
       <span className="eyebrow">Método</span>
       <h2 className="display mt-6 max-w-4xl">
-        Em <em>3 semanas</em> a tua máquina de Email Marketing está a enviar.
+        Em <em>3 semanas</em> o teu outreach está no ar.
       </h2>
 
       <div className="mt-12 grid md:grid-cols-2 gap-6">
         {METHOD.map((phase) => (
           <div key={phase.phase} className="card-surface p-8">
             <div className="flex items-baseline justify-between mb-2">
-              <div className="text-xs uppercase tracking-[0.18em] text-wave">{phase.phase}</div>
+              <div className="text-xs uppercase tracking-[0.18em] text-foreground">{phase.phase}</div>
             </div>
             <div className="text-sm text-muted-foreground mb-8">{phase.window}</div>
             <ul className="space-y-6">
@@ -381,7 +466,6 @@ function Testimonials() {
         </h2>
       </div>
 
-      {/* Marquee with real client message screenshots */}
       <div className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
@@ -412,7 +496,7 @@ function Team() {
     <section id="equipa" className="section">
       <span className="eyebrow">A equipa</span>
       <h2 className="display mt-6 max-w-4xl">
-        Quem é o <em>Founder</em> da Digital Wave?
+        Quem está por trás da <em>Digital Wave.</em>
       </h2>
 
       <div className="mt-12 md:mt-16 grid md:grid-cols-[300px_1fr] lg:grid-cols-[360px_1fr] gap-8 md:gap-10 items-start">
@@ -428,24 +512,23 @@ function Team() {
           </div>
           <div className="mt-4 px-2 pb-2">
             <div className="text-lg font-medium">Tiago Barbosa</div>
-            <div className="text-sm text-wave">Founder · Digital Wave</div>
+            <div className="text-sm text-muted-foreground">Founder · Digital Wave</div>
           </div>
         </div>
 
         <div>
           <h3 className="text-3xl md:text-4xl max-w-2xl">
-            A história, a missão e a forma como a Digital Wave coloca decisores B2B na tua agenda.
+            A missão, o método e a forma como colocamos decisores B2B na tua agenda.
           </h3>
           <p className="mt-6 text-muted-foreground text-lg leading-relaxed max-w-2xl">
-            Neste vídeo, o Tiago apresenta-se em primeira pessoa: o percurso que o levou
-            a especializar-se em Email Marketing B2B, as empresas e mercados com que já
-            trabalhou e a forma como hoje constrói, do zero, operações de aquisição por
-            email para empresas que querem crescer com previsibilidade.
+            Neste vídeo, o Tiago explica em primeira pessoa como estruturamos operações
+            de outreach para empresas B2B: Cold Email, LinkedIn e todo o processo que
+            transforma contactos frios em reuniões com decisores.
           </p>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
-            Explica também o que torna a operação da Digital Wave diferente: equipa
-            dedicada por cliente, foco em decisores qualificados e total transparência
-            sobre números, processos e resultados.
+            E o que torna a Digital Wave diferente: equipa dedicada por cliente,
+            foco em decisores qualificados e total transparência sobre números,
+            processos e resultados.
           </p>
         </div>
       </div>
@@ -457,16 +540,16 @@ function QuizCta() {
   return (
     <section id="quiz" className="section">
       <div className="card-surface p-10 md:p-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,oklch(0.72_0.19_47/0.18),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,oklch(1_0_0/0.08),transparent_70%)]" />
         <div className="relative grid md:grid-cols-[1fr_auto] gap-8 items-end">
           <div>
             <span className="eyebrow">Diagnóstico gratuito</span>
             <h2 className="display mt-6 max-w-3xl">
-              Descobre a <em>Pontuação da Saúde</em> da Tua Empresa.
+              Descobre a <em>saúde do teu sistema</em> de aquisição.
             </h2>
             <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
-              8 perguntas, 4 pilares críticos do teu sistema de aquisição de clientes. No fim
-              recebes um diagnóstico claro do que está a travar o crescimento, e o que ativar a seguir.
+              8 perguntas, 4 pilares críticos. No fim recebes um diagnóstico claro
+              do que está a travar o crescimento e o que ativar a seguir.
             </p>
           </div>
           <Link to="/quiz" className="btn-primary">
@@ -482,7 +565,7 @@ function FinalCta() {
   return (
     <section id="contacto" className="section">
       <div className="card-surface p-10 md:p-20 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.85_0.09_235/0.18),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(1_0_0/0.08),transparent_70%)]" />
         <div className="relative">
           <span className="eyebrow">Está na hora</span>
           <h2 className="display mt-6 max-w-3xl mx-auto">
@@ -497,7 +580,7 @@ function FinalCta() {
           </div>
           <div className="mt-10 pt-10 border-t border-border max-w-md mx-auto text-sm">
             <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">Ou envia email</div>
-            <a href="mailto:hello@tiagodigitalwave.eu" className="text-wave hover:underline">
+            <a href="mailto:hello@tiagodigitalwave.eu" className="text-foreground hover:underline">
               hello@tiagodigitalwave.eu
             </a>
           </div>
@@ -515,8 +598,9 @@ function Page() {
         <Hero />
         <Partners />
         <VideoBlock />
-        <Mission />
-        <Pilar />
+        <Problem />
+        <Offer />
+        <Benefits />
         <Ecosystem />
         <Method />
         <Testimonials />
