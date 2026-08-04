@@ -5,7 +5,7 @@ import arquimea from "@/assets/logos/arquimea.png";
 import mcdonalds from "@/assets/logos/mcdonalds.png";
 import hipay from "@/assets/logos/hipay.png";
 import mosqueteiros from "@/assets/logos/mosqueteiros.png";
-import gartnerAsset from "@/assets/logos/gartner.png.asset.json";
+import gartnerAsset from "@/assets/logos/gartner-white.png.asset.json";
 
 const logos = [
   { name: "Bolt", src: bolt },
