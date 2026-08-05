@@ -6,11 +6,6 @@ import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import tiagoVideo from "@/assets/tiago-video.mp4";
 import heroMeeting from "@/assets/hero-meeting.mp4.asset.json";
-import testimonial1 from "@/assets/testimonials/t1.jpeg.asset.json";
-import testimonial2 from "@/assets/testimonials/t2.jpeg.asset.json";
-import testimonial3 from "@/assets/testimonials/t3.jpg.asset.json";
-import testimonial4 from "@/assets/testimonials/t4.jpg.asset.json";
-import testimonial5 from "@/assets/testimonials/t5.jpg.asset.json";
 import testimonial7 from "@/assets/testimonials/t7.png.asset.json";
 import testimonial8 from "@/assets/testimonials/t8.png.asset.json";
 import testimonial9 from "@/assets/testimonials/t9.png.asset.json";
@@ -19,11 +14,6 @@ import testimonial11 from "@/assets/testimonials/t11.png.asset.json";
 import testimonial12 from "@/assets/testimonials/t12.png.asset.json";
 
 const TESTIMONIALS = [
-  testimonial1,
-  testimonial2,
-  testimonial3,
-  testimonial4,
-  testimonial5,
   testimonial7,
   testimonial8,
   testimonial9,
