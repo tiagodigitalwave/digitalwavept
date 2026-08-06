@@ -499,6 +499,50 @@ function Testimonials() {
   );
 }
 
+function CaseStudy() {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <section id="caso-de-estudo" className="section">
+      <div className="max-w-3xl mb-12">
+        <span className="eyebrow">Caso de estudo</span>
+        <h2 className="display mt-6">
+          Como funciona <em>na prática</em>.
+        </h2>
+        <p className="mt-6 text-muted-foreground text-lg">
+          Um caso real de estruturação de outreach: o que foi implementado, como
+          foi executado e que resultados gerou.
+        </p>
+      </div>
+
+      <div className="card-surface aspect-video relative overflow-hidden grid place-items-center">
+        {playing ? (
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src="https://player.vimeo.com/video/1216112164?autoplay=1&loop=1&playsinline=1"
+            title="Caso de estudo Digital Wave"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 w-full h-full group"
+            aria-label="Reproduzir caso de estudo"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
+            <div className="relative grid place-items-center h-full">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-foreground text-background grid place-items-center shadow-[0_0_60px_oklch(1_0_0/0.4)] group-hover:scale-110 transition">
+                <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
+              </div>
+            </div>
+          </button>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function Team() {
   return (
     <section id="equipa" className="section">
