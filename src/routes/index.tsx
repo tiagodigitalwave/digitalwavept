@@ -656,6 +656,7 @@ function Page() {
         <Ecosystem />
         <Method />
         <Testimonials />
+        <CaseStudy />
         <Team />
         <QuizCta />
         <FinalCta />
