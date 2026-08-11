@@ -518,9 +518,9 @@ function CaseStudy() {
         {playing ? (
           <iframe
             className="absolute inset-0 w-full h-full"
-            src="https://player.vimeo.com/video/1216112164?autoplay=1&loop=1&playsinline=1"
+            src="https://www.youtube.com/embed/wBfk9ibO37A?autoplay=1&rel=0&modestbranding=1&playsinline=1"
             title="Caso de estudo Digital Wave"
-            allow="autoplay; fullscreen; picture-in-picture"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen
           />
         ) : (
@@ -530,6 +530,12 @@ function CaseStudy() {
             className="absolute inset-0 w-full h-full group"
             aria-label="Reproduzir caso de estudo"
           >
+            <img
+              src="https://img.youtube.com/vi/wBfk9ibO37A/maxresdefault.jpg"
+              alt="Pré-visualização do caso de estudo"
+              className="absolute inset-0 w-full h-full object-cover opacity-60 blur-[2px] grayscale group-hover:opacity-70 transition"
+            />
+
             <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
             <div className="relative grid place-items-center h-full">
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-foreground text-background grid place-items-center shadow-[0_0_60px_oklch(1_0_0/0.4)] group-hover:scale-110 transition">
