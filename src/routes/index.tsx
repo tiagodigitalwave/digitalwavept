@@ -30,10 +30,10 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave — Estruturação de Outreach B2B (Cold Email + LinkedIn)" },
-      { name: "description", content: "Ajudamos empresas B2B a criar um sistema previsível de reuniões com decisores. Estruturamos o outreach via Cold Email e LinkedIn, sem depender do fundador nem de tráfego pago." },
-      { property: "og:title", content: "Digital Wave — Estruturação de Outreach B2B" },
-      { property: "og:description", content: "Um sistema previsível de reuniões com decisores B2B. Cold Email + LinkedIn, operado ponta a ponta." },
+      { title: "Digital Wave - Outreach B2B: Cold Email, LinkedIn e Meta Ads" },
+      { name: "description", content: "Ajudamos empresas B2B a criar um sistema previsível de reuniões com decisores. Estruturamos o outreach via Cold Email, LinkedIn e Meta Ads, sem depender do fundador." },
+      { property: "og:title", content: "Digital Wave - Outreach B2B: Cold Email, LinkedIn e Meta Ads" },
+      { property: "og:description", content: "Um sistema previsível de reuniões com decisores B2B. Cold Email, LinkedIn e Meta Ads, operados ponta a ponta." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
