@@ -241,12 +241,12 @@ function Offer() {
         <em>Estruturação de outreach</em> ponta a ponta.
       </h2>
       <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        Não somos uma agência de e-mail marketing nem uma agência de LinkedIn.
-        Estruturamos, dentro da tua empresa, um sistema de outreach que junta os dois canais
+        Não somos uma agência de e-mail marketing, uma agência de LinkedIn nem uma agência de anúncios.
+        Estruturamos, dentro da tua empresa, um sistema de outreach que junta três canais
         para gerar reuniões com decisores, todos os meses, de forma previsível.
       </p>
 
-      <div className="mt-12 grid md:grid-cols-2 gap-6">
+      <div className="mt-12 grid md:grid-cols-3 gap-6">
         <article className="card-surface p-8 md:p-10">
           <div className="flex items-baseline gap-4">
             <span className="num-display">01</span>
@@ -296,10 +296,36 @@ function Offer() {
             ))}
           </ul>
         </article>
+
+        <article className="card-surface p-8 md:p-10">
+          <div className="flex items-baseline gap-4">
+            <span className="num-display">03</span>
+            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 3</div>
+          </div>
+          <h3 className="text-3xl mt-4">Meta Ads</h3>
+          <p className="mt-4 text-muted-foreground leading-relaxed">
+            Anúncios no Facebook e Instagram, geridos como parte do mesmo sistema. Alcançamos
+            decisores B2B enquanto o outbound trabalha em paralelo, reforçando reconhecimento
+            de marca e aumentando a taxa de resposta aos outros dois canais.
+          </p>
+          <ul className="mt-6 space-y-2 text-sm">
+            {[
+              "Segmentação por ICP, cargo e comportamento",
+              "Criativos e mensagens testados continuamente",
+              "Landing pages dedicadas por campanha",
+              "Sincronização com as cadências de e-mail e LinkedIn",
+            ].map((i) => (
+              <li key={i} className="flex gap-2 items-start text-muted-foreground">
+                <span className="text-foreground mt-0.5">→</span>
+                <span>{i}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
       </div>
 
       <p className="mt-10 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        Os dois canais funcionam em conjunto e alimentam o mesmo objetivo: colocar reuniões
+        Os três canais funcionam em conjunto e alimentam o mesmo objetivo: colocar reuniões
         qualificadas no teu calendário, semana após semana.
       </p>
     </section>
