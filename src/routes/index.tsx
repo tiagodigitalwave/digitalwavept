@@ -202,7 +202,7 @@ function Problem() {
     },
     {
       t: "Custo de aquisição alto",
-      d: "Tráfego pago e agências generalistas tornam cada cliente cada vez mais caro, sem previsibilidade.",
+      d: "Tráfego pago gerido sem estratégia, por agências generalistas sem integração com outbound, torna cada cliente cada vez mais caro, sem previsibilidade.",
     },
     {
       t: "Pipeline imprevisível",
