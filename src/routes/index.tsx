@@ -87,11 +87,12 @@ function Hero() {
         </h1>
       </div>
       <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-        Estruturamos o outreach da tua empresa em dois canais que trabalham em conjunto:
-        <span className="text-foreground"> Cold Email </span>
+        Estruturamos o outreach da tua empresa em três canais que trabalham em conjunto:
+        <span className="text-foreground"> Cold Email</span>,
+        <span className="text-foreground"> LinkedIn</span>
         e
-        <span className="text-foreground"> LinkedIn</span>.
-        Reuniões agendadas todos os meses, sem depender do fundador nem de tráfego pago.
+        <span className="text-foreground"> Meta Ads</span>.
+        Reuniões agendadas todos os meses, sem depender do fundador.
       </p>
 
       <div className="relative mt-10">
