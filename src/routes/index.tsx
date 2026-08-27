@@ -448,11 +448,11 @@ function Ecosystem() {
 const METHOD = [
   { phase: "FASE 1 · ARRANQUE", window: "Semana 0 → Semana 3", items: [
     { t: "Onboarding & ICP", d: "Workshop inicial, definição de ICP, mercados-alvo e ângulos de mensagem." },
-    { t: "Setup técnico", d: "Domínios de e-mail, autenticação, warm-up e preparação dos perfis de LinkedIn." },
-    { t: "Listas + Mensagens v1", d: "Primeira lista de decisores e primeiras cadências (e-mail e LinkedIn) prontas." },
+    { t: "Setup técnico", d: "Domínios de e-mail, autenticação, warm-up, preparação dos perfis de LinkedIn e configuração inicial de campanhas Meta Ads." },
+    { t: "Listas + Mensagens v1", d: "Primeira lista de decisores e primeiras cadências (e-mail, LinkedIn e Meta Ads) prontas." },
   ]},
   { phase: "FASE 2 · ESCALA", window: "Semana 4 → contínuo", items: [
-    { t: "Envio em escala", d: "Volume diário ajustado, com monitorização de entregabilidade e limites do LinkedIn." },
+    { t: "Envio em escala", d: "Volume diário ajustado, gestão e otimização diária de campanhas Meta Ads, com monitorização de entregabilidade e limites do LinkedIn." },
     { t: "Otimização semanal", d: "Análise de KPIs, novos testes, refinamento de listas e mensagens." },
     { t: "Reuniões consistentes", d: "Reporting semanal, briefings de leads e marcações no teu calendário." },
   ]},
