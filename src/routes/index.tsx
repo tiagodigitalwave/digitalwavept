@@ -381,8 +381,8 @@ const STEPS = [
   {
     tag: "Infraestrutura",
     title: "Setup técnico dos canais",
-    body: "Preparamos a infraestrutura de envio de e-mail (domínios secundários, autenticação, warm-up) e configuramos os perfis de LinkedIn a utilizar.",
-    points: ["Domínios dedicados ao outreach", "Autenticação SPF/DKIM/DMARC", "Preparação dos perfis de LinkedIn"],
+    body: "Preparamos a infraestrutura de envio de e-mail (domínios secundários, autenticação, warm-up), configuramos os perfis de LinkedIn e estruturamos as contas de Meta Ads.",
+    points: ["Domínios dedicados ao outreach", "Autenticação SPF/DKIM/DMARC", "Preparação dos perfis de LinkedIn", "Configuração de contas e pixels de Meta Ads"],
   },
   {
     tag: "Dados",
@@ -392,9 +392,9 @@ const STEPS = [
   },
   {
     tag: "Mensagens",
-    title: "Copy para e-mail e LinkedIn",
-    body: "Escrevemos as mensagens para os dois canais. Testamos ângulos, assuntos e CTAs todas as semanas até maximizar respostas.",
-    points: ["Cadências de e-mail 3-5 toques", "Pedidos e follow-ups no LinkedIn", "Testes A/B contínuos"],
+    title: "Copy e criativos para e-mail, LinkedIn e Ads",
+    body: "Escrevemos as mensagens e criativos para os três canais. Testamos ângulos, assuntos e formatos todas as semanas até maximizar respostas.",
+    points: ["Cadências de e-mail 3-5 toques", "Pedidos e follow-ups no LinkedIn", "Criativos e copy para Meta Ads", "Testes A/B contínuos"],
   },
   {
     tag: "Operação",
