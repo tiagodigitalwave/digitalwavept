@@ -30,10 +30,10 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave - Outreach B2B: Cold Email, LinkedIn e Meta Ads" },
-      { name: "description", content: "Ajudamos empresas B2B a criar um sistema previsível de reuniões com decisores. Estruturamos o outreach via Cold Email, LinkedIn e Meta Ads, sem depender do fundador." },
-      { property: "og:title", content: "Digital Wave - Outreach B2B: Cold Email, LinkedIn e Meta Ads" },
-      { property: "og:description", content: "Um sistema previsível de reuniões com decisores B2B. Cold Email, LinkedIn e Meta Ads, operados ponta a ponta." },
+      { title: "Digital Wave — Estruturação de Outreach B2B (Cold Email + LinkedIn)" },
+      { name: "description", content: "Ajudamos empresas B2B a criar um sistema previsível de reuniões com decisores. Estruturamos o outreach via Cold Email e LinkedIn, sem depender do fundador nem de tráfego pago." },
+      { property: "og:title", content: "Digital Wave — Estruturação de Outreach B2B" },
+      { property: "og:description", content: "Um sistema previsível de reuniões com decisores B2B. Cold Email + LinkedIn, operado ponta a ponta." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
@@ -87,12 +87,11 @@ function Hero() {
         </h1>
       </div>
       <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-        Estruturamos o outreach da tua empresa em três canais que trabalham em conjunto:
-        <span className="text-foreground"> Cold Email</span>,
-        <span className="text-foreground"> LinkedIn</span>
+        Estruturamos o outreach da tua empresa em dois canais que trabalham em conjunto:
+        <span className="text-foreground"> Cold Email </span>
         e
-        <span className="text-foreground"> Meta Ads</span>.
-        Reuniões agendadas todos os meses, sem depender do fundador.
+        <span className="text-foreground"> LinkedIn</span>.
+        Reuniões agendadas todos os meses, sem depender do fundador nem de tráfego pago.
       </p>
 
       <div className="relative mt-10">
@@ -202,7 +201,7 @@ function Problem() {
     },
     {
       t: "Custo de aquisição alto",
-      d: "Tráfego pago gerido sem estratégia, por agências generalistas sem integração com outbound, torna cada cliente cada vez mais caro, sem previsibilidade.",
+      d: "Tráfego pago e agências generalistas tornam cada cliente cada vez mais caro, sem previsibilidade.",
     },
     {
       t: "Pipeline imprevisível",
@@ -241,12 +240,12 @@ function Offer() {
         <em>Estruturação de outreach</em> ponta a ponta.
       </h2>
       <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        Não somos uma agência de e-mail marketing, uma agência de LinkedIn nem uma agência de anúncios.
-        Estruturamos, dentro da tua empresa, um sistema de outreach que junta três canais
+        Não somos uma agência de e-mail marketing nem uma agência de LinkedIn.
+        Estruturamos, dentro da tua empresa, um sistema de outreach que junta os dois canais
         para gerar reuniões com decisores, todos os meses, de forma previsível.
       </p>
 
-      <div className="mt-12 grid md:grid-cols-3 gap-6">
+      <div className="mt-12 grid md:grid-cols-2 gap-6">
         <article className="card-surface p-8 md:p-10">
           <div className="flex items-baseline gap-4">
             <span className="num-display">01</span>
@@ -296,36 +295,10 @@ function Offer() {
             ))}
           </ul>
         </article>
-
-        <article className="card-surface p-8 md:p-10">
-          <div className="flex items-baseline gap-4">
-            <span className="num-display">03</span>
-            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 3</div>
-          </div>
-          <h3 className="text-3xl mt-4">Meta Ads</h3>
-          <p className="mt-4 text-muted-foreground leading-relaxed">
-            Anúncios no Facebook e Instagram, geridos como parte do mesmo sistema. Alcançamos
-            decisores B2B enquanto o outbound trabalha em paralelo, reforçando reconhecimento
-            de marca e aumentando a taxa de resposta aos outros dois canais.
-          </p>
-          <ul className="mt-6 space-y-2 text-sm">
-            {[
-              "Segmentação por ICP, cargo e comportamento",
-              "Criativos e mensagens testados continuamente",
-              "Landing pages dedicadas por campanha",
-              "Sincronização com as cadências de e-mail e LinkedIn",
-            ].map((i) => (
-              <li key={i} className="flex gap-2 items-start text-muted-foreground">
-                <span className="text-foreground mt-0.5">→</span>
-                <span>{i}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
       </div>
 
       <p className="mt-10 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        Os três canais funcionam em conjunto e alimentam o mesmo objetivo: colocar reuniões
+        Os dois canais funcionam em conjunto e alimentam o mesmo objetivo: colocar reuniões
         qualificadas no teu calendário, semana após semana.
       </p>
     </section>
@@ -381,8 +354,8 @@ const STEPS = [
   {
     tag: "Infraestrutura",
     title: "Setup técnico dos canais",
-    body: "Preparamos a infraestrutura de envio de e-mail (domínios secundários, autenticação, warm-up), configuramos os perfis de LinkedIn e estruturamos as contas de Meta Ads.",
-    points: ["Domínios dedicados ao outreach", "Autenticação SPF/DKIM/DMARC", "Preparação dos perfis de LinkedIn", "Configuração de contas e pixels de Meta Ads"],
+    body: "Preparamos a infraestrutura de envio de e-mail (domínios secundários, autenticação, warm-up) e configuramos os perfis de LinkedIn a utilizar.",
+    points: ["Domínios dedicados ao outreach", "Autenticação SPF/DKIM/DMARC", "Preparação dos perfis de LinkedIn"],
   },
   {
     tag: "Dados",
@@ -392,9 +365,9 @@ const STEPS = [
   },
   {
     tag: "Mensagens",
-    title: "Copy e criativos para e-mail, LinkedIn e Ads",
-    body: "Escrevemos as mensagens e criativos para os três canais. Testamos ângulos, assuntos e formatos todas as semanas até maximizar respostas.",
-    points: ["Cadências de e-mail 3-5 toques", "Pedidos e follow-ups no LinkedIn", "Criativos e copy para Meta Ads", "Testes A/B contínuos"],
+    title: "Copy para e-mail e LinkedIn",
+    body: "Escrevemos as mensagens para os dois canais. Testamos ângulos, assuntos e CTAs todas as semanas até maximizar respostas.",
+    points: ["Cadências de e-mail 3-5 toques", "Pedidos e follow-ups no LinkedIn", "Testes A/B contínuos"],
   },
   {
     tag: "Operação",
@@ -448,11 +421,11 @@ function Ecosystem() {
 const METHOD = [
   { phase: "FASE 1 · ARRANQUE", window: "Semana 0 → Semana 3", items: [
     { t: "Onboarding & ICP", d: "Workshop inicial, definição de ICP, mercados-alvo e ângulos de mensagem." },
-    { t: "Setup técnico", d: "Domínios de e-mail, autenticação, warm-up, preparação dos perfis de LinkedIn e configuração inicial de campanhas Meta Ads." },
-    { t: "Listas + Mensagens v1", d: "Primeira lista de decisores e primeiras cadências (e-mail, LinkedIn e Meta Ads) prontas." },
+    { t: "Setup técnico", d: "Domínios de e-mail, autenticação, warm-up e preparação dos perfis de LinkedIn." },
+    { t: "Listas + Mensagens v1", d: "Primeira lista de decisores e primeiras cadências (e-mail e LinkedIn) prontas." },
   ]},
   { phase: "FASE 2 · ESCALA", window: "Semana 4 → contínuo", items: [
-    { t: "Envio em escala", d: "Volume diário ajustado, gestão e otimização diária de campanhas Meta Ads, com monitorização de entregabilidade e limites do LinkedIn." },
+    { t: "Envio em escala", d: "Volume diário ajustado, com monitorização de entregabilidade e limites do LinkedIn." },
     { t: "Otimização semanal", d: "Análise de KPIs, novos testes, refinamento de listas e mensagens." },
     { t: "Reuniões consistentes", d: "Reporting semanal, briefings de leads e marcações no teu calendário." },
   ]},
