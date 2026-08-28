@@ -22,7 +22,7 @@ const TESTIMONIALS = [
   testimonial12,
 ];
 
-const YT_ID = "1r3yGX4nPnc";
+const YT_ID = "R_TZTTClLck";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
 
 const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
