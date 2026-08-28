@@ -25,7 +25,7 @@ const TESTIMONIALS = [
 const YT_ID = "R_TZTTClLck";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
 
-const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
+const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/15min";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -167,7 +167,7 @@ function VslPlayer() {
           <img
             src={YT_THUMB}
             alt="Pré-visualização do vídeo"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 blur-[2px] grayscale group-hover:opacity-70 transition"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-70 transition"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
           <div className="relative grid place-items-center h-full">
@@ -533,7 +533,7 @@ function CaseStudy() {
             <img
               src="https://img.youtube.com/vi/wBfk9ibO37A/maxresdefault.jpg"
               alt="Pré-visualização do caso de estudo"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 blur-[2px] grayscale group-hover:opacity-70 transition"
+              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-70 transition"
             />
 
             <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
