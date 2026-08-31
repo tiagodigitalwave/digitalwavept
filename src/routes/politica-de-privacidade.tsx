@@ -73,6 +73,37 @@ function PrivacidadePage() {
           </section>
 
           <section>
+            <h2 className="text-2xl mb-3">5.1. Plataformas de dados B2B e provas de conformidade</h2>
+            <p>
+              Para identificar e contactar decisores B2B, utilizamos exclusivamente plataformas que
+              cumprem o RGPD, a Lei n.º 58/2019 e os principais regimes internacionais de proteção
+              de dados (incluindo o CCPA). Não utilizamos listas compradas de origem desconhecida.
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mt-3">
+              <li>
+                <strong>Apollo.io</strong>, base de dados de contactos e empresas B2B, cuja conformidade
+                pode ser consultada publicamente em{" "}
+                <a href="https://www.apollo.io/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-wave underline">
+                  apollo.io/privacy-policy
+                </a>.
+              </li>
+              <li>
+                <strong>Lusha</strong>, ferramenta de enriquecimento e verificação de dados, que explica
+                de forma transparente a base de consentimento e os direitos dos titulares em{" "}
+                <a href="https://www.lusha.com/privacy-articles/please-show-me-where-i-have-consented/" target="_blank" rel="noopener noreferrer" className="text-wave underline">
+                  lusha.com/privacy-articles
+                </a>.
+              </li>
+            </ul>
+            <p className="mt-3">
+              Qualquer pessoa contactada através dos nossos sistemas pode exercer os direitos de
+              acesso, retificação, apagamento e oposição respondendo diretamente ao e-mail recebido
+              ou escrevendo para{" "}
+              <a href="mailto:hello@tiagodigitalwave.eu" className="text-wave underline">hello@tiagodigitalwave.eu</a>.
+            </p>
+          </section>
+
+          <section>
             <h2 className="text-2xl mb-3">6. Direitos do titular</h2>
             <p>
               Nos termos dos artigos 15.º a 22.º do RGPD, tem direito de acesso, retificação,
