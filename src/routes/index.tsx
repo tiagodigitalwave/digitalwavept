@@ -30,9 +30,9 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/15min";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave — Estruturação de Outreach B2B (Cold Email + LinkedIn)" },
+      { title: "Digital Wave, Estruturação de Outreach B2B (Cold Email + LinkedIn)" },
       { name: "description", content: "Ajudamos empresas B2B a criar um sistema previsível de reuniões com decisores. Estruturamos o outreach via Cold Email e LinkedIn, sem depender do fundador nem de tráfego pago." },
-      { property: "og:title", content: "Digital Wave — Estruturação de Outreach B2B" },
+      { property: "og:title", content: "Digital Wave, Estruturação de Outreach B2B" },
       { property: "og:description", content: "Um sistema previsível de reuniões com decisores B2B. Cold Email + LinkedIn, operado ponta a ponta." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -300,6 +300,67 @@ function Offer() {
       <p className="mt-10 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
         Os dois canais funcionam em conjunto e alimentam o mesmo objetivo: colocar reuniões
         qualificadas no teu calendário, semana após semana.
+      </p>
+    </section>
+  );
+}
+
+function Compliance() {
+  const tools = [
+    {
+      name: "Apollo.io",
+      role: "Base de dados de contactos e empresas B2B",
+      d: "Trata dados pessoais em conformidade com o RGPD, o CCPA e outros regimes internacionais de proteção de dados, com mecanismos de exercício de direitos pelos titulares.",
+      proof: "https://www.apollo.io/privacy-policy",
+      proofLabel: "Política de Privacidade da Apollo",
+    },
+    {
+      name: "Lusha",
+      role: "Enriquecimento e verificação de dados de contacto",
+      d: "Opera sob uma base de consentimento e conformidade com o RGPD, explicando de forma transparente de onde vêm os dados e como os titulares podem exercer os seus direitos.",
+      proof: "https://www.lusha.com/privacy-articles/please-show-me-where-i-have-consented/",
+      proofLabel: "Como a Lusha garante consentimento",
+    },
+  ];
+  return (
+    <section id="conformidade" className="section">
+      <span className="eyebrow">Conformidade legal</span>
+      <h2 className="display mt-6 max-w-4xl">
+        Dados tratados <em>dentro da lei</em>, em Portugal e no mundo.
+      </h2>
+      <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
+        As plataformas que utilizamos para identificar e contactar decisores B2B cumprem
+        o Regulamento Geral sobre a Proteção de Dados (RGPD), a Lei n.º 58/2019 em Portugal
+        e os principais regimes internacionais de privacidade. Não usamos listas compradas
+        de origem desconhecida: trabalhamos apenas com fontes que publicam e provam a sua
+        conformidade.
+      </p>
+
+      <div className="mt-12 grid md:grid-cols-2 gap-6">
+        {tools.map((t) => (
+          <article key={t.name} className="card-surface p-8 flex flex-col">
+            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{t.role}</div>
+            <h3 className="text-2xl mt-3">{t.name}</h3>
+            <p className="mt-3 text-muted-foreground leading-relaxed">{t.d}</p>
+            <a
+              href={t.proof}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground transition"
+            >
+              Ver prova pública: {t.proofLabel} <span aria-hidden>↗</span>
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <p className="mt-10 max-w-3xl text-sm text-muted-foreground leading-relaxed">
+        Qualquer pessoa contactada pelos nossos sistemas pode exercer a qualquer momento os
+        direitos de acesso, retificação, apagamento e oposição, bastando responder ao e-mail
+        recebido ou escrever para{" "}
+        <a href="mailto:hello@tiagodigitalwave.eu" className="text-foreground underline underline-offset-4">
+          hello@tiagodigitalwave.eu
+        </a>.
       </p>
     </section>
   );
@@ -658,6 +719,7 @@ function Page() {
         <VideoBlock />
         <Problem />
         <Offer />
+        <Compliance />
         <Benefits />
         <Ecosystem />
         <Method />
