@@ -104,7 +104,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-muted-foreground);
-    background: oklch(0.12 0 0 / 0.6);
+    background: oklch(0.25 0.07 305 / 0.6);
     backdrop-filter: blur(8px);
   }
   .eyebrow::before {
@@ -112,32 +112,32 @@
     width: 6px;
     height: 6px;
     border-radius: 999px;
-    background: var(--color-foreground);
-    box-shadow: 0 0 12px oklch(1 0 0 / 0.6);
+    background: var(--color-primary);
+    box-shadow: 0 0 12px oklch(0.72 0.18 55 / 0.8);
   }
   .btn-primary {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.5rem;
-    background: var(--color-foreground);
-    color: var(--color-primary-foreground);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    color: oklch(0.98 0 0);
     border-radius: 999px;
     font-weight: 500;
     font-size: 0.95rem;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 30px -12px oklch(1 0 0 / 0.35);
+    box-shadow: 0 10px 30px -12px oklch(0.72 0.18 55 / 0.65);
   }
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 40px -12px oklch(1 0 0 / 0.5);
+    box-shadow: 0 14px 40px -12px oklch(0.72 0.18 55 / 0.8);
   }
   .btn-ghost {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.5rem;
-    background: oklch(0.16 0 0 / 0.6);
+    background: oklch(0.28 0.08 305 / 0.6);
     color: var(--color-foreground);
     border: 1px solid var(--color-border);
     border-radius: 999px;
@@ -147,11 +147,11 @@
     transition: all 0.3s ease;
   }
   .btn-ghost:hover {
-    background: oklch(0.2 0 0 / 0.8);
-    border-color: oklch(1 0 0 / 0.25);
+    background: oklch(0.33 0.09 305 / 0.85);
+    border-color: oklch(0.72 0.18 55 / 0.5);
   }
   .card-surface {
-    background: linear-gradient(180deg, oklch(0.13 0 0 / 0.9), oklch(0.08 0 0 / 0.6));
+    background: linear-gradient(180deg, oklch(0.23 0.06 305 / 0.9), oklch(0.16 0.05 305 / 0.6));
     border: 1px solid var(--color-border);
     border-radius: 1.25rem;
     backdrop-filter: blur(12px);
@@ -175,7 +175,7 @@
     color: var(--color-foreground);
     font-style: normal;
     font-weight: 500;
-    background: linear-gradient(180deg, oklch(1 0 0), oklch(0.6 0 0));
+    background: linear-gradient(120deg, oklch(0.62 0.24 300), oklch(0.75 0.19 55));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -210,7 +210,7 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  background: oklch(0.16 0 0 / 0.5);
+  background: oklch(0.25 0.07 305 / 0.5);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 0.5rem 0.75rem;
