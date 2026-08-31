@@ -719,10 +719,10 @@ function Page() {
         <VideoBlock />
         <Problem />
         <Offer />
-        <Compliance />
         <Benefits />
         <Ecosystem />
         <Method />
+        <Compliance />
         <Testimonials />
         <CaseStudy />
         <Team />
