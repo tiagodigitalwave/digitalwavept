@@ -103,7 +103,7 @@ function Hero() {
             className="absolute inset-0 hero-glow-anim"
             style={{
               background:
-                "radial-gradient(ellipse 55% 55% at 28% 55%, oklch(1 0 0 / 0.10), transparent 70%)",
+                "radial-gradient(ellipse 55% 55% at 28% 55%, oklch(0.55 0.22 300 / 0.28), transparent 70%)",
               filter: "blur(40px)",
             }}
           />
@@ -111,7 +111,7 @@ function Hero() {
             className="absolute inset-0 hero-glow-anim-2"
             style={{
               background:
-                "radial-gradient(ellipse 50% 55% at 78% 85%, oklch(1 0 0 / 0.08), transparent 70%)",
+                "radial-gradient(ellipse 50% 55% at 78% 85%, oklch(0.72 0.18 55 / 0.14), transparent 70%)",
               filter: "blur(50px)",
             }}
           />
@@ -171,7 +171,7 @@ function VslPlayer() {
           />
           <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
           <div className="relative grid place-items-center h-full">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-foreground text-background grid place-items-center shadow-[0_0_60px_oklch(1_0_0/0.4)] group-hover:scale-110 transition">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center shadow-[0_0_60px_oklch(0.72_0.18_55/0.55)] group-hover:scale-110 transition">
               <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
             </div>
           </div>
@@ -543,7 +543,7 @@ function Testimonials() {
             TESTIMONIALS.map((img, i) => (
               <div
                 key={`${loop}-${i}`}
-                className="card-surface w-[340px] sm:w-[380px] h-[460px] sm:h-[500px] shrink-0 overflow-hidden bg-[#0a0a0a] grid place-items-center p-3"
+                className="card-surface w-[340px] sm:w-[380px] h-[460px] sm:h-[500px] shrink-0 overflow-hidden bg-[#1c1030] grid place-items-center p-3"
               >
                 <img
                   src={img.url}
@@ -599,7 +599,7 @@ function CaseStudy() {
 
             <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
             <div className="relative grid place-items-center h-full">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-foreground text-background grid place-items-center shadow-[0_0_60px_oklch(1_0_0/0.4)] group-hover:scale-110 transition">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center shadow-[0_0_60px_oklch(0.72_0.18_55/0.55)] group-hover:scale-110 transition">
                 <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
               </div>
             </div>
@@ -719,10 +719,10 @@ function Page() {
         <VideoBlock />
         <Problem />
         <Offer />
-        <Compliance />
         <Benefits />
         <Ecosystem />
         <Method />
+        <Compliance />
         <Testimonials />
         <CaseStudy />
         <Team />
