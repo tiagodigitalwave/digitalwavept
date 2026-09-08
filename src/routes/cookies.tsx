@@ -9,7 +9,10 @@ export const Route = createFileRoute("/cookies")({
       { name: "description", content: "Informação sobre os cookies utilizados pela Digital Wave, conforme a Lei n.º 41/2004 e o RGPD." },
       { property: "og:title", content: "Política de Cookies, Digital Wave" },
       { property: "og:description", content: "Que cookies usamos, para quê e como podes geri-los." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://digitalwavept.lovable.app/cookies" },
     ],
+    links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/cookies" }],
   }),
   component: CookiesPage,
 });
