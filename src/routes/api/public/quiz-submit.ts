@@ -468,7 +468,7 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
           } catch {
             return new Response(JSON.stringify({ error: "Invalid JSON" }), {
               status: 400,
-              headers: { "Content-Type": "application/json" },
+              headers: JSON_HEADERS,
             });
           }
           const parsed = PAYLOAD.safeParse(body);
@@ -476,7 +476,7 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
             console.error("Quiz payload invalid:", parsed.error.flatten());
             return new Response(JSON.stringify({ error: "Invalid payload" }), {
               status: 400,
-              headers: { "Content-Type": "application/json" },
+              headers: JSON_HEADERS,
             });
           }
           const d = parsed.data;
@@ -491,7 +491,7 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
             });
             return new Response(JSON.stringify({ error: "Email service not configured" }), {
               status: 500,
-              headers: { "Content-Type": "application/json" },
+              headers: JSON_HEADERS,
             });
           }
 
@@ -524,13 +524,13 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
 
           return new Response(
             JSON.stringify({ ok: true, adminEmailSent: adminResult.ok, pdfBase64, filename }),
-            { status: 200, headers: { "Content-Type": "application/json" } },
+            { status: 200, headers: JSON_HEADERS },
           );
         } catch (err) {
           console.error("Quiz submit unhandled error:", err);
           return new Response(
-            JSON.stringify({ error: "Internal error", detail: String(err) }),
-            { status: 500, headers: { "Content-Type": "application/json" } },
+            JSON.stringify({ error: "Internal error" }),
+            { status: 500, headers: JSON_HEADERS },
           );
         }
       },
