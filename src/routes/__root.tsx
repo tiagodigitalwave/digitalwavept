@@ -85,6 +85,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1ca3cd61-2af1-4c38-9f37-a2f33e67e892/id-preview-9b9250df--b2408b0a-cab7-4615-9f1b-a19d07fc6757.lovable.app-1778977498480.png" },
     ],
     links: [
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -96,6 +98,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Digital Wave",
+          url: "https://digitalwavept.lovable.app/",
+          logo: "https://digitalwavept.lovable.app/favicon.png",
+          description:
+            "Estruturação de outreach B2B em Cold Email e LinkedIn para gerar reuniões previsíveis com decisores.",
+          email: "hello@tiagodigitalwave.eu",
+          areaServed: "PT",
+          sameAs: ["https://cal.com/tiago-barbosa-wiadtc"],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -105,7 +124,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-PT">
       <head>
         <HeadContent />
       </head>

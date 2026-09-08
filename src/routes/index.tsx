@@ -35,9 +35,24 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Digital Wave, Estruturação de Outreach B2B" },
       { property: "og:description", content: "Um sistema previsível de reuniões com decisores B2B. Cold Email + LinkedIn, operado ponta a ponta." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://digitalwavept.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          name: "Digital Wave",
+          url: "https://digitalwavept.lovable.app/",
+          description:
+            "Estruturação de outreach B2B em Cold Email e LinkedIn para gerar reuniões previsíveis com decisores.",
+          areaServed: "PT",
+          serviceType: "Estruturação de outreach B2B",
+        }),
+      },
+    ],
   }),
   component: Page,
 });

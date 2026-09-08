@@ -39,13 +39,21 @@ const REVENUES = [
 export const Route = createFileRoute("/quiz")({
   head: () => ({
     meta: [
-      { title: "Quiz · Diagnóstico de Aquisição de Clientes — Digital Wave" },
+      { title: "Quiz de Diagnóstico de Aquisição de Clientes B2B, Digital Wave" },
       {
         name: "description",
         content:
-          "Diagnostica em 17 perguntas se o teu sistema de aquisição de clientes B2B está afinado, com travões ou parado.",
+          "Diagnostica em 17 perguntas se o teu sistema de aquisição de clientes B2B está afinado, com travões ou parado. Recebe um relatório em PDF no fim.",
       },
+      { property: "og:title", content: "Quiz de Diagnóstico de Aquisição de Clientes B2B" },
+      {
+        property: "og:description",
+        content: "17 perguntas para medir a saúde do teu sistema de aquisição de clientes B2B, com relatório em PDF.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://digitalwavept.lovable.app/quiz" },
     ],
+    links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/quiz" }],
   }),
   component: QuizPage,
 });

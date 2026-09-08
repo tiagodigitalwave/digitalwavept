@@ -418,18 +418,57 @@ async function sendEmailSafely(label: string, opts: Parameters<typeof sendEmail>
   }
 }
 
+// Simple in-memory abuse protection: max 5 submissions per IP per 10 minutes.
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_MAX = 5;
+const rateHits = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const hits = (rateHits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  hits.push(now);
+  rateHits.set(ip, hits);
+  if (rateHits.size > 5000) rateHits.clear();
+  return hits.length > RATE_MAX;
+}
+
+const JSON_HEADERS = {
+  "Content-Type": "application/json",
+  "Cache-Control": "no-store",
+  "X-Content-Type-Options": "nosniff",
+} as const;
+
 export const Route = createFileRoute("/api/public/quiz-submit")({
   server: {
     handlers: {
       POST: async ({ request }) => {
         try {
+          const ip =
+            request.headers.get("cf-connecting-ip") ??
+            request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+            "unknown";
+          if (isRateLimited(ip)) {
+            return new Response(JSON.stringify({ error: "Too many requests" }), {
+              status: 429,
+              headers: JSON_HEADERS,
+            });
+          }
+
+          const raw = await request.text();
+          if (raw.length > 100_000) {
+            return new Response(JSON.stringify({ error: "Payload too large" }), {
+              status: 413,
+              headers: JSON_HEADERS,
+            });
+          }
+
           let body: unknown;
           try {
-            body = await request.json();
+            body = JSON.parse(raw);
           } catch {
             return new Response(JSON.stringify({ error: "Invalid JSON" }), {
               status: 400,
-              headers: { "Content-Type": "application/json" },
+              headers: JSON_HEADERS,
             });
           }
           const parsed = PAYLOAD.safeParse(body);
@@ -437,7 +476,7 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
             console.error("Quiz payload invalid:", parsed.error.flatten());
             return new Response(JSON.stringify({ error: "Invalid payload" }), {
               status: 400,
-              headers: { "Content-Type": "application/json" },
+              headers: JSON_HEADERS,
             });
           }
           const d = parsed.data;
@@ -452,7 +491,7 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
             });
             return new Response(JSON.stringify({ error: "Email service not configured" }), {
               status: 500,
-              headers: { "Content-Type": "application/json" },
+              headers: JSON_HEADERS,
             });
           }
 
@@ -485,13 +524,13 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
 
           return new Response(
             JSON.stringify({ ok: true, adminEmailSent: adminResult.ok, pdfBase64, filename }),
-            { status: 200, headers: { "Content-Type": "application/json" } },
+            { status: 200, headers: JSON_HEADERS },
           );
         } catch (err) {
           console.error("Quiz submit unhandled error:", err);
           return new Response(
-            JSON.stringify({ error: "Internal error", detail: String(err) }),
-            { status: 500, headers: { "Content-Type": "application/json" } },
+            JSON.stringify({ error: "Internal error" }),
+            { status: 500, headers: JSON_HEADERS },
           );
         }
       },

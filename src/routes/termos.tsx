@@ -9,7 +9,10 @@ export const Route = createFileRoute("/termos")({
       { name: "description", content: "Termos e condições de utilização do website e serviços da Digital Wave." },
       { property: "og:title", content: "Termos e Condições, Digital Wave" },
       { property: "og:description", content: "Termos e condições de utilização do website e serviços da Digital Wave." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://digitalwavept.lovable.app/termos" },
     ],
+    links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/termos" }],
   }),
   component: TermosPage,
 });
