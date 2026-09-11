@@ -92,10 +92,9 @@ function Hero() {
             loop
             playsInline
             preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover opacity-30 grayscale"
+            className="absolute inset-0 w-full h-full object-cover opacity-15"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/40" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/90" />
+          <div className="absolute inset-0 bg-background/80" />
         </div>
         <h1 className="display max-w-5xl relative">
           Um sistema previsível de <em>reuniões B2B</em> com decisores.
@@ -110,27 +109,6 @@ function Hero() {
       </p>
 
       <div className="relative mt-10">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-x-20 -top-20 -bottom-20 -z-10 overflow-hidden"
-        >
-          <div
-            className="absolute inset-0 hero-glow-anim"
-            style={{
-              background:
-                "radial-gradient(ellipse 55% 55% at 28% 55%, oklch(0.55 0.22 300 / 0.28), transparent 70%)",
-              filter: "blur(40px)",
-            }}
-          />
-          <div
-            className="absolute inset-0 hero-glow-anim-2"
-            style={{
-              background:
-                "radial-gradient(ellipse 50% 55% at 78% 85%, oklch(0.72 0.18 55 / 0.14), transparent 70%)",
-              filter: "blur(50px)",
-            }}
-          />
-        </div>
         <div className="flex flex-wrap gap-3">
           <CtaButton />
           <a href="#cases" className="btn-ghost">Ver casos de sucesso</a>
@@ -186,7 +164,7 @@ function VslPlayer() {
           />
           <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
           <div className="relative grid place-items-center h-full">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center shadow-[0_0_60px_oklch(0.72_0.18_55/0.55)] group-hover:scale-110 transition">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center group-hover:scale-110 transition">
               <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
             </div>
           </div>
@@ -614,7 +592,7 @@ function CaseStudy() {
 
             <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
             <div className="relative grid place-items-center h-full">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center shadow-[0_0_60px_oklch(0.72_0.18_55/0.55)] group-hover:scale-110 transition">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center group-hover:scale-110 transition">
                 <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
               </div>
             </div>
@@ -674,7 +652,7 @@ function QuizCta() {
   return (
     <section id="quiz" className="section">
       <div className="card-surface p-10 md:p-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,oklch(1_0_0/0.08),transparent_70%)]" />
+        
         <div className="relative grid md:grid-cols-[1fr_auto] gap-8 items-end">
           <div>
             <span className="eyebrow">Diagnóstico gratuito</span>
@@ -699,7 +677,7 @@ function FinalCta() {
   return (
     <section id="contacto" className="section">
       <div className="card-surface p-10 md:p-20 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(1_0_0/0.08),transparent_70%)]" />
+        
         <div className="relative">
           <span className="eyebrow">Está na hora</span>
           <h2 className="display mt-6 max-w-3xl mx-auto">
