@@ -531,18 +531,18 @@ function Testimonials() {
       <div className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
-        <div className="flex gap-6 marquee-track-slow py-4">
+        <div className="flex items-start gap-6 marquee-track-slow py-4">
           {Array.from({ length: 3 }).flatMap((_, loop) =>
             TESTIMONIALS.map((img, i) => (
               <div
                 key={`${loop}-${i}`}
-                className="card-surface w-[340px] sm:w-[380px] h-[460px] sm:h-[500px] shrink-0 overflow-hidden bg-[#1c1030] grid place-items-center p-3"
+                className="card-surface w-[340px] sm:w-[420px] shrink-0 overflow-hidden bg-[#1c1030]"
               >
                 <img
                   src={img.url}
                   alt={`Mensagem de cliente ${i + 1}`}
                   loading="lazy"
-                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-md"
+                  className="w-full h-auto block"
                 />
               </div>
             )),
