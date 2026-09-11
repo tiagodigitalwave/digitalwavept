@@ -536,13 +536,13 @@ function Testimonials() {
             TESTIMONIALS.map((img, i) => (
               <div
                 key={`${loop}-${i}`}
-                className="card-surface w-[340px] sm:w-[380px] h-[460px] sm:h-[500px] shrink-0 overflow-hidden bg-[#1c1030] grid place-items-center p-3"
+                className="card-surface w-[340px] sm:w-[420px] shrink-0 overflow-hidden bg-[#1c1030]"
               >
                 <img
                   src={img.url}
                   alt={`Mensagem de cliente ${i + 1}`}
                   loading="lazy"
-                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-md"
+                  className="w-full h-auto block"
                 />
               </div>
             )),
