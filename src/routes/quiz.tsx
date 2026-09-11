@@ -635,15 +635,6 @@ function NextStepBlock({ scores }: { scores: Scores }) {
 
   return (
     <div className="mt-12 card-surface p-6 md:p-10 border-wave/40 relative overflow-hidden">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-20 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 50% at 20% 0%, oklch(0.72 0.19 47 / 0.18), transparent 70%), radial-gradient(ellipse 50% 50% at 90% 100%, oklch(0.78 0.17 55 / 0.14), transparent 70%)",
-          filter: "blur(20px)",
-        }}
-      />
 
       <div className="text-xs uppercase tracking-[0.18em] text-wave font-medium">
         Próximo passo recomendado
