@@ -4,3 +4,4 @@
 - [x] Segurança: cabeçalhos HTTP, limite de pedidos no formulário do quiz, erros sem detalhes internos
 - [x] Design: visual mais sóbrio, sem gradientes nem brilhos animados
 - [x] Testemunhos: incluir as seis imagens no site para funcionarem também fora da pré-visualização e verificar no browser
+- [x] Processo: substituir seis passos por quatro cartões com gráficos progressivos, em PT-PT, responsivos
