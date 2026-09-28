@@ -387,71 +387,65 @@ function Benefits() {
 
 const STEPS = [
   {
-    tag: "Estratégia",
-    title: "ICP & posicionamento",
-    body: "Definimos contigo o perfil de cliente ideal por mercado, vertical e dor. Mapeamos os ângulos de comunicação que fazem sentido para cada decisor.",
-    points: ["Workshop de ICP e personas", "Mapeamento de mercados-alvo", "Ângulos de mensagem por segmento"],
+    tag: "Base",
+    title: "Preparação da infraestrutura",
+    body: "Preparamos os domínios e as contas de e-mail, configuramos a autenticação e o aquecimento gradual para proteger a reputação de envio. Deixamos também os perfis de LinkedIn prontos a utilizar.",
   },
   {
-    tag: "Infraestrutura",
-    title: "Setup técnico dos canais",
-    body: "Preparamos a infraestrutura de envio de e-mail (domínios secundários, autenticação, warm-up) e configuramos os perfis de LinkedIn a utilizar.",
-    points: ["Domínios dedicados ao outreach", "Autenticação SPF/DKIM/DMARC", "Preparação dos perfis de LinkedIn"],
+    tag: "Pesquisa",
+    title: "Construção de listas",
+    body: "Identificamos empresas e decisores que correspondem ao teu cliente ideal. Cruzamos fontes, enriquecemos os dados e verificamos os contactos antes de iniciar qualquer abordagem.",
   },
   {
-    tag: "Dados",
-    title: "Listas de decisores",
-    body: "Construímos listas com dados enriquecidos e verificados. O mesmo contacto entra na cadência de e-mail e na sequência de LinkedIn.",
-    points: ["Segmentação por cargo e empresa", "Verificação em cascata", "Sinais de compra e contexto"],
+    tag: "Execução",
+    title: "Mensagens personalizadas",
+    body: "Escrevemos sequências de e-mail e mensagens de LinkedIn adaptadas a cada segmento. A pesquisa sobre a empresa e o decisor torna cada contacto relevante e genuíno.",
   },
   {
-    tag: "Mensagens",
-    title: "Copy para e-mail e LinkedIn",
-    body: "Escrevemos as mensagens para os dois canais. Testamos ângulos, assuntos e CTAs todas as semanas até maximizar respostas.",
-    points: ["Cadências de e-mail 3-5 toques", "Pedidos e follow-ups no LinkedIn", "Testes A/B contínuos"],
-  },
-  {
-    tag: "Operação",
-    title: "Envio e gestão diária",
-    body: "Enviamos, monitorizamos entregabilidade, gerimos as respostas dos dois canais e qualificamos manualmente cada interessado.",
-    points: ["Envio diário gerido por nós", "Monitorização de inbox e LinkedIn", "Triagem e qualificação humana"],
-  },
-  {
-    tag: "Reuniões",
-    title: "Agendamento no teu calendário",
-    body: "Apenas leads qualificadas chegam até ti, com contexto, agenda confirmada e link da reunião. Tu só apareces para fechar.",
-    points: ["Briefing pré-reunião", "Confirmações automáticas", "Reporting semanal de pipeline"],
+    tag: "Crescimento",
+    title: "Lançamento e otimização",
+    body: "Lançamos as campanhas, acompanhamos as respostas e analisamos os resultados. Ajustamos listas e mensagens de forma contínua para gerar reuniões qualificadas e crescimento sustentável.",
   },
 ];
 
+function FlowGraphic({ layers }: { layers: number }) {
+  return (
+    <svg viewBox="0 0 120 168" className="h-44 w-32 text-foreground" fill="none" aria-hidden="true">
+      {Array.from({ length: layers }, (_, index) => {
+        const y = 104 - index * 29;
+        return (
+          <path
+            key={index}
+            d={`M60 ${y} L108 ${y + 24} L108 ${y + 32} L60 ${y + 56} L12 ${y + 32} L12 ${y + 24} Z`}
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
 function Ecosystem() {
   return (
-    <section id="ecossistema" className="section">
-      <span className="eyebrow">Como funciona</span>
-      <h2 className="display mt-6 max-w-4xl">
-        Seis passos. <em>Um sistema.</em>
+    <section id="ecossistema" className="section max-w-none bg-card/30 border-y border-border">
+      <h2 className="display text-center">
+        O nosso <em>processo.</em>
       </h2>
-      <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
-        Cobrimos todo o ciclo, do perfil de cliente ideal até à reunião marcada.
-        Cada conta tem uma operação dedicada, com os dois canais a trabalhar em conjunto.
-      </p>
 
-      <div className="mt-16 grid md:grid-cols-2 gap-5">
+      <div className="mt-14 mx-auto max-w-[1500px] grid sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5">
         {STEPS.map((s, i) => (
-          <article key={s.title} className="card-surface p-8 hover:border-foreground/40 transition">
-            <div className="flex items-baseline justify-between">
-              <span className="num-display text-foreground/80">{String(i + 1).padStart(2, "0")}</span>
-              <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{s.tag}</span>
+          <article key={s.title} className="min-w-0 rounded-md border border-border bg-card p-5 sm:p-6 flex flex-col min-h-[510px] sm:min-h-[530px]">
+            <div className="flex items-start justify-between gap-3 text-xs sm:text-sm text-muted-foreground uppercase">
+              <span>{String(i + 1).padStart(2, "0")}</span>
+              <span className="text-right">{s.tag}</span>
             </div>
-            <h3 className="text-2xl mt-4">{s.title}</h3>
-            <p className="mt-3 text-muted-foreground leading-relaxed">{s.body}</p>
-            <ul className="mt-5 space-y-2 text-sm">
-              {s.points.map((p) => (
-                <li key={p} className="flex gap-2 text-muted-foreground">
-                  <span className="text-foreground">·</span>{p}
-                </li>
-              ))}
-            </ul>
+            <h3 className="text-center text-2xl sm:text-[1.7rem] leading-tight mt-8 min-h-[4.5rem] flex items-start justify-center">{s.title}</h3>
+            <div className="flex-1 flex items-end justify-center pb-5">
+              <FlowGraphic layers={i + 1} />
+            </div>
+            <p className="text-sm sm:text-base leading-relaxed text-foreground/85 min-h-[9.5rem]">{s.body}</p>
           </article>
         ))}
       </div>
