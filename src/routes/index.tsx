@@ -6,21 +6,8 @@ import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import tiagoVideo from "@/assets/tiago-video.mp4";
 import heroMeeting from "@/assets/hero-meeting.mp4.asset.json";
-import testimonial7 from "@/assets/testimonials/t7.png.asset.json";
-import testimonial8 from "@/assets/testimonials/t8.png.asset.json";
-import testimonial9 from "@/assets/testimonials/t9.png.asset.json";
-import testimonial10 from "@/assets/testimonials/t10.png.asset.json";
-import testimonial11 from "@/assets/testimonials/t11.png.asset.json";
-import testimonial12 from "@/assets/testimonials/t12.png.asset.json";
 
-const TESTIMONIALS = [
-  testimonial7,
-  testimonial8,
-  testimonial9,
-  testimonial10,
-  testimonial11,
-  testimonial12,
-];
+const TESTIMONIALS = [7, 8, 9, 10, 11, 12].map((number) => `/testimonials/t${number}.png`);
 
 const YT_ID = "R_TZTTClLck";
 const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
@@ -539,7 +526,7 @@ function Testimonials() {
                 className="card-surface w-[340px] sm:w-[420px] shrink-0 overflow-hidden bg-[#1c1030]"
               >
                 <img
-                  src={img.url}
+                  src={img}
                   alt={`Mensagem de cliente ${i + 1}`}
                   loading="lazy"
                   className="w-full h-auto block"
