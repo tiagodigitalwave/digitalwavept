@@ -412,7 +412,7 @@ function FlowGraphic({ layers }: { layers: number }) {
   return (
     <svg viewBox="0 0 120 168" className="h-44 w-32 text-foreground" fill="none" aria-hidden="true">
       {Array.from({ length: layers }, (_, index) => {
-        const y = 132 - index * 29;
+        const y = 104 - index * 29;
         return (
           <path
             key={index}
