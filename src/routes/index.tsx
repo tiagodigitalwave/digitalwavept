@@ -702,6 +702,39 @@ function FinalCta() {
   );
 }
 
+function Awards() {
+  return (
+    <section id="premios" className="section">
+      <span className="eyebrow">Prémios e certificações</span>
+      <h2 className="display mt-6 max-w-4xl">
+        Os nossos <em>resultados</em>, reconhecidos por quem manda no mercado.
+      </h2>
+      <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
+        Prémios e certificações que provam a qualidade do trabalho que entregamos
+        em geração de leads B2B, automação e segurança da informação.
+      </p>
+      <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {AWARDS.map((award) => (
+          <article
+            key={award.label}
+            className="card-surface p-6 flex flex-col items-center text-center gap-4"
+          >
+            <div className="flex-1 flex items-center justify-center py-4">
+              <img
+                src={award.src}
+                alt={award.alt}
+                loading="lazy"
+                className="max-h-48 w-auto max-w-full object-contain"
+              />
+            </div>
+            <p className="text-sm leading-relaxed text-muted-foreground">{award.label}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Page() {
   return (
     <div className="dark">
