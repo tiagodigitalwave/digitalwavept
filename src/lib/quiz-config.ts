@@ -35,9 +35,9 @@ export const SCORED: ScoredQuestion[] = [
     block: "Canais actuais de aquisição",
     q: "Há quanto tempo tens esse(s) canal(is) activo(s)?",
     opts: {
-      A: "Menos de 3 meses — ainda estamos a testar",
-      B: "Entre 3 e 12 meses — já temos alguma experiência",
-      C: "Mais de 1 ano — já temos resultados históricos",
+      A: "Menos de 3 meses, ainda estamos a testar",
+      B: "Entre 3 e 12 meses, já temos alguma experiência",
+      C: "Mais de 1 ano, já temos resultados históricos",
     },
   },
   {
@@ -45,7 +45,7 @@ export const SCORED: ScoredQuestion[] = [
     block: "Volume e resultados actuais",
     q: "Em média, quantas reuniões com potenciais clientes tens por mês?",
     opts: {
-      A: "Menos de 4 — menos de uma por semana",
+      A: "Menos de 4, menos de uma por semana",
       B: "Entre 4 e 10",
       C: "Mais de 10",
     },
@@ -55,9 +55,9 @@ export const SCORED: ScoredQuestion[] = [
     block: "Volume e resultados actuais",
     q: "Estás satisfeito com o número de reuniões que tens actualmente?",
     opts: {
-      A: "Não — precisava de significativamente mais",
-      B: "Mais ou menos — há meses bons e meses maus, sem consistência",
-      C: "Sim — o volume está alinhado com os meus objectivos de crescimento",
+      A: "Não, precisava de significativamente mais",
+      B: "Mais ou menos, há meses bons e meses maus, sem consistência",
+      C: "Sim, o volume está alinhado com os meus objectivos de crescimento",
     },
   },
   {
@@ -65,9 +65,9 @@ export const SCORED: ScoredQuestion[] = [
     block: "Volume e resultados actuais",
     q: "Quando pensas nos últimos 3 meses, como descreves os teus resultados de aquisição?",
     opts: {
-      A: "Imprevisíveis — não consigo antecipar o que vai acontecer no mês seguinte",
+      A: "Imprevisíveis, não consigo antecipar o que vai acontecer no mês seguinte",
       B: "Razoáveis mas dependentes de sorte ou de um canal que pode falhar",
-      C: "Consistentes — tenho uma base previsível de novas oportunidades todos os meses",
+      C: "Consistentes, tenho uma base previsível de novas oportunidades todos os meses",
     },
   },
   {
@@ -76,7 +76,7 @@ export const SCORED: ScoredQuestion[] = [
     q: "Nas reuniões que tens, com quem falas habitualmente?",
     opts: {
       A: "Frequentemente com pessoas que não têm poder de decisão",
-      B: "Às vezes com o decisor, às vezes com intermediários — depende da situação",
+      B: "Às vezes com o decisor, às vezes com intermediários, depende da situação",
       C: "Quase sempre com o decisor ou alguém com influência directa na decisão",
     },
   },
@@ -95,7 +95,7 @@ export const SCORED: ScoredQuestion[] = [
     block: "Qualidade das reuniões",
     q: "O que acontece tipicamente depois de uma reunião?",
     opts: {
-      A: "A maioria fica em silêncio — difícil perceber se há interesse real",
+      A: "A maioria fica em silêncio, difícil perceber se há interesse real",
       B: "Algumas avançam, outras ficam paradas sem resposta clara",
       C: "Tenho um processo claro de follow-up e sei em que fase está cada oportunidade",
     },
@@ -105,9 +105,9 @@ export const SCORED: ScoredQuestion[] = [
     block: "Custo e eficiência",
     q: "Tens noção do custo por reunião nos teus canais actuais?",
     opts: {
-      A: "Não — nunca calculei isso",
+      A: "Não, nunca calculei isso",
       B: "Tenho uma ideia vaga mas não um número preciso",
-      C: "Sim — sei quanto me custa em média gerar uma reunião qualificada",
+      C: "Sim, sei quanto me custa em média gerar uma reunião qualificada",
     },
   },
   {
@@ -125,9 +125,9 @@ export const SCORED: ScoredQuestion[] = [
     block: "Custo e eficiência",
     q: "Estás satisfeito com o esforço que tens de colocar para gerar cada nova reunião?",
     opts: {
-      A: "Não — é demasiado tempo e energia para os resultados que gera",
+      A: "Não, é demasiado tempo e energia para os resultados que gera",
       B: "Aceitável mas sei que podia ser mais eficiente",
-      C: "Sim — o rácio esforço/resultado faz sentido para o meu negócio",
+      C: "Sim, o rácio esforço/resultado faz sentido para o meu negócio",
     },
   },
   {
@@ -135,9 +135,9 @@ export const SCORED: ScoredQuestion[] = [
     block: "Previsibilidade e controlo",
     q: "Se precisasses de duplicar o número de reuniões no próximo mês, o que farias?",
     opts: {
-      A: "Não sei — dependeria de circunstâncias fora do meu controlo",
+      A: "Não sei, dependeria de circunstâncias fora do meu controlo",
       B: "Tentaria fazer mais do que estou a fazer, mas sem certeza do resultado",
-      C: "Tenho um sistema que sei que posso escalar — é uma questão de aumentar os inputs",
+      C: "Tenho um sistema que sei que posso escalar, é uma questão de aumentar os inputs",
     },
   },
   {
@@ -145,9 +145,9 @@ export const SCORED: ScoredQuestion[] = [
     block: "Previsibilidade e controlo",
     q: "Quando os resultados pioram, sabes identificar porquê?",
     opts: {
-      A: "Não — é difícil perceber o que está a falhar",
+      A: "Não, é difícil perceber o que está a falhar",
       B: "Tenho algumas ideias mas é maioritariamente intuição",
-      C: "Sim — consigo identificar em que ponto do processo está o problema",
+      C: "Sim, consigo identificar em que ponto do processo está o problema",
     },
   },
   {
@@ -155,9 +155,9 @@ export const SCORED: ScoredQuestion[] = [
     block: "Previsibilidade e controlo",
     q: "Com que frequência falas com potenciais clientes que não conhecias há 3 meses?",
     opts: {
-      A: "Raramente — quase toda a receita vem de referências ou clientes existentes",
-      B: "Às vezes — tenho alguns contactos novos mas não é consistente",
-      C: "Regularmente — tenho um fluxo contínuo de novas conversas com o meu ICP",
+      A: "Raramente, quase toda a receita vem de referências ou clientes existentes",
+      B: "Às vezes, tenho alguns contactos novos mas não é consistente",
+      C: "Regularmente, tenho um fluxo contínuo de novas conversas com o meu ICP",
     },
   },
   {
@@ -165,7 +165,7 @@ export const SCORED: ScoredQuestion[] = [
     block: "Consciência e ambição",
     q: "Qual é o teu maior obstáculo para crescer nos próximos 6 meses?",
     opts: {
-      A: "Não tenho leads suficientes — o topo do funil está vazio",
+      A: "Não tenho leads suficientes, o topo do funil está vazio",
       B: "Tenho leads mas poucas convertem em clientes",
       C: "O processo de vendas é lento e imprevisível depois da reunião",
     },
@@ -217,7 +217,7 @@ export const DIMENSIONS: Dimension[] = [
     short: "Fluxo",
     questionIds: ["P4", "P5", "P15"],
     intro:
-      "Mede se entras em contacto com novas pessoas qualificadas de forma consistente — ou se cada mês é uma surpresa dependente de referências.",
+      "Mede se entras em contacto com novas pessoas qualificadas de forma consistente, ou se cada mês é uma surpresa dependente de referências.",
     practices: [
       {
         title: "Definir um alvo mensal de reuniões",
@@ -244,7 +244,7 @@ export const DIMENSIONS: Dimension[] = [
     short: "Qualidade",
     questionIds: ["P7", "P8", "P9"],
     intro:
-      "Volume não chega. Mede se as reuniões que tens são com decisores certos e se avançam no processo — ou se gastas horas em conversas que não dão em nada.",
+      "Volume não chega. Mede se as reuniões que tens são com decisores certos e se avançam no processo, ou se gastas horas em conversas que não dão em nada.",
     practices: [
       {
         title: "ICP definido em 3 dimensões",
@@ -260,9 +260,9 @@ export const DIMENSIONS: Dimension[] = [
       },
     ],
     diagnoses: {
-      low: "Perdes tempo com não-decisores ou empresas fora do perfil. O esforço a montante não se converte em receita. O problema não é falta de reuniões — é falta de filtro.",
+      low: "Perdes tempo com não-decisores ou empresas fora do perfil. O esforço a montante não se converte em receita. O problema não é falta de reuniões, é falta de filtro.",
       mid: "Qualidade variável. Algumas reuniões são boas, muitas ficam paradas. Falta processo claro de qualificação e de follow-up depois do primeiro contacto.",
-      high: "As reuniões que tens são com as pessoas certas e avançam. O fundo do funil está a fazer o seu trabalho — o foco passa a ser volume.",
+      high: "As reuniões que tens são com as pessoas certas e avançam. O fundo do funil está a fazer o seu trabalho, o foco passa a ser volume.",
     },
   },
   {
@@ -279,7 +279,7 @@ export const DIMENSIONS: Dimension[] = [
       },
       {
         title: "Benchmark por canal",
-        body: "Outbound bem feito anda entre 80€-200€ por reunião qualificada em B2B. Acima disto, o problema é geralmente lista, mensagem ou qualificação — não o canal em si.",
+        body: "Outbound bem feito anda entre 80€-200€ por reunião qualificada em B2B. Acima disto, o problema é geralmente lista, mensagem ou qualificação, não o canal em si.",
       },
       {
         title: "Decisão de escalar baseada em dados",
@@ -287,7 +287,7 @@ export const DIMENSIONS: Dimension[] = [
       },
     ],
     diagnoses: {
-      low: "Não sabes o que te custa uma reunião. Estás a investir tempo e dinheiro sem saber o retorno — e é impossível optimizar o que não se mede. Primeiro passo: medir.",
+      low: "Não sabes o que te custa uma reunião. Estás a investir tempo e dinheiro sem saber o retorno, e é impossível optimizar o que não se mede. Primeiro passo: medir.",
       mid: "Tens noção aproximada mas não optimizas activamente. O custo pode ser aceitável hoje, mas sem controlo activo só se descobre o problema quando já está caro.",
       high: "Conheces o custo por reunião, comparas canais e tomas decisões com dados. Posição forte para escalar com confiança.",
     },
@@ -315,7 +315,7 @@ export const DIMENSIONS: Dimension[] = [
     ],
     diagnoses: {
       low: "Estás a gerir por intuição. Cada semana má é um mistério, cada boa é sorte. Não consegues prever o mês seguinte nem diagnosticar o que falha. Impossível escalar com confiança.",
-      mid: "Alguma previsibilidade, mas com pontos cegos. Quando algo corre mal demora a perceber porquê — e quando perceberes já estás em modo de crise.",
+      mid: "Alguma previsibilidade, mas com pontos cegos. Quando algo corre mal demora a perceber porquê, e quando perceberes já estás em modo de crise.",
       high: "Sistema controlável. Sabes escalar, sabes diagnosticar, fazes previsões razoáveis. Tens uma operação que pode crescer sem entrar em pânico.",
     },
   },
@@ -329,20 +329,20 @@ export const DIMENSIONS: Dimension[] = [
     practices: [
       {
         title: "Pelo menos um canal proprietário",
-        body: "Email frio, LinkedIn outbound ou ads pagos — algo que funcione mesmo se ninguém te referenciar este mês. Referências continuam a vir, mas deixam de ser a única fonte.",
+        body: "Email frio, LinkedIn outbound ou ads pagos, algo que funcione mesmo se ninguém te referenciar este mês. Referências continuam a vir, mas deixam de ser a única fonte.",
       },
       {
         title: "Maturidade do canal antes de julgar",
-        body: "Outbound bem feito demora 3-6 meses a atingir velocidade de cruzeiro. Testar 4 semanas e abandonar é o erro mais comum — e o mais caro.",
+        body: "Outbound bem feito demora 3-6 meses a atingir velocidade de cruzeiro. Testar 4 semanas e abandonar é o erro mais comum, e o mais caro.",
       },
       {
         title: "Diversificação consciente",
-        body: "Quando o canal principal estabiliza, adicionar um segundo (ex. LinkedIn ao cold email) reduz risco e amplia o alcance. Nunca começar com 4 canais em paralelo — só dilui foco.",
+        body: "Quando o canal principal estabiliza, adicionar um segundo (ex. LinkedIn ao cold email) reduz risco e amplia o alcance. Nunca começar com 4 canais em paralelo, só dilui foco.",
       },
     ],
     diagnoses: {
-      low: "Totalmente dependente de referências. Sem outreach activo, o crescimento é passivo e imprevisível. Hoje pode parecer suficiente — daqui a 6 meses pode ser um problema sério.",
-      mid: "Tens canais mas não substituem as referências — são complementos inconsistentes. Falta dar continuidade e maturidade a pelo menos um deles.",
+      low: "Totalmente dependente de referências. Sem outreach activo, o crescimento é passivo e imprevisível. Hoje pode parecer suficiente, daqui a 6 meses pode ser um problema sério.",
+      mid: "Tens canais mas não substituem as referências, são complementos inconsistentes. Falta dar continuidade e maturidade a pelo menos um deles.",
       high: "Tens pelo menos um canal de aquisição activo que funciona independentemente de referências. Posição muito mais segura para crescer.",
     },
   },
@@ -399,7 +399,7 @@ export function overallProfile(s: Scores): OverallProfile {
       key: "parado",
       title: "Motor parado",
       headline: "O teu crescimento está dependente da sorte",
-      body: "A maioria das dimensões críticas está em zona vermelha. Não é falta de esforço — é falta de sistema. Hoje a receita pode vir, amanhã não há nada que a garanta.",
+      body: "A maioria das dimensões críticas está em zona vermelha. Não é falta de esforço, é falta de sistema. Hoje a receita pode vir, amanhã não há nada que a garanta.",
     };
   }
   if (highs === 0) {
@@ -414,14 +414,14 @@ export function overallProfile(s: Scores): OverallProfile {
     return {
       key: "travoes",
       title: "Motor com travões",
-      headline: "Estás perto — mas tens travões que te custam reuniões todos os meses",
+      headline: "Estás perto, mas tens travões que te custam reuniões todos os meses",
       body: "A operação funciona em várias dimensões mas tens 1-2 pontos críticos que limitam o resto. Cortar estes travões é a alavanca de maior retorno no curto prazo.",
     };
   }
   return {
     key: "afinado",
     title: "Motor afinado",
-    headline: "O teu sistema funciona — a questão agora é escalar",
-    body: "Maioritariamente verde. Tens base sólida em quase todas as dimensões. A próxima etapa não é arranjar — é multiplicar com confiança.",
+    headline: "O teu sistema funciona, a questão agora é escalar",
+    body: "Maioritariamente verde. Tens base sólida em quase todas as dimensões. A próxima etapa não é arranjar, é multiplicar com confiança.",
   };
 }

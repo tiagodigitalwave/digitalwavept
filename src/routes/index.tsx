@@ -36,10 +36,13 @@ const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/15min";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave, Estruturação de Outreach B2B (Cold Email + LinkedIn)" },
-      { name: "description", content: "Ajudamos empresas B2B a criar um sistema previsível de reuniões com decisores. Estruturamos o outreach via Cold Email e LinkedIn, sem depender do fundador nem de tráfego pago." },
-      { property: "og:title", content: "Digital Wave, Estruturação de Outreach B2B" },
-      { property: "og:description", content: "Um sistema previsível de reuniões com decisores B2B. Cold Email + LinkedIn, operado ponta a ponta." },
+      { title: "Digital Wave | LinkedIn Outreach e Email Marketing B2B em Portugal" },
+      { name: "description", content: "Agência de LinkedIn Outreach e Email Marketing B2B em Portugal. Geramos e agendamos reuniões qualificadas com decisores, sem depender do fundador nem de tráfego pago." },
+      { property: "og:title", content: "Digital Wave | LinkedIn Outreach e Email Marketing B2B" },
+      { name: "twitter:title", content: "Digital Wave | LinkedIn Outreach e Email Marketing B2B" },
+      { name: "twitter:description", content: "Reuniões B2B previsíveis com decisores através de LinkedIn Outreach e Email Marketing." },
+      { name: "keywords", content: "LinkedIn Outreach, Email Marketing B2B, prospeção B2B, geração de leads B2B, agendamento de reuniões, outbound Portugal" },
+      { property: "og:description", content: "Reuniões B2B previsíveis com decisores através de LinkedIn Outreach e Email Marketing, operado ponta a ponta." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://digitalwavept.lovable.app/" },
     ],
@@ -53,9 +56,19 @@ export const Route = createFileRoute("/")({
           name: "Digital Wave",
           url: "https://digitalwavept.lovable.app/",
           description:
-            "Estruturação de outreach B2B em Cold Email e LinkedIn para gerar reuniões previsíveis com decisores.",
-          areaServed: "PT",
-          serviceType: "Estruturação de outreach B2B",
+            "Agência de LinkedIn Outreach e Email Marketing B2B que gera reuniões previsíveis com decisores.",
+          areaServed: ["PT", "Worldwide"],
+          email: "hello@tiagodigitalwave.eu",
+          founder: { "@type": "Person", name: "Tiago Barbosa" },
+          serviceType: ["LinkedIn Outreach", "Email Marketing B2B", "Geração de leads B2B"],
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "LinkedIn Outreach e Email Marketing",
+            itemListElement: [
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "LinkedIn Outreach B2B" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Email Marketing B2B (em conjunto com LinkedIn Outreach)" } },
+            ],
+          },
         }),
       },
     ],
@@ -108,9 +121,9 @@ function Hero() {
       </div>
       <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
         Estruturamos o outreach da tua empresa em dois canais que trabalham em conjunto:
-        <span className="text-foreground"> Cold Email </span>
+        <span className="text-foreground"> LinkedIn Outreach </span>
         e
-        <span className="text-foreground"> LinkedIn</span>.
+        <span className="text-foreground"> Email Marketing</span>.
         Reuniões agendadas todos os meses, sem depender do fundador nem de tráfego pago.
       </p>
 
@@ -250,7 +263,7 @@ function Offer() {
             <span className="num-display">01</span>
             <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 1</div>
           </div>
-          <h3 className="text-3xl mt-4">Cold Email</h3>
+          <h3 className="text-3xl mt-4">Email Marketing</h3>
           <p className="mt-4 text-muted-foreground leading-relaxed">
             O mesmo canal com que chegámos até ti. Identificamos decisores, escrevemos mensagens
             que geram resposta e garantimos que chegam à caixa de entrada certa.
@@ -634,7 +647,7 @@ function Team() {
           </h3>
           <p className="mt-6 text-muted-foreground text-lg leading-relaxed max-w-2xl">
             Neste vídeo, o Tiago explica em primeira pessoa como estruturamos operações
-            de outreach para empresas B2B: Cold Email, LinkedIn e todo o processo que
+            de outreach para empresas B2B: LinkedIn Outreach, Email Marketing e todo o processo que
             transforma contactos frios em reuniões com decisores.
           </p>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
