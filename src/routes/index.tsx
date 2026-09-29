@@ -751,6 +751,7 @@ function Page() {
         <Compliance />
         <Testimonials />
         <CaseStudy />
+        <Awards />
         <Team />
         <QuizCta />
         <FinalCta />
