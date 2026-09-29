@@ -337,7 +337,7 @@ function adminEmailHtml(d: Payload, overall: number, perTen: number[], profile: 
 
   return `<div style="font-family:Inter,Arial,sans-serif;background:#0f0f0f;color:#f5f5f5;padding:24px;max-width:720px">
     <h1 style="color:#ff6b26;margin:0 0 8px">Novo lead · Quiz Digital Wave</h1>
-    <p style="color:#bdbdbd;margin:0 0 4px">Pontuação geral: <strong style="color:#ff6b26">${overall}%</strong> — ${profile.title}</p>
+    <p style="color:#bdbdbd;margin:0 0 4px">Pontuação geral: <strong style="color:#ff6b26">${overall}%</strong>, ${profile.title}</p>
     <p style="color:#888;margin:0 0 24px;font-size:13px">${profile.headline}</p>
 
     <h2 style="font-size:16px;margin:24px 0 8px;color:#fff">Contacto</h2>

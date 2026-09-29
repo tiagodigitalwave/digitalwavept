@@ -15,7 +15,7 @@ export function Footer() {
             <span className="font-semibold">Digital Wave</span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">
-            Email Marketing B2B operado ponta a ponta. Agendamos reuniões com
+            LinkedIn Outreach e Email Marketing B2B operados ponta a ponta. Agendamos reuniões com
             os decisores que importam.
           </p>
         </div>
