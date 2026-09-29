@@ -6,6 +6,25 @@ import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import tiagoVideo from "@/assets/tiago-video.mp4";
 import heroMeeting from "@/assets/hero-meeting.mp4.asset.json";
+import awardInstantly from "@/assets/awards/award-instantly.png.asset.json";
+import clayCert from "@/assets/awards/clay-cert.png.asset.json";
+import instantlyExpert from "@/assets/awards/instantly-expert.png.asset.json";
+import plusvibeCert from "@/assets/awards/plusvibe-cert.png.asset.json";
+import dpoCert from "@/assets/awards/dpo-cert.png.asset.json";
+import pmeExcelencia from "@/assets/awards/pme-excelencia.png.asset.json";
+import iso9001 from "@/assets/awards/iso-9001.png.asset.json";
+import iso27001 from "@/assets/awards/iso-27001.png.asset.json";
+
+const AWARDS = [
+  { src: awardInstantly.url, alt: "Prémio Instantly apresentado ao Tiago Barbosa", label: "Prémio Instantly: 5000 oportunidades de vendas B2B geradas" },
+  { src: clayCert.url, alt: "Selo Clay Certified em Automação de Outbound", label: "Certificação Clay.com: Automação de Outbound" },
+  { src: instantlyExpert.url, alt: "Selo Instantly AI Certified Expert", label: "Instantly.ai Certified Lead Generation Expert" },
+  { src: plusvibeCert.url, alt: "Selo Plusvibe Certified Technology Partner", label: "Plusvibe Certified Technology Partner" },
+  { src: dpoCert.url, alt: "Certificação de Encarregado de Proteção de Dados", label: "Certificação de Encarregado de Proteção de Dados (DPO) / RGPD" },
+  { src: pmeExcelencia.url, alt: "Distinção PME Excelência", label: "PME Excelência" },
+  { src: iso9001.url, alt: "Selo ISO 9001:2015 Certified Company", label: "ISO 9001: Gestão da Qualidade" },
+  { src: iso27001.url, alt: "Selo ISO 27001 Information Security Management", label: "ISO 27001: Segurança da Informação" },
+];
 
 const TESTIMONIALS = [7, 8, 9, 10, 11, 12].map((number) => `/testimonials/t${number}.png`);
 
