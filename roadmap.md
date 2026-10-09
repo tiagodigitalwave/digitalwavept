@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Adaptar o design da Digital Wave à referência featfilms.pt, preservando conteúdos e funcionalidades, e verificar a navegação.
+- [x] Adaptar o design da Digital Wave à referência featfilms.pt, preservando conteúdos e funcionalidades, e verificar a navegação, vídeos e imagens no computador e no telemóvel.
 
 - [x] SEO: robots.txt, sitemap.xml, favicon, canonical/og por página, JSON-LD, lang pt-PT
 - [x] Segurança: cabeçalhos HTTP, limite de pedidos no formulário do quiz, erros sem detalhes internos
