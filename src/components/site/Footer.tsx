@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 
 const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border mt-20">
+    <footer className="site-footer border-t border-border">
       <div className="max-w-7xl mx-auto px-6 py-16 grid gap-10 md:grid-cols-3">
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-full bg-wave/20 border border-wave/40 grid place-items-center">
-              <div className="w-3 h-3 rounded-full bg-wave" />
-            </div>
-            <span className="font-semibold">Digital Wave</span>
-          </div>
+          <div className="text-2xl font-display mb-4">Ligamos empresas.<br />Criamos oportunidades<span className="text-primary">.</span></div>
           <p className="text-sm text-muted-foreground max-w-xs">
             LinkedIn Outreach e Email Marketing B2B operados ponta a ponta. Agendamos reuniões com
             os decisores que importam.
@@ -38,6 +34,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
+      <div className="footer-wordmark" aria-hidden="true">digital wave<span>.</span></div>
       <div className="border-t border-border">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row gap-3 items-center justify-between text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} Digital Wave. Todos os direitos reservados.</div>
@@ -71,8 +68,8 @@ export function CookieBanner() {
         <Link to="/cookies" className="text-wave underline">Política de Cookies</Link>.
       </p>
       <div className="flex gap-2 shrink-0 w-full md:w-auto">
-        <button onClick={() => decide("reject")} className="btn-ghost !py-2 !px-4 !text-sm flex-1 md:flex-none justify-center">Recusar</button>
-        <button onClick={() => decide("accept")} className="btn-primary !py-2 !px-4 !text-sm flex-1 md:flex-none justify-center">Aceitar</button>
+        <Button variant="outline" onClick={() => decide("reject")} className="flex-1 md:flex-none">Recusar</Button>
+        <Button onClick={() => decide("accept")} className="flex-1 md:flex-none">Aceitar</Button>
       </div>
     </div>
   );

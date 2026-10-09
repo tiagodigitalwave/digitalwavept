@@ -1,4 +1,7 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-dw.png";
 
 
@@ -14,34 +17,40 @@ const links = [
 ];
 
 export function Nav() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 40);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 pt-3 sm:pt-4">
-      <div className="mx-auto max-w-7xl flex items-center justify-between gap-3 rounded-full border border-border bg-background/60 backdrop-blur-xl px-4 sm:px-5 py-2.5 sm:py-3">
-        <Link to="/" hash="top" className="flex items-center gap-2.5 shrink-0">
-          <img
-            src={logo}
-            alt="Digital Wave"
-            className="w-9 h-9 object-contain"
-            style={{ filter: "invert(1) brightness(2)", mixBlendMode: "screen" }}
-          />
-          <div className="leading-none">
-            <div className="text-sm font-semibold tracking-tight">Digital Wave</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground hidden sm:block">B2B · Email</div>
-          </div>
+    <header className={`site-nav ${scrolled || open ? "site-nav-solid" : ""}`}>
+      <div className="nav-inner">
+        <Link to="/" hash="top" onClick={() => setOpen(false)} className="site-brand" aria-label="Digital Wave, início">
+          <img src={logo} alt="" className="brand-symbol" width={40} height={40} />
+          <span>digital wave<span className="text-primary">.</span></span>
         </Link>
-        <nav className="hidden lg:flex items-center gap-7 text-sm text-muted-foreground">
-          {links.map((l) => (
-            <Link key={l.hash} to="/" hash={l.hash} className="hover:text-foreground transition-colors">
-              {l.label}
-            </Link>
-          ))}
+        <nav className="hidden lg:flex items-center gap-8 text-sm" aria-label="Navegação principal">
+          <Link to="/" hash="pilar">O que fazemos</Link>
+          <Link to="/" hash="cases">Resultados</Link>
+          <Link to="/" hash="equipa">Sobre nós</Link>
         </nav>
-        <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="btn-primary !py-2 !px-3 sm:!px-4 !text-xs sm:!text-sm shrink-0">
-          <span className="hidden sm:inline">Agendar uma reunião</span>
-          <span className="sm:hidden">Agendar</span>
-          <span aria-hidden>→</span>
-        </a>
+        <div className="flex items-center gap-4">
+          <Button asChild variant="link" className="nav-contact hidden sm:inline-flex">
+            <a href={CAL_URL} target="_blank" rel="noopener noreferrer">Vamos conversar <ArrowUpRight /></a>
+          </Button>
+          <Button variant="ghost" size="icon" className="lg:hidden" aria-label={open ? "Fechar menu" : "Abrir menu"} aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}>
+            {open ? <X /> : <Menu />}
+          </Button>
+        </div>
       </div>
+      {open && <nav id="mobile-nav" className="mobile-nav" aria-label="Navegação móvel">
+        {links.map((link) => <Link key={link.hash} to="/" hash={link.hash} onClick={() => setOpen(false)}>{link.label} <ArrowUpRight size={22} /></Link>)}
+        <Link to="/quiz" onClick={() => setOpen(false)}>Diagnóstico <ArrowUpRight size={22} /></Link>
+        <a href={CAL_URL} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="text-primary">Agendar uma reunião <ArrowUpRight size={22} /></a>
+      </nav>}
     </header>
   );
 }
