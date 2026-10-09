@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import cinematicImage from "@/assets/digital-wave-cinematic.jpg";
 import { Nav } from "@/components/site/Nav";
 import { CountUp } from "@/components/site/CountUp";
 import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import tiagoVideo from "@/assets/tiago-video.mp4";
-import heroMeeting from "@/assets/hero-meeting.mp4.asset.json";
 const AWARDS = [
   { src: "/awards/award-instantly.png", alt: "Prémio Instantly apresentado ao Tiago Barbosa", label: "Prémio Instantly: 5000 oportunidades de vendas B2B geradas" },
   { src: "/awards/clay-cert.png", alt: "Selo Clay Certified em Automação de Outbound", label: "Certificação Clay.com: Automação de Outbound" },
@@ -35,6 +37,7 @@ export const Route = createFileRoute("/")({
       { name: "keywords", content: "LinkedIn Outreach, Email Marketing B2B, prospeção B2B, geração de leads B2B, agendamento de reuniões, outbound Portugal" },
       { property: "og:description", content: "Reuniões B2B previsíveis com decisores através de LinkedIn Outreach e Email Marketing, operado ponta a ponta." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "https://digitalwavept.lovable.app/" },
     ],
     links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/" }],
@@ -88,52 +91,28 @@ function Hero() {
     { node: <CountUp end={7} suffix=" dígitos" />, label: "Gerados a parceiros" },
   ];
   return (
-    <section id="top" className="relative pt-32 sm:pt-36 md:pt-44 pb-16 md:pb-20 px-6 max-w-7xl mx-auto">
-      <span className="eyebrow relative z-10">Estruturação de Outreach · B2B</span>
-      <div className="relative mt-6">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-x-6 sm:-inset-x-10 -inset-y-6 sm:-inset-y-10 -z-10 overflow-hidden rounded-3xl"
-        >
-          <video
-            src={heroMeeting.url}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover opacity-15"
-          />
-          <div className="absolute inset-0 bg-background/80" />
+    <>
+      <section id="top" className="cinematic-hero">
+        <img src={cinematicImage} alt="" width={1920} height={1088} fetchPriority="high" className="hero-photo" />
+        <div className="hero-shade" aria-hidden="true" />
+        <div className="hero-content">
+          <span className="hero-kicker">LINKEDIN OUTREACH + EMAIL MARKETING</span>
+          <h1>Digital Wave<span className="text-primary">.</span></h1>
+          <p className="hero-statement">As pessoas certas.<br />As próximas <em>oportunidades.</em></p>
+          <p className="hero-description">Encontramos os teus clientes ideais e agendamos reuniões com quem decide.</p>
+          <Button asChild variant="link" className="hero-link">
+            <a href={CAL_URL} target="_blank" rel="noopener noreferrer">Vamos conversar <ArrowUpRight /></a>
+          </Button>
         </div>
-        <h1 className="display max-w-5xl relative">
-          Um sistema previsível de <em>reuniões B2B</em> com decisores.
-        </h1>
+        <div className="hero-bottom">
+          <span>PROSPEÇÃO B2B. CONEXÕES COM PROPÓSITO.</span>
+          <a href="#sobre" aria-label="Explorar a Digital Wave" className="hero-explore">Explorar <ArrowDown size={18} /></a>
+        </div>
+      </section>
+      <div className="hero-stats">
+        {stats.map((stat) => <div key={stat.label}><div className="num-display">{stat.node}</div><p>{stat.label}</p></div>)}
       </div>
-      <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-        Estruturamos o outreach da tua empresa em dois canais que trabalham em conjunto:
-        <span className="text-foreground"> LinkedIn Outreach </span>
-        e
-        <span className="text-foreground"> Email Marketing</span>.
-        Reuniões agendadas todos os meses, sem depender do fundador nem de tráfego pago.
-      </p>
-
-      <div className="relative mt-10">
-        <div className="flex flex-wrap gap-3">
-          <CtaButton />
-          <a href="#cases" className="btn-ghost">Ver casos de sucesso</a>
-        </div>
-
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-16 border-t border-border pt-10">
-          {stats.map((s) => (
-            <div key={s.label}>
-              <div className="num-display">{s.node}</div>
-              <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mt-3">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    </>
   );
 }
 
@@ -161,24 +140,25 @@ function VslPlayer() {
           allowFullScreen
         />
       ) : (
-        <button
+        <Button
+          variant="ghost"
           type="button"
           onClick={() => setPlaying(true)}
-          className="absolute inset-0 w-full h-full group"
+          className="video-play absolute inset-0 w-full h-full group"
           aria-label="Reproduzir vídeo"
         >
           <img
             src={YT_THUMB}
             alt="Pré-visualização do vídeo"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-70 transition"
+            className="absolute inset-0 w-full h-full object-cover transition"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
+          <div className="absolute inset-0 bg-background/15" />
           <div className="relative grid place-items-center h-full">
             <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center group-hover:scale-110 transition">
               <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
             </div>
           </div>
-        </button>
+        </Button>
       )}
     </div>
   );
@@ -243,7 +223,7 @@ function Offer() {
         <em>Estruturação de outreach</em> ponta a ponta.
       </h2>
       <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        Não somos uma agência de e-mail marketing nem uma agência de LinkedIn.
+        Não somos uma agência generalista.
         Estruturamos, dentro da tua empresa, um sistema de outreach que junta os dois canais
         para gerar reuniões com decisores, todos os meses, de forma previsível.
       </p>
@@ -254,7 +234,7 @@ function Offer() {
             <span className="num-display">01</span>
             <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 1</div>
           </div>
-          <h3 className="text-3xl mt-4">Email Marketing</h3>
+          <h3 className="text-3xl mt-4">Email Marketing <span className="channel-companion">com LinkedIn Outreach</span></h3>
           <p className="mt-4 text-muted-foreground leading-relaxed">
             O mesmo canal com que chegámos até ti. Identificamos decisores, escrevemos mensagens
             que geram resposta e garantimos que chegam à caixa de entrada certa.
@@ -279,7 +259,7 @@ function Offer() {
             <span className="num-display">02</span>
             <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 2</div>
           </div>
-          <h3 className="text-3xl mt-4">LinkedIn Outbound</h3>
+          <h3 className="text-3xl mt-4">LinkedIn Outreach</h3>
           <p className="mt-4 text-muted-foreground leading-relaxed">
             Pedidos de ligação, mensagens diretas e follow-ups estratégicos com os decisores
             certos. Coordenado com o e-mail para multiplicar respostas.
@@ -540,7 +520,7 @@ function Testimonials() {
             TESTIMONIALS.map((img, i) => (
               <div
                 key={`${loop}-${i}`}
-                className="card-surface w-[340px] sm:w-[420px] shrink-0 overflow-hidden bg-[#1c1030]"
+                className="card-surface w-[340px] sm:w-[420px] shrink-0 overflow-hidden bg-card"
               >
                 <img
                   src={img}
@@ -582,25 +562,26 @@ function CaseStudy() {
             allowFullScreen
           />
         ) : (
-          <button
+          <Button
+            variant="ghost"
             type="button"
             onClick={() => setPlaying(true)}
-            className="absolute inset-0 w-full h-full group"
+            className="video-play absolute inset-0 w-full h-full group"
             aria-label="Reproduzir caso de estudo"
           >
             <img
               src="https://img.youtube.com/vi/wBfk9ibO37A/maxresdefault.jpg"
               alt="Pré-visualização do caso de estudo"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-70 transition"
+              className="absolute inset-0 w-full h-full object-cover transition"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
+            <div className="absolute inset-0 bg-background/15" />
             <div className="relative grid place-items-center h-full">
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center group-hover:scale-110 transition">
                 <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
               </div>
             </div>
-          </button>
+          </Button>
         )}
       </div>
     </section>
@@ -654,8 +635,8 @@ function Team() {
 
 function QuizCta() {
   return (
-    <section id="quiz" className="section">
-      <div className="card-surface p-10 md:p-16 relative overflow-hidden">
+    <section id="quiz" className="section quiz-band">
+      <div className="quiz-inner relative">
         
         <div className="relative grid md:grid-cols-[1fr_auto] gap-8 items-end">
           <div>
@@ -679,13 +660,13 @@ function QuizCta() {
 
 function FinalCta() {
   return (
-    <section id="contacto" className="section">
-      <div className="card-surface p-10 md:p-20 text-center relative overflow-hidden">
+    <section id="contacto" className="section contact-band">
+      <div className="contact-inner relative">
         
         <div className="relative">
           <span className="eyebrow">Está na hora</span>
           <h2 className="display mt-6 max-w-3xl mx-auto">
-            A tua próxima reunião com um decisor B2B começa <em>aqui.</em>
+            Vamos criar<br /><em>oportunidades.</em>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl mx-auto">
             30 minutos contigo. Mostramos-te o que já fizemos, vemos se faz sentido
@@ -740,8 +721,26 @@ function Awards() {
 }
 
 function Page() {
+  const pageRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const sections = pageRef.current?.querySelectorAll("main > .section, main > #cases");
+    if (!sections || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06 });
+    sections.forEach((section) => {
+      section.classList.add("scroll-reveal");
+      observer.observe(section);
+    });
+    return () => observer.disconnect();
+  }, []);
   return (
-    <div className="dark">
+    <div className="dark cinematic-page" ref={pageRef}>
       <Nav />
       <main>
         <Hero />
