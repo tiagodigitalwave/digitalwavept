@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
@@ -32,7 +33,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
 
@@ -84,8 +85,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Digital Wave | LinkedIn Outreach e Email Marketing B2B" },
       { name: "twitter:description", content: "Sistema previsível de reuniões B2B com decisores. LinkedIn Outreach e Email Marketing." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1ca3cd61-2af1-4c38-9f37-a2f33e67e892/id-preview-9b9250df--b2408b0a-cab7-4615-9f1b-a19d07fc6757.lovable.app-1778977498480.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1ca3cd61-2af1-4c38-9f37-a2f33e67e892/id-preview-9b9250df--b2408b0a-cab7-4615-9f1b-a19d07fc6757.lovable.app-1778977498480.png" },
     ],
     links: [
       { rel: "icon", type: "image/png", href: "/favicon.png" },
