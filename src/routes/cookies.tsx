@@ -108,7 +108,7 @@ function CookiesPage() {
             <h2 className="text-2xl mb-3">5. Contacto</h2>
             <p>
               Para esclarecimentos sobre esta Política, contacte{" "}
-              <a href="mailto:hello@tiagodigitalwave.eu" className="text-wave underline">hello@tiagodigitalwave.eu</a>.
+              <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
             </p>
           </section>
 

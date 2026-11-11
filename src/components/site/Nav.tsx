@@ -1,47 +1,51 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-dw.png";
+import { useI18n, LangSwitch } from "@/lib/i18n";
+import { BookButton } from "./Booking";
 
-
-const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/30min";
-
-const links = [
-  { hash: "sobre", label: "Sobre" },
-  { hash: "pilar", label: "Oferta" },
-  { hash: "ecossistema", label: "Ecossistema" },
-  { hash: "metodo", label: "Método" },
-  { hash: "cases", label: "Cases" },
-  { hash: "equipa", label: "Equipa" },
-];
+export function Logo() {
+  return (
+    <span className="flex items-center gap-2.5">
+      <img src={logo} alt="Digital Wave" width={36} height={36} className="w-9 h-9 object-contain" style={{ filter: "invert(1) brightness(2)", mixBlendMode: "screen" }} />
+      <span className="font-bold text-ink-foreground">Digital Wave</span>
+    </span>
+  );
+}
 
 export function Nav() {
+  const { t } = useI18n();
+  const [open, setOpen] = useState(false);
+  const links = [
+    ["processo", t.nav.process], ["guia", t.nav.guide], ["calculadora", t.nav.calc], ["casos", t.nav.cases],
+    ["sobre", t.nav.about], ["perguntas", t.nav.faq], ["contacto", t.nav.contact],
+  ] as const;
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 pt-3 sm:pt-4">
-      <div className="mx-auto max-w-7xl flex items-center justify-between gap-3 rounded-full border border-border bg-background/60 backdrop-blur-xl px-4 sm:px-5 py-2.5 sm:py-3">
-        <Link to="/" hash="top" className="flex items-center gap-2.5 shrink-0">
-          <img
-            src={logo}
-            alt="Digital Wave"
-            className="w-9 h-9 object-contain"
-            style={{ filter: "invert(1) brightness(2)", mixBlendMode: "screen" }}
-          />
-          <div className="leading-none">
-            <div className="text-sm font-semibold tracking-tight">Digital Wave</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground hidden sm:block">B2B · Email</div>
-          </div>
-        </Link>
-        <nav className="hidden lg:flex items-center gap-7 text-sm text-muted-foreground">
-          {links.map((l) => (
-            <Link key={l.hash} to="/" hash={l.hash} className="hover:text-foreground transition-colors">
-              {l.label}
-            </Link>
+    <header className="fixed top-0 inset-x-0 z-50 bg-ink text-ink-foreground border-b border-ink-foreground/10">
+      <div className="mx-auto max-w-7xl px-4 md:px-6 h-16 flex items-center justify-between gap-4">
+        <Link to="/" hash="top" aria-label="Digital Wave"><Logo /></Link>
+        <nav className="hidden xl:flex items-center gap-6 text-sm" aria-label="Principal">
+          {links.map(([h, l]) => (
+            <Link key={h} to="/" hash={h} className="text-ink-foreground/85 hover:text-ink-foreground">{l}</Link>
           ))}
         </nav>
-        <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="btn-primary !py-2 !px-3 sm:!px-4 !text-xs sm:!text-sm shrink-0">
-          <span className="hidden sm:inline">Agendar uma reunião</span>
-          <span className="sm:hidden">Agendar</span>
-          <span aria-hidden>→</span>
-        </a>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <LangSwitch className="hidden sm:inline-flex" />
+          <BookButton className="btn-primary !py-2 !px-3 sm:!px-4 !text-sm" />
+          <button type="button" className="xl:hidden p-2" aria-label={t.nav.menu} aria-expanded={open} onClick={() => setOpen(!open)}>
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
+      {open && (
+        <nav className="xl:hidden border-t border-ink-foreground/10 px-4 pb-4" aria-label="Menu">
+          {links.map(([h, l]) => (
+            <Link key={h} to="/" hash={h} onClick={() => setOpen(false)} className="block py-3 border-b border-ink-foreground/10">{l}</Link>
+          ))}
+          <LangSwitch className="mt-4 sm:hidden" />
+        </nav>
+      )}
     </header>
   );
 }

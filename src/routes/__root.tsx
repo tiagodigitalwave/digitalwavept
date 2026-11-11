@@ -8,6 +8,8 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import { I18nProvider } from "@/lib/i18n";
+import { BookingProvider } from "@/components/site/Booking";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -84,8 +86,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Digital Wave | LinkedIn Outreach e Email Marketing B2B" },
       { name: "twitter:description", content: "Sistema previsível de reuniões B2B com decisores. LinkedIn Outreach e Email Marketing." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1ca3cd61-2af1-4c38-9f37-a2f33e67e892/id-preview-9b9250df--b2408b0a-cab7-4615-9f1b-a19d07fc6757.lovable.app-1778977498480.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1ca3cd61-2af1-4c38-9f37-a2f33e67e892/id-preview-9b9250df--b2408b0a-cab7-4615-9f1b-a19d07fc6757.lovable.app-1778977498480.png" },
     ],
     links: [
       { rel: "icon", type: "image/png", href: "/favicon.png" },
@@ -94,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
       },
       {
         rel: "stylesheet",
@@ -112,7 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           logo: "https://digitalwavept.lovable.app/favicon.png",
           description:
             "Estruturação de outreach B2B em LinkedIn Outreach e Email Marketing para gerar reuniões previsíveis com decisores.",
-          email: "hello@tiagodigitalwave.eu",
+          email: "hello@infodigitalwave.pt",
           areaServed: "PT",
           sameAs: ["https://cal.com/tiago-barbosa-wiadtc"],
         }),
@@ -127,7 +127,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-PT">
+    <html lang="pt-PT" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
@@ -144,7 +144,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <I18nProvider>
+        <BookingProvider>
+          <Outlet />
+        </BookingProvider>
+      </I18nProvider>
     </QueryClientProvider>
   );
 }

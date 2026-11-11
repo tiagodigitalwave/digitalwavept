@@ -31,7 +31,7 @@ function TermosPage() {
             <h2 className="text-2xl mb-3">1. Identificação</h2>
             <p>
               O presente website é propriedade de <strong>Digital Wave</strong>, com sede em Portugal,
-              contacto através do email <a href="mailto:hello@tiagodigitalwave.eu" className="text-wave underline">hello@tiagodigitalwave.eu</a>
+              contacto através do email <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>
               (doravante "Digital Wave", "nós" ou "empresa").
             </p>
           </section>
@@ -101,7 +101,7 @@ function TermosPage() {
             <h2 className="text-2xl mb-3">8. Contacto</h2>
             <p>
               Para qualquer questão relacionada com estes Termos, contacte-nos através de{" "}
-              <a href="mailto:hello@tiagodigitalwave.eu" className="text-wave underline">hello@tiagodigitalwave.eu</a>.
+              <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
             </p>
           </section>
 

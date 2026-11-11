@@ -119,7 +119,7 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
   page.drawText(d.firstName.toUpperCase(), { x: M, y: 145, size: 22, font: bold, color: WHITE });
   page.drawText(`${d.role} · ${d.revenue}`, { x: M, y: 122, size: 10, font: helv, color: GREY });
 
-  page.drawText("Produzido por Digital Wave · hello@tiagodigitalwave.eu", {
+  page.drawText("Produzido por Digital Wave · hello@infodigitalwave.pt", {
     x: M,
     y: 50,
     size: 9,
@@ -175,7 +175,7 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
     y -= 44;
   });
 
-  page.drawText("tiagodigitalwave.eu · hello@tiagodigitalwave.eu", {
+  page.drawText("tiagodigitalwave.eu · hello@infodigitalwave.pt", {
     x: M,
     y: 40,
     size: 9,
@@ -214,7 +214,7 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
       cp.drawText(ln, { x: M, y: cy, size: 11, font: helv, color: LIGHT });
       cy -= 16;
     }
-    cp.drawText("Produzido por Digital Wave · hello@tiagodigitalwave.eu", {
+    cp.drawText("Produzido por Digital Wave · hello@infodigitalwave.pt", {
       x: M,
       y: 50,
       size: 9,
@@ -250,7 +250,7 @@ async function buildPdf(d: Payload): Promise<Uint8Array> {
       py = by - 22;
     });
 
-    pp.drawText("tiagodigitalwave.eu · hello@tiagodigitalwave.eu", {
+    pp.drawText("tiagodigitalwave.eu · hello@infodigitalwave.pt", {
       x: M,
       y: 40,
       size: 9,
@@ -505,7 +505,7 @@ export const Route = createFileRoute("/api/public/quiz-submit")({
           const adminResult = await sendEmailSafely("admin", {
             lovableKey: LOVABLE_API_KEY,
             resendKey: RESEND_API_KEY,
-            to: "hello@tiagodigitalwave.eu",
+            to: "hello@infodigitalwave.pt",
             replyTo: d.email,
             subject: `Novo lead Quiz · ${d.firstName} (${scores.overall}%)`,
             html: adminEmailHtml(d, scores.overall, scores.perTenList, profile),

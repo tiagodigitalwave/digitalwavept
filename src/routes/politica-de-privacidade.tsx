@@ -31,7 +31,7 @@ function PrivacidadePage() {
             <h2 className="text-2xl mb-3">1. Responsável pelo tratamento</h2>
             <p>
               A entidade responsável pelo tratamento dos seus dados pessoais é a <strong>Digital Wave</strong>,
-              com contacto em <a href="mailto:hello@tiagodigitalwave.eu" className="text-wave underline">hello@tiagodigitalwave.eu</a>.
+              com contacto em <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
               Esta Política cumpre o Regulamento (UE) 2016/679 (RGPD) e a Lei n.º 58/2019, de 8 de agosto,
               que executa o RGPD na ordem jurídica nacional portuguesa.
             </p>
@@ -102,7 +102,7 @@ function PrivacidadePage() {
               Qualquer pessoa contactada através dos nossos sistemas pode exercer os direitos de
               acesso, retificação, apagamento e oposição respondendo diretamente ao e-mail recebido
               ou escrevendo para{" "}
-              <a href="mailto:hello@tiagodigitalwave.eu" className="text-wave underline">hello@tiagodigitalwave.eu</a>.
+              <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
             </p>
           </section>
 
@@ -112,7 +112,7 @@ function PrivacidadePage() {
               Nos termos dos artigos 15.º a 22.º do RGPD, tem direito de acesso, retificação,
               apagamento, limitação, portabilidade, oposição e a não ficar sujeito a decisões
               automatizadas. Para exercer estes direitos, contacte-nos através de{" "}
-              <a href="mailto:hello@tiagodigitalwave.eu" className="text-wave underline">hello@tiagodigitalwave.eu</a>.
+              <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
             </p>
             <p className="mt-3">
               Tem ainda o direito de apresentar reclamação à Comissão Nacional de Proteção de Dados

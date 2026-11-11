@@ -1,134 +1,360 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Users, Linkedin, CalendarCheck, Play, Download, Mail, CheckCircle2 } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
-import { CountUp } from "@/components/site/CountUp";
-import { LogoMarquee } from "@/components/site/Marquee";
 import { Footer, CookieBanner } from "@/components/site/Footer";
-import tiagoVideo from "@/assets/tiago-video.mp4";
-import heroMeeting from "@/assets/hero-meeting.mp4.asset.json";
-const AWARDS = [
-  { src: "/awards/award-instantly.png", alt: "Prémio Instantly apresentado ao Tiago Barbosa", label: "Prémio Instantly: 5000 oportunidades de vendas B2B geradas" },
-  { src: "/awards/clay-cert.png", alt: "Selo Clay Certified em Automação de Outbound", label: "Certificação Clay.com: Automação de Outbound" },
-  { src: "/awards/instantly-expert.png", alt: "Selo Instantly AI Certified Expert", label: "Instantly.ai Certified Lead Generation Expert" },
-  { src: "/awards/plusvibe-cert.png", alt: "Selo Plusvibe Certified Technology Partner", label: "Plusvibe Certified Technology Partner" },
-  { src: "/awards/dpo-cert.png", alt: "Certificação de Encarregado de Proteção de Dados", label: "Certificação de Encarregado de Proteção de Dados (DPO) / RGPD" },
-  { src: "/awards/pme-excelencia.png", alt: "Distinção PME Excelência", label: "PME Excelência" },
-  { src: "/awards/iso-9001.png", alt: "Selo ISO 9001:2015 Certified Company", label: "ISO 9001: Gestão da Qualidade" },
-  { src: "/awards/iso-27001.png", alt: "Selo ISO 27001 Information Security Management", label: "ISO 27001: Segurança da Informação" },
-];
+import { BookButton } from "@/components/site/Booking";
+import { useI18n } from "@/lib/i18n";
+import { CONTACT, dict } from "@/lib/content";
+import { calculate, parseNum } from "@/lib/calculator";
 
-const TESTIMONIALS = [7, 8, 9, 10, 11, 12].map((number) => `/testimonials/t${number}.png`);
-
-const YT_ID = "R_TZTTClLck";
-const YT_THUMB = `https://img.youtube.com/vi/${YT_ID}/maxresdefault.jpg`;
-
-const CAL_URL = "https://cal.com/tiago-barbosa-wiadtc/15min";
+const SITE = "https://digitalwavept.lovable.app/";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Wave | LinkedIn Outreach e Email Marketing B2B em Portugal" },
-      { name: "description", content: "Agência de LinkedIn Outreach e Email Marketing B2B em Portugal. Geramos e agendamos reuniões qualificadas com decisores, sem depender do fundador nem de tráfego pago." },
-      { property: "og:title", content: "Digital Wave | LinkedIn Outreach e Email Marketing B2B" },
-      { name: "twitter:title", content: "Digital Wave | LinkedIn Outreach e Email Marketing B2B" },
-      { name: "twitter:description", content: "Reuniões B2B previsíveis com decisores através de LinkedIn Outreach e Email Marketing." },
-      { name: "keywords", content: "LinkedIn Outreach, Email Marketing B2B, prospeção B2B, geração de leads B2B, agendamento de reuniões, outbound Portugal" },
-      { property: "og:description", content: "Reuniões B2B previsíveis com decisores através de LinkedIn Outreach e Email Marketing, operado ponta a ponta." },
+      { title: dict.pt.meta.title },
+      { name: "description", content: dict.pt.meta.description },
+      { property: "og:title", content: dict.pt.meta.title },
+      { property: "og:description", content: dict.pt.meta.description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://digitalwavept.lovable.app/" },
+      { property: "og:url", content: SITE },
+      { property: "og:locale:alternate", content: "en_GB" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ProfessionalService",
-          name: "Digital Wave",
-          url: "https://digitalwavept.lovable.app/",
-          description:
-            "Agência de LinkedIn Outreach e Email Marketing B2B que gera reuniões previsíveis com decisores.",
-          areaServed: ["PT", "Worldwide"],
-          email: "hello@tiagodigitalwave.eu",
-          founder: { "@type": "Person", name: "Tiago Barbosa" },
-          serviceType: ["LinkedIn Outreach", "Email Marketing B2B", "Geração de leads B2B"],
-          hasOfferCatalog: {
-            "@type": "OfferCatalog",
-            name: "LinkedIn Outreach e Email Marketing",
-            itemListElement: [
-              { "@type": "Offer", itemOffered: { "@type": "Service", name: "LinkedIn Outreach B2B" } },
-              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Email Marketing B2B (em conjunto com LinkedIn Outreach)" } },
-            ],
-          },
-        }),
-      },
-    ],
+    links: [{ rel: "canonical", href: SITE }],
   }),
-  component: Page,
+  component: Home,
 });
 
-function CtaButton({ children = "Agendar uma reunião", variant = "primary" as "primary" | "ghost" }) {
+function Home() {
   return (
-    <a
-      href={CAL_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={variant === "primary" ? "btn-primary" : "btn-ghost"}
-    >
-      {children}
-      <span aria-hidden>→</span>
-    </a>
+    <div id="top" className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <Nav />
+      <main className="pt-16">
+        <Hero />
+        <Stats />
+        <Why />
+        <Process />
+        <Guide />
+        <Calculator />
+        <Cases />
+        <Certs />
+        <About />
+        <Faq />
+        <FinalCta />
+      </main>
+      <Footer />
+      <CookieBanner />
+    </div>
   );
 }
 
+function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add("in"); io.disconnect(); } }, { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <div ref={ref} className={`reveal ${className}`}>{children}</div>;
+}
+
+const wrap = "max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24";
+
 function Hero() {
-  const stats = [
-    { node: <CountUp end={250} prefix="+" />, label: "Reuniões agendadas" },
-    { node: <CountUp end={20} prefix="+" />, label: "Mercados alcançados" },
-    { node: <CountUp end={7} suffix=" dígitos" />, label: "Gerados a parceiros" },
+  const { t } = useI18n();
+  const cards = [
+    { day: "Ter 14:00", co: "Diretor Comercial", via: t.hero.via.linkedin },
+    { day: "Qua 10:30", co: "CEO", via: t.hero.via.email },
+    { day: "Qui 16:00", co: "Head of Sales", via: t.hero.via.linkedin },
   ];
   return (
-    <section id="top" className="relative pt-32 sm:pt-36 md:pt-44 pb-16 md:pb-20 px-6 max-w-7xl mx-auto">
-      <span className="eyebrow relative z-10">Estruturação de Outreach · B2B</span>
-      <div className="relative mt-6">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-x-6 sm:-inset-x-10 -inset-y-6 sm:-inset-y-10 -z-10 overflow-hidden rounded-3xl"
-        >
-          <video
-            src={heroMeeting.url}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover opacity-15"
-          />
-          <div className="absolute inset-0 bg-background/80" />
+    <section className="bg-ink text-ink-foreground">
+      <div className={`${wrap} grid lg:grid-cols-2 gap-12 items-center`}>
+        <div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]">{t.hero.h1}</h1>
+          <p className="mt-6 text-lg text-ink-foreground/80 max-w-xl">{t.hero.sub}</p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+            <BookButton className="btn-primary justify-center" />
+            <a href="#guia" className="btn-outline-light">{t.hero.guide}</a>
+          </div>
         </div>
-        <h1 className="display max-w-5xl relative">
-          Um sistema previsível de <em>reuniões B2B</em> com decisores.
-        </h1>
+        <div className="relative" aria-hidden>
+          <div className="grid gap-4 max-w-md mx-auto">
+            {cards.map((c, i) => (
+              <div key={i} className="rounded-xl bg-ink-foreground text-ink p-4 flex items-center gap-4 shadow-lg" style={{ marginLeft: `${i * 8}%` }}>
+                <div className="w-12 h-12 rounded-lg bg-primary grid place-items-center shrink-0"><CalendarCheck size={22} /></div>
+                <div className="min-w-0">
+                  <div className="text-xs text-muted-foreground">{c.day} · {c.via}</div>
+                  <div className="font-semibold truncate">{c.co}</div>
+                </div>
+                <span className="ml-auto text-xs font-semibold flex items-center gap-1 shrink-0"><CheckCircle2 size={14} /> <span className="hidden sm:inline">{t.hero.confirmed}</span></span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-        Estruturamos o outreach da tua empresa em dois canais que trabalham em conjunto:
-        <span className="text-foreground"> LinkedIn Outreach </span>
-        e
-        <span className="text-foreground"> Email Marketing</span>.
-        Reuniões agendadas todos os meses, sem depender do fundador nem de tráfego pago.
-      </p>
+    </section>
+  );
+}
 
-      <div className="relative mt-10">
-        <div className="flex flex-wrap gap-3">
-          <CtaButton />
-          <a href="#cases" className="btn-ghost">Ver casos de sucesso</a>
+function Count({ to, prefix = "+", suffix = "" }: { to: number; prefix?: string; suffix?: string }) {
+  const { lang } = useI18n();
+  const ref = useRef<HTMLSpanElement>(null);
+  const [v, setV] = useState(to);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setV(0);
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      const start = performance.now();
+      const tick = (n: number) => {
+        const p = Math.min(1, (n - start) / 1400);
+        setV(Math.round(to * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [to]);
+  return <span ref={ref}>{prefix}{v.toLocaleString(lang === "pt" ? "pt-PT" : "en-GB").replace(/\u00a0|\u202f/g, ".")}{suffix}</span>;
+}
+
+function Stats() {
+  const { t, lang } = useI18n();
+  const items = [
+    { el: <><Count to={100} /> {lang === "pt" ? "mil" : "k"}</> },
+    { el: <Count to={1000} /> },
+    { el: <Count to={35} /> },
+    { el: <Count to={20} /> },
+  ];
+  return (
+    <section className="bg-primary text-primary-foreground">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        {items.map((it, i) => (
+          <div key={i}>
+            <div className="text-4xl md:text-5xl font-bold tabular-nums">{it.el}</div>
+            <div className="mt-2 font-medium">{t.stats[i]}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function VideoPlaceholder({ label }: { label: string }) {
+  return (
+    <div className="aspect-video rounded-2xl bg-ink text-ink-foreground grid place-items-center">
+      <div className="text-center">
+        <div className="w-16 h-16 mx-auto rounded-full bg-primary text-primary-foreground grid place-items-center"><Play size={26} /></div>
+        <div className="mt-3 text-sm text-ink-foreground/80">{label}</div>
+      </div>
+    </div>
+  );
+}
+
+function Why() {
+  const { t } = useI18n();
+  const icons = [Users, Linkedin, CalendarCheck];
+  return (
+    <section className="bg-background">
+      <div className={wrap}>
+        <h2 className="text-3xl md:text-4xl max-w-2xl">{t.why.title}</h2>
+        <div className="mt-10 grid lg:grid-cols-2 gap-10 items-center">
+          <Reveal><VideoPlaceholder label={t.why.video} /></Reveal>
+          <div className="space-y-6">
+            {t.why.items.map(([h, p], i) => {
+              const I = icons[i];
+              return (
+                <Reveal key={h} className="flex gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary text-primary-foreground grid place-items-center shrink-0"><I size={22} /></div>
+                  <div><h3 className="text-lg">{h}</h3><p className="text-muted-foreground mt-1">{p}</p></div>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
+      </div>
+    </section>
+  );
+}
 
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-16 border-t border-border pt-10">
-          {stats.map((s) => (
-            <div key={s.label}>
-              <div className="num-display">{s.node}</div>
-              <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mt-3">{s.label}</div>
+function Process() {
+  const { t } = useI18n();
+  return (
+    <section id="processo" className="bg-muted">
+      <div className={wrap}>
+        <h2 className="text-3xl md:text-4xl">{t.process.title}</h2>
+        <div className="relative mt-12">
+          <div className="hidden lg:block absolute top-7 left-[12%] right-[12%] h-0.5 bg-ink/15" aria-hidden />
+          <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            {t.process.steps.map(([h, p], i) => (
+              <li key={h}>
+                <Reveal className="card-soft p-6 h-full">
+                  <div className="w-14 h-14 rounded-full bg-primary text-primary-foreground grid place-items-center font-bold text-lg">0{i + 1}</div>
+                  <h3 className="mt-5 text-xl">{h}</h3>
+                  <p className="mt-2 text-muted-foreground">{p}</p>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Guide() {
+  const { t } = useI18n();
+  const track = () => {
+    // Evento de analytics (apenas contagem, sem dados pessoais)
+    const w = window as unknown as { gtag?: (...a: unknown[]) => void; plausible?: (e: string) => void };
+    w.gtag?.("event", "guide_download");
+    w.plausible?.("guide_download");
+  };
+  return (
+    <section id="guia" className="bg-ink text-ink-foreground">
+      <div className={`${wrap} grid md:grid-cols-[minmax(0,320px)_1fr] gap-10 items-center`}>
+        {/* [PDF FINAL A ENVIAR] capa provisória */}
+        <div className="aspect-[3/4] max-w-[260px] w-full mx-auto rounded-xl bg-ink-foreground text-ink p-6 flex flex-col justify-between shadow-lg">
+          <div className="flex gap-2"><Mail size={22} /><Linkedin size={22} /></div>
+          <div className="font-bold text-xl leading-tight">{t.guide.cover}</div>
+          <div className="h-2 w-16 bg-primary rounded" />
+        </div>
+        <div>
+          <h2 className="text-3xl md:text-4xl">{t.guide.title}</h2>
+          <p className="mt-4 text-ink-foreground/80 text-lg">{t.guide.sub}</p>
+          <a href="/guia-campanha-email-linkedin.pdf" download onClick={track} className="btn-primary mt-8">
+            <Download size={18} /> {t.guide.cta}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Calculator() {
+  const { t, lang } = useI18n();
+  const [a, setA] = useState("");
+  const [b, setB] = useState("");
+  const [c, setC] = useState("");
+  const loc = lang === "pt" ? "pt-PT" : "en-GB";
+  const eur = (n: number) => new Intl.NumberFormat(loc, { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
+  const pct = (n: number) => new Intl.NumberFormat(loc, { style: "percent", maximumFractionDigits: 0 }).format(n);
+  const na = parseNum(a), nb = parseNum(b), nc = parseNum(c);
+  const okA = na !== null && na <= 10;
+  const okB = okA && nb !== null;
+  const okC = okB && nc !== null;
+  const r = calculate(na ?? 0, nb ?? 0, nc ?? 0);
+  const field = (id: string, label: string, v: string, set: (s: string) => void, err: string | false) => (
+    <div>
+      <label htmlFor={id} className="block font-medium text-sm">{label}</label>
+      <input id={id} inputMode="decimal" value={v} onChange={(e) => set(e.target.value)} aria-invalid={!!err}
+        className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-base" />
+      {err && <p className="mt-1 text-sm text-destructive">{err}</p>}
+    </div>
+  );
+  const results = [
+    { show: okB, label: t.calc.r[0], value: eur(r.tenMeetings), extra: okA ? `${t.calc.conv}: ${pct((na ?? 0) / 10)}` : "" },
+    { show: okC, label: t.calc.r[1], value: eur(r.monthlyGoal) },
+    { show: okC, label: t.calc.r[2], value: eur(r.fourMonths) },
+    { show: okC, label: t.calc.r[3], value: eur(r.yearGoal) },
+  ];
+  return (
+    <section id="calculadora" className="bg-background">
+      <div className={wrap}>
+        <h2 className="text-3xl md:text-4xl max-w-2xl">{t.calc.title}</h2>
+        <div className="mt-10 grid lg:grid-cols-2 gap-8">
+          <div className="card-soft p-6 space-y-5">
+            {field("c1", t.calc.q1, a, setA, a !== "" && !okA && t.calc.err1)}
+            {field("c2", t.calc.q2, b, setB, okA && b !== "" && nb === null && t.calc.err)}
+            {field("c3", t.calc.q3, c, setC, okB && c !== "" && nc === null && t.calc.err)}
+            <button type="button" onClick={() => { setA(""); setB(""); setC(""); }} className="btn-ghost">{t.calc.reset}</button>
+          </div>
+          <div className="space-y-3" aria-live="polite">
+            {results.map((x, i) => x.show ? (
+              <div key={i} className="rounded-xl bg-muted p-5">
+                <div className="text-sm text-muted-foreground">{i + 1}. {x.label}</div>
+                <div className="text-3xl font-bold mt-1">{x.value}</div>
+                {x.extra && <div className="text-sm text-muted-foreground mt-1">{x.extra}</div>}
+              </div>
+            ) : (
+              <div key={i} className="rounded-xl border border-dashed border-border p-5 text-sm text-muted-foreground">{i + 1}. {x.label}: {t.calc.fill}</div>
+            ))}
+            <p className="text-sm text-muted-foreground">{t.calc.note}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function YouTubeLite({ id, title }: { id: string; title: string }) {
+  const [on, setOn] = useState(false);
+  const { t } = useI18n();
+  if (on) return <iframe className="w-full aspect-video" src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`} title={title} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />;
+  return (
+    <button type="button" onClick={() => setOn(true)} className="relative w-full aspect-video block group" aria-label={t.cases.play}>
+      <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" className="w-full h-full object-cover" />
+      <span className="absolute inset-0 grid place-items-center"><span className="w-14 h-14 rounded-full bg-primary text-primary-foreground grid place-items-center group-hover:scale-105 transition"><Play size={24} /></span></span>
+    </button>
+  );
+}
+
+function Cases() {
+  const { t } = useI18n();
+  // Cartões 2 e 3: [LINK YOUTUBE] [LINK LINKEDIN] [EMPRESA] [SETOR]
+  const cases = [
+    { yt: CONTACT.youtubeCase, linkedin: "", company: t.cases.company, sector: t.cases.sector },
+    null,
+    null,
+  ];
+  return (
+    <section id="casos" className="bg-muted">
+      <div className={wrap}>
+        <h2 className="text-3xl md:text-4xl max-w-2xl">{t.cases.title}</h2>
+        <div className="mt-10 grid md:grid-cols-3 gap-6">
+          {cases.map((c, i) => (
+            <Reveal key={i} className="card-soft overflow-hidden flex flex-col">
+              {c ? <YouTubeLite id={c.yt} title={c.company} /> : <div className="aspect-video bg-ink/5 grid place-items-center text-muted-foreground text-sm">{t.cases.soon}</div>}
+              <div className="p-5 flex-1 flex flex-col">
+                <div className="font-semibold">{c ? c.company : t.cases.soon}</div>
+                <div className="text-sm text-muted-foreground">{c ? c.sector : ""}</div>
+                {c && (c.linkedin ? (
+                  <a href={c.linkedin} target="_blank" rel="noopener noreferrer" className="btn-ghost mt-4 self-start"><Linkedin size={16} /> {t.cases.linkedin}</a>
+                ) : (
+                  <span className="mt-4 text-xs text-muted-foreground">{t.cases.linkedin}: [A PREENCHER]</span>
+                ))}
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const CERTS = [
+  { src: "/awards/clay-cert.png", alt: "Clay University Automated Outbound Certification" },
+  { src: "/awards/plusvibe-cert.png", alt: "PlusVibe Certified Agency Partner" },
+];
+
+function Certs() {
+  const { t } = useI18n();
+  return (
+    <section className="bg-background">
+      <div className={`${wrap} text-center`}>
+        <h2 className="text-3xl md:text-4xl">{t.certs.title}</h2>
+        <div className="mt-10 flex flex-wrap justify-center gap-6">
+          {CERTS.map((c) => (
+            <div key={c.src} className="card-soft p-6 w-[220px] sm:w-[260px] grid place-items-center">
+              <img src={c.src} alt={c.alt} loading="lazy" className="w-full h-48 object-contain rounded-xl" />
             </div>
           ))}
         </div>
@@ -137,540 +363,46 @@ function Hero() {
   );
 }
 
-function Partners() {
+function About() {
+  const { t } = useI18n();
   return (
-    <section className="py-16 border-y border-border">
-      <p className="text-center text-xs uppercase tracking-[0.18em] text-muted-foreground mb-10">
-        Empresas com quem já agendamos reuniões
-      </p>
-      <LogoMarquee />
-    </section>
-  );
-}
-
-function VslPlayer() {
-  const [playing, setPlaying] = useState(false);
-  return (
-    <div className="card-surface aspect-video relative overflow-hidden grid place-items-center">
-      {playing ? (
-        <iframe
-          className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}&rel=0&modestbranding=1&playsinline=1`}
-          title="Digital Wave VSL"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowFullScreen
-        />
-      ) : (
-        <button
-          type="button"
-          onClick={() => setPlaying(true)}
-          className="absolute inset-0 w-full h-full group"
-          aria-label="Reproduzir vídeo"
-        >
-          <img
-            src={YT_THUMB}
-            alt="Pré-visualização do vídeo"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-70 transition"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
-          <div className="relative grid place-items-center h-full">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center group-hover:scale-110 transition">
-              <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
+    <section id="sobre" className="bg-muted">
+      <div className={wrap}>
+        <h2 className="text-3xl md:text-4xl">{t.about.title}</h2>
+        <div className="mt-10 grid lg:grid-cols-2 gap-10 items-center">
+          <VideoPlaceholder label={t.about.video} />
+          <div className="flex flex-col sm:flex-row gap-6">
+            {/* [A PREENCHER] foto do fundador */}
+            <div className="w-32 h-32 rounded-2xl bg-ink/10 grid place-items-center text-xs text-muted-foreground shrink-0 text-center p-2">{t.about.photo}</div>
+            <div>
+              <h3 className="text-2xl">Tiago</h3>
+              <div className="text-muted-foreground">{t.about.role}</div>
+              <p className="mt-4">{t.about.bio}</p>
+              <p className="mt-4 font-medium">{t.about.support}</p>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground"><Linkedin size={16} /> {t.about.linkedin}: [A PREENCHER]</span>
             </div>
           </div>
-        </button>
-      )}
-    </div>
-  );
-}
-
-function VideoBlock() {
-  return (
-    <section className="section">
-      <VslPlayer />
-    </section>
-  );
-}
-
-function Problem() {
-  const items = [
-    {
-      t: "Depende do fundador",
-      d: "As novas oportunidades param sempre que o fundador (ou o comercial mais experiente) deixa de prospetar manualmente.",
-    },
-    {
-      t: "Reuniões com quem não decide",
-      d: "Investe-se tempo em conversas com pessoas sem poder de compra. O ciclo de venda arrasta-se ou morre.",
-    },
-    {
-      t: "Custo de aquisição alto",
-      d: "Tráfego pago e agências generalistas tornam cada cliente cada vez mais caro, sem previsibilidade.",
-    },
-    {
-      t: "Pipeline imprevisível",
-      d: "Uns meses cheios, outros vazios. Impossível planear equipa, entrega e crescimento.",
-    },
-  ];
-  return (
-    <section id="sobre" className="section">
-      <span className="eyebrow">O problema</span>
-      <h2 className="display mt-6 max-w-4xl">
-        Por que razão a maioria das empresas B2B <em>não cresce de forma previsível.</em>
-      </h2>
-      <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
-        A geração de reuniões continua presa a esforço manual, referências ou anúncios pagos.
-        Isto cria quatro problemas que travam o crescimento.
-      </p>
-
-      <div className="mt-12 grid sm:grid-cols-2 gap-5">
-        {items.map((it, i) => (
-          <div key={it.t} className="card-surface p-8">
-            <div className="num-display text-2xl text-muted-foreground/60">{String(i + 1).padStart(2, "0")}</div>
-            <h3 className="text-2xl mt-3">{it.t}</h3>
-            <p className="mt-3 text-muted-foreground leading-relaxed">{it.d}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Offer() {
-  return (
-    <section id="pilar" className="section">
-      <span className="eyebrow">A nossa oferta</span>
-      <h2 className="display mt-6 max-w-4xl">
-        <em>Estruturação de outreach</em> ponta a ponta.
-      </h2>
-      <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        Não somos uma agência de e-mail marketing nem uma agência de LinkedIn.
-        Estruturamos, dentro da tua empresa, um sistema de outreach que junta os dois canais
-        para gerar reuniões com decisores, todos os meses, de forma previsível.
-      </p>
-
-      <div className="mt-12 grid md:grid-cols-2 gap-6">
-        <article className="card-surface p-8 md:p-10">
-          <div className="flex items-baseline gap-4">
-            <span className="num-display">01</span>
-            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 1</div>
-          </div>
-          <h3 className="text-3xl mt-4">Email Marketing</h3>
-          <p className="mt-4 text-muted-foreground leading-relaxed">
-            O mesmo canal com que chegámos até ti. Identificamos decisores, escrevemos mensagens
-            que geram resposta e garantimos que chegam à caixa de entrada certa.
-          </p>
-          <ul className="mt-6 space-y-2 text-sm">
-            {[
-              "Infraestrutura de envio dedicada",
-              "Listas verificadas por ICP e mercado",
-              "Copy testado com foco em resposta",
-              "Cadências multi-toque otimizadas",
-            ].map((i) => (
-              <li key={i} className="flex gap-2 items-start text-muted-foreground">
-                <span className="text-foreground mt-0.5">→</span>
-                <span>{i}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-
-        <article className="card-surface p-8 md:p-10">
-          <div className="flex items-baseline gap-4">
-            <span className="num-display">02</span>
-            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canal 2</div>
-          </div>
-          <h3 className="text-3xl mt-4">LinkedIn Outbound</h3>
-          <p className="mt-4 text-muted-foreground leading-relaxed">
-            Pedidos de ligação, mensagens diretas e follow-ups estratégicos com os decisores
-            certos. Coordenado com o e-mail para multiplicar respostas.
-          </p>
-          <ul className="mt-6 space-y-2 text-sm">
-            {[
-              "Segmentação por cargo e empresa-alvo",
-              "Pedidos de ligação personalizados",
-              "Sequências de mensagens e follow-up",
-              "Sincronização com a cadência de e-mail",
-            ].map((i) => (
-              <li key={i} className="flex gap-2 items-start text-muted-foreground">
-                <span className="text-foreground mt-0.5">→</span>
-                <span>{i}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-      </div>
-
-      <p className="mt-10 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        Os dois canais funcionam em conjunto e alimentam o mesmo objetivo: colocar reuniões
-        qualificadas no teu calendário, semana após semana.
-      </p>
-    </section>
-  );
-}
-
-function Compliance() {
-  const tools = [
-    {
-      name: "Apollo.io",
-      role: "Base de dados de contactos e empresas B2B",
-      d: "Trata dados pessoais em conformidade com o RGPD, o CCPA e outros regimes internacionais de proteção de dados, com mecanismos de exercício de direitos pelos titulares.",
-      proof: "https://www.apollo.io/privacy-policy",
-      proofLabel: "Política de Privacidade da Apollo",
-    },
-    {
-      name: "Lusha",
-      role: "Enriquecimento e verificação de dados de contacto",
-      d: "Opera sob uma base de consentimento e conformidade com o RGPD, explicando de forma transparente de onde vêm os dados e como os titulares podem exercer os seus direitos.",
-      proof: "https://www.lusha.com/privacy-articles/please-show-me-where-i-have-consented/",
-      proofLabel: "Como a Lusha garante consentimento",
-    },
-  ];
-  return (
-    <section id="conformidade" className="section">
-      <span className="eyebrow">Conformidade legal</span>
-      <h2 className="display mt-6 max-w-4xl">
-        Dados tratados <em>dentro da lei</em>, em Portugal e no mundo.
-      </h2>
-      <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        As plataformas que utilizamos para identificar e contactar decisores B2B cumprem
-        o Regulamento Geral sobre a Proteção de Dados (RGPD), a Lei n.º 58/2019 em Portugal
-        e os principais regimes internacionais de privacidade. Não usamos listas compradas
-        de origem desconhecida: trabalhamos apenas com fontes que publicam e provam a sua
-        conformidade.
-      </p>
-
-      <div className="mt-12 grid md:grid-cols-2 gap-6">
-        {tools.map((t) => (
-          <article key={t.name} className="card-surface p-8 flex flex-col">
-            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{t.role}</div>
-            <h3 className="text-2xl mt-3">{t.name}</h3>
-            <p className="mt-3 text-muted-foreground leading-relaxed">{t.d}</p>
-            <a
-              href={t.proof}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground transition"
-            >
-              Ver prova pública: {t.proofLabel} <span aria-hidden>↗</span>
-            </a>
-          </article>
-        ))}
-      </div>
-
-      <p className="mt-10 max-w-3xl text-sm text-muted-foreground leading-relaxed">
-        Qualquer pessoa contactada pelos nossos sistemas pode exercer a qualquer momento os
-        direitos de acesso, retificação, apagamento e oposição, bastando responder ao e-mail
-        recebido ou escrever para{" "}
-        <a href="mailto:hello@tiagodigitalwave.eu" className="text-foreground underline underline-offset-4">
-          hello@tiagodigitalwave.eu
-        </a>.
-      </p>
-    </section>
-  );
-}
-
-function Benefits() {
-  const items = [
-    {
-      t: "Previsibilidade",
-      d: "Reuniões marcadas todos os meses, com um volume que passas a saber prever.",
-    },
-    {
-      t: "Sem dependência do fundador",
-      d: "A geração de novas oportunidades deixa de depender do teu tempo ou do da tua equipa.",
-    },
-    {
-      t: "Só falas com decisores",
-      d: "Filtramos e qualificamos antes da reunião. Chegas ao calendário apenas com quem decide.",
-    },
-    {
-      t: "Custo de aquisição mais baixo",
-      d: "Muito mais eficiente do que tráfego pago. Cada reunião passa a custar uma fração do que custava.",
-    },
-  ];
-  return (
-    <section id="beneficios" className="section">
-      <span className="eyebrow">O que ganhas</span>
-      <h2 className="display mt-6 max-w-4xl">
-        Quatro coisas mudam <em>na tua empresa.</em>
-      </h2>
-
-      <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {items.map((it, i) => (
-          <div key={it.t} className="card-surface p-8">
-            <div className="num-display text-2xl text-muted-foreground/60">{String(i + 1).padStart(2, "0")}</div>
-            <h3 className="text-xl mt-3">{it.t}</h3>
-            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{it.d}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-const STEPS = [
-  {
-    tag: "Base",
-    title: "Preparação da infraestrutura",
-    body: "Preparamos os domínios e as contas de e-mail, configuramos a autenticação e o aquecimento gradual para proteger a reputação de envio. Deixamos também os perfis de LinkedIn prontos a utilizar.",
-  },
-  {
-    tag: "Pesquisa",
-    title: "Construção de listas",
-    body: "Identificamos empresas e decisores que correspondem ao teu cliente ideal. Cruzamos fontes, enriquecemos os dados e verificamos os contactos antes de iniciar qualquer abordagem.",
-  },
-  {
-    tag: "Execução",
-    title: "Mensagens personalizadas",
-    body: "Escrevemos sequências de e-mail e mensagens de LinkedIn adaptadas a cada segmento. A pesquisa sobre a empresa e o decisor torna cada contacto relevante e genuíno.",
-  },
-  {
-    tag: "Crescimento",
-    title: "Lançamento e otimização",
-    body: "Lançamos as campanhas, acompanhamos as respostas e analisamos os resultados. Ajustamos listas e mensagens de forma contínua para gerar reuniões qualificadas e crescimento sustentável.",
-  },
-];
-
-function FlowGraphic({ layers }: { layers: number }) {
-  return (
-    <svg viewBox="0 0 120 168" className="h-44 w-32 text-foreground" fill="none" aria-hidden="true">
-      {Array.from({ length: layers }, (_, index) => {
-        const y = 104 - index * 29;
-        return (
-          <path
-            key={index}
-            d={`M60 ${y} L108 ${y + 24} L108 ${y + 32} L60 ${y + 56} L12 ${y + 32} L12 ${y + 24} Z`}
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-        );
-      })}
-    </svg>
-  );
-}
-
-function Ecosystem() {
-  return (
-    <section id="ecossistema" className="section max-w-none bg-card/30 border-y border-border">
-      <h2 className="display text-center">
-        O nosso <em>processo.</em>
-      </h2>
-
-      <div className="mt-14 mx-auto max-w-[1500px] grid sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5">
-        {STEPS.map((s, i) => (
-          <article key={s.title} className="min-w-0 rounded-md border border-border bg-card p-5 sm:p-6 flex flex-col min-h-[510px] sm:min-h-[530px]">
-            <div className="flex items-start justify-between gap-3 text-xs sm:text-sm text-muted-foreground uppercase">
-              <span>{String(i + 1).padStart(2, "0")}</span>
-              <span className="text-right">{s.tag}</span>
-            </div>
-            <h3 className="text-center text-2xl sm:text-[1.7rem] leading-tight mt-8 min-h-[4.5rem] flex items-start justify-center">{s.title}</h3>
-            <div className="flex-1 flex items-end justify-center pb-5">
-              <FlowGraphic layers={i + 1} />
-            </div>
-            <p className="text-sm sm:text-base leading-relaxed text-foreground/85 min-h-[9.5rem]">{s.body}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-const METHOD = [
-  { phase: "FASE 1 · ARRANQUE", window: "Semana 0 → Semana 3", items: [
-    { t: "Onboarding & ICP", d: "Workshop inicial, definição de ICP, mercados-alvo e ângulos de mensagem." },
-    { t: "Setup técnico", d: "Domínios de e-mail, autenticação, warm-up e preparação dos perfis de LinkedIn." },
-    { t: "Listas + Mensagens v1", d: "Primeira lista de decisores e primeiras cadências (e-mail e LinkedIn) prontas." },
-  ]},
-  { phase: "FASE 2 · ESCALA", window: "Semana 4 → contínuo", items: [
-    { t: "Envio em escala", d: "Volume diário ajustado, com monitorização de entregabilidade e limites do LinkedIn." },
-    { t: "Otimização semanal", d: "Análise de KPIs, novos testes, refinamento de listas e mensagens." },
-    { t: "Reuniões consistentes", d: "Reporting semanal, briefings de leads e marcações no teu calendário." },
-  ]},
-];
-
-function Method() {
-  return (
-    <section id="metodo" className="section">
-      <span className="eyebrow">Método</span>
-      <h2 className="display mt-6 max-w-4xl">
-        Em <em>3 semanas</em> o teu outreach está no ar.
-      </h2>
-
-      <div className="mt-12 grid md:grid-cols-2 gap-6">
-        {METHOD.map((phase) => (
-          <div key={phase.phase} className="card-surface p-8">
-            <div className="flex items-baseline justify-between mb-2">
-              <div className="text-xs uppercase tracking-[0.18em] text-foreground">{phase.phase}</div>
-            </div>
-            <div className="text-sm text-muted-foreground mb-8">{phase.window}</div>
-            <ul className="space-y-6">
-              {phase.items.map((it, i) => (
-                <li key={it.t} className="flex gap-4">
-                  <div className="num-display text-2xl text-muted-foreground/50 shrink-0 w-10">{String(i + 1).padStart(2, "0")}</div>
-                  <div>
-                    <div className="font-medium">{it.t}</div>
-                    <div className="text-sm text-muted-foreground mt-1">{it.d}</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Testimonials() {
-  return (
-    <section id="cases" className="py-32 border-y border-border">
-      <div className="max-w-7xl mx-auto px-6 mb-16">
-        <span className="eyebrow">Testemunhos</span>
-        <h2 className="display mt-6 max-w-4xl">
-          Deixamos os <em>clientes falar</em> por nós.
-        </h2>
-      </div>
-
-      <div className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
-        <div className="flex items-start gap-6 marquee-track-slow py-4">
-          {Array.from({ length: 3 }).flatMap((_, loop) =>
-            TESTIMONIALS.map((img, i) => (
-              <div
-                key={`${loop}-${i}`}
-                className="card-surface w-[340px] sm:w-[420px] shrink-0 overflow-hidden bg-[#1c1030]"
-              >
-                <img
-                  src={img}
-                  alt={`Mensagem de cliente ${i + 1}`}
-                  loading="lazy"
-                  className="w-full h-auto block"
-                />
-              </div>
-            )),
-          )}
         </div>
       </div>
     </section>
   );
 }
 
-function CaseStudy() {
-  const [playing, setPlaying] = useState(false);
+function Faq() {
+  const { t } = useI18n();
   return (
-    <section id="caso-de-estudo" className="section">
-      <div className="max-w-3xl mb-12">
-        <span className="eyebrow">Caso de estudo</span>
-        <h2 className="display mt-6">
-          Como funciona <em>na prática</em>.
-        </h2>
-        <p className="mt-6 text-muted-foreground text-lg">
-          Um caso real de estruturação de outreach: o que foi implementado, como
-          foi executado e que resultados gerou.
-        </p>
-      </div>
-
-      <div className="card-surface aspect-video relative overflow-hidden grid place-items-center">
-        {playing ? (
-          <iframe
-            className="absolute inset-0 w-full h-full"
-            src="https://www.youtube.com/embed/wBfk9ibO37A?autoplay=1&rel=0&modestbranding=1&playsinline=1"
-            title="Caso de estudo Digital Wave"
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-            allowFullScreen
-          />
-        ) : (
-          <button
-            type="button"
-            onClick={() => setPlaying(true)}
-            className="absolute inset-0 w-full h-full group"
-            aria-label="Reproduzir caso de estudo"
-          >
-            <img
-              src="https://img.youtube.com/vi/wBfk9ibO37A/maxresdefault.jpg"
-              alt="Pré-visualização do caso de estudo"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-70 transition"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/30 to-background/70" />
-            <div className="relative grid place-items-center h-full">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary text-primary-foreground grid place-items-center group-hover:scale-110 transition">
-                <svg width="26" height="30" viewBox="0 0 22 26" fill="currentColor"><path d="M22 13L0 26V0z" /></svg>
-              </div>
-            </div>
-          </button>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function Team() {
-  return (
-    <section id="equipa" className="section">
-      <span className="eyebrow">A equipa</span>
-      <h2 className="display mt-6 max-w-4xl">
-        Quem está por trás da <em>Digital Wave.</em>
-      </h2>
-
-      <div className="mt-12 md:mt-16 grid md:grid-cols-[300px_1fr] lg:grid-cols-[360px_1fr] gap-8 md:gap-10 items-start">
-        <div className="card-surface p-4">
-          <div className="aspect-[4/5] rounded-xl bg-muted/40 overflow-hidden">
-            <video
-              src={tiagoVideo}
-              controls
-              playsInline
-              preload="metadata"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="mt-4 px-2 pb-2">
-            <div className="text-lg font-medium">Tiago Barbosa</div>
-            <div className="text-sm text-muted-foreground">Founder · Digital Wave</div>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-3xl md:text-4xl max-w-2xl">
-            A missão, o método e a forma como colocamos decisores B2B na tua agenda.
-          </h3>
-          <p className="mt-6 text-muted-foreground text-lg leading-relaxed max-w-2xl">
-            Neste vídeo, o Tiago explica em primeira pessoa como estruturamos operações
-            de outreach para empresas B2B: LinkedIn Outreach, Email Marketing e todo o processo que
-            transforma contactos frios em reuniões com decisores.
-          </p>
-          <p className="mt-4 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
-            E o que torna a Digital Wave diferente: equipa dedicada por cliente,
-            foco em decisores qualificados e total transparência sobre números,
-            processos e resultados.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function QuizCta() {
-  return (
-    <section id="quiz" className="section">
-      <div className="card-surface p-10 md:p-16 relative overflow-hidden">
-        
-        <div className="relative grid md:grid-cols-[1fr_auto] gap-8 items-end">
-          <div>
-            <span className="eyebrow">Diagnóstico gratuito</span>
-            <h2 className="display mt-6 max-w-3xl">
-              Descobre a <em>saúde do teu sistema</em> de aquisição.
-            </h2>
-            <p className="mt-6 max-w-2xl text-muted-foreground text-base sm:text-lg">
-              8 perguntas, 4 pilares críticos. No fim recebes um diagnóstico claro
-              do que está a travar o crescimento e o que ativar a seguir.
-            </p>
-          </div>
-          <Link to="/quiz" className="btn-primary">
-            Faz o Quiz <span aria-hidden>→</span>
-          </Link>
+    <section id="perguntas" className="bg-background">
+      <div className={`${wrap} max-w-3xl`}>
+        <h2 className="text-3xl md:text-4xl">{t.faq.title}</h2>
+        <div className="mt-8 divide-y divide-border border-y border-border">
+          {t.faq.items.map(([q, a]) => (
+            <details key={q} className="group py-4">
+              <summary className="cursor-pointer list-none flex justify-between gap-4 font-semibold text-lg">
+                {q}<span className="text-2xl leading-none group-open:rotate-45 transition" aria-hidden>+</span>
+              </summary>
+              <p className="mt-3 text-muted-foreground">{a}</p>
+            </details>
+          ))}
         </div>
       </div>
     </section>
@@ -678,90 +410,13 @@ function QuizCta() {
 }
 
 function FinalCta() {
+  const { t } = useI18n();
   return (
-    <section id="contacto" className="section">
-      <div className="card-surface p-10 md:p-20 text-center relative overflow-hidden">
-        
-        <div className="relative">
-          <span className="eyebrow">Está na hora</span>
-          <h2 className="display mt-6 max-w-3xl mx-auto">
-            A tua próxima reunião com um decisor B2B começa <em>aqui.</em>
-          </h2>
-          <p className="mt-6 text-lg text-muted-foreground max-w-xl mx-auto">
-            30 minutos contigo. Mostramos-te o que já fizemos, vemos se faz sentido
-            trabalharmos juntos. Sem rodeios, sem pitch decks.
-          </p>
-          <div className="mt-10 flex justify-center">
-            <CtaButton>Agendar a minha reunião agora</CtaButton>
-          </div>
-          <div className="mt-10 pt-10 border-t border-border max-w-md mx-auto text-sm">
-            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">Ou envia email</div>
-            <a href="mailto:hello@tiagodigitalwave.eu" className="text-foreground hover:underline">
-              hello@tiagodigitalwave.eu
-            </a>
-          </div>
-        </div>
+    <section className="bg-primary text-primary-foreground">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-20 text-center">
+        <h2 className="text-3xl md:text-5xl">{t.final.title}</h2>
+        <BookButton className="btn-dark mt-8" />
       </div>
     </section>
-  );
-}
-
-function Awards() {
-  return (
-    <section id="premios" className="section">
-      <span className="eyebrow">Prémios e certificações</span>
-      <h2 className="display mt-6 max-w-4xl">
-        Os nossos <em>resultados</em>, reconhecidos por quem manda no mercado.
-      </h2>
-      <p className="mt-6 max-w-3xl text-muted-foreground text-base sm:text-lg leading-relaxed">
-        Prémios e certificações que provam a qualidade do trabalho que entregamos
-        em geração de leads B2B, automação e segurança da informação.
-      </p>
-      <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {AWARDS.map((award) => (
-          <article
-            key={award.label}
-            className="card-surface p-6 flex flex-col items-center text-center gap-4"
-          >
-            <div className="flex-1 flex items-center justify-center py-4">
-              <img
-                src={award.src}
-                alt={award.alt}
-                loading="lazy"
-                className="max-h-48 w-auto max-w-full object-contain"
-              />
-            </div>
-            <p className="text-sm leading-relaxed text-muted-foreground">{award.label}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Page() {
-  return (
-    <div className="dark">
-      <Nav />
-      <main>
-        <Hero />
-        <Partners />
-        <VideoBlock />
-        <Problem />
-        <Offer />
-        <Benefits />
-        <Ecosystem />
-        <Method />
-        <Compliance />
-        <Testimonials />
-        <CaseStudy />
-        <Awards />
-        <Team />
-        <QuizCta />
-        <FinalCta />
-      </main>
-      <Footer />
-      <CookieBanner />
-    </div>
   );
 }
