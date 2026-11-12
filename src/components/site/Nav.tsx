@@ -9,7 +9,7 @@ export function Logo() {
   return (
     <span className="flex items-center gap-2.5">
       <img src={logo} alt="Digital Wave" width={36} height={36} className="w-9 h-9 object-contain" style={{ filter: "invert(1) brightness(2)", mixBlendMode: "screen" }} />
-      <span className="font-bold text-ink-foreground">Digital Wave</span>
+      <span className="font-bold text-ink-foreground whitespace-nowrap">Digital Wave</span>
     </span>
   );
 }
@@ -31,8 +31,8 @@ export function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-2 sm:gap-3">
-          <LangSwitch className="hidden sm:inline-flex" />
-          <BookButton className="btn-primary !py-2 !px-3 sm:!px-4 !text-sm" />
+          <span className="hidden sm:block"><LangSwitch /></span>
+          <BookButton className="btn-primary !py-2 !px-3 sm:!px-4 !text-sm whitespace-nowrap" />
           <button type="button" className="xl:hidden p-2" aria-label={t.nav.menu} aria-expanded={open} onClick={() => setOpen(!open)}>
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -43,7 +43,7 @@ export function Nav() {
           {links.map(([h, l]) => (
             <Link key={h} to="/" hash={h} onClick={() => setOpen(false)} className="block py-3 border-b border-ink-foreground/10">{l}</Link>
           ))}
-          <LangSwitch className="mt-4 sm:hidden" />
+          <div className="mt-4 sm:hidden"><LangSwitch /></div>
         </nav>
       )}
     </header>
