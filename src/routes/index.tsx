@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Users, Linkedin, CalendarCheck, Play, Download, Mail, CheckCircle2 } from "lucide-react";
+import { useState, type ReactNode } from "react";
+import { Users, Linkedin, CalendarCheck, Play, Download, Mail } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import { BookButton } from "@/components/site/Booking";
@@ -29,9 +29,9 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <div id="top" className="min-h-screen overflow-x-hidden bg-background text-foreground">
+    <div id="top" className="site-home min-h-screen overflow-x-hidden bg-background text-foreground">
       <Nav />
-      <main className="pt-16">
+      <main className="pt-[72px]">
         <Hero />
         <Stats />
         <Why />
@@ -51,50 +51,28 @@ function Home() {
 }
 
 function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add("in"); io.disconnect(); } }, { threshold: 0.15 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return <div ref={ref} className={`reveal ${className}`}>{children}</div>;
+  return <div className={className}>{children}</div>;
 }
 
-const wrap = "max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24";
+const wrap = "site-wrap";
 
 function Hero() {
   const { t } = useI18n();
-  const cards = [
-    { day: "Ter 14:00", co: "Diretor Comercial", via: t.hero.via.linkedin },
-    { day: "Qua 10:30", co: "CEO", via: t.hero.via.email },
-    { day: "Qui 16:00", co: "Head of Sales", via: t.hero.via.linkedin },
-  ];
   return (
     <section className="bg-ink text-ink-foreground">
-      <div className={`${wrap} grid lg:grid-cols-2 gap-12 items-center`}>
-        <div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]">{t.hero.h1}</h1>
+      <div className={`${wrap} grid grid-cols-12 gap-8 items-center`}>
+        <div className="hero-copy">
+          <h1 className="hero-title">{t.hero.h1}</h1>
           <p className="mt-6 text-lg text-ink-foreground/80 max-w-xl">{t.hero.sub}</p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <div className="hero-actions mt-8 flex flex-col sm:flex-row gap-3">
             <BookButton className="btn-primary justify-center" />
             <a href="#guia" className="btn-outline-light">{t.hero.guide}</a>
           </div>
         </div>
-        <div className="relative" aria-hidden>
-          <div className="grid gap-4 max-w-md mx-auto">
-            {cards.map((c, i) => (
-              <div key={i} className="rounded-xl bg-ink-foreground text-ink p-4 flex items-center gap-4 shadow-lg" style={{ marginLeft: `${i * 8}%` }}>
-                <div className="w-12 h-12 rounded-lg bg-primary grid place-items-center shrink-0"><CalendarCheck size={22} /></div>
-                <div className="min-w-0">
-                  <div className="text-xs text-muted-foreground">{c.day} · {c.via}</div>
-                  <div className="font-semibold truncate">{c.co}</div>
-                </div>
-                <span className="ml-auto text-xs font-semibold flex items-center gap-1 shrink-0"><CheckCircle2 size={14} /> <span className="hidden sm:inline">{t.hero.confirmed}</span></span>
-              </div>
-            ))}
-          </div>
+        <div className="hero-symbol" aria-hidden="true">
+          <svg viewBox="0 0 260 340" role="presentation">
+            <path d="M-45 310 130 170 305 310 M-45 265 130 125 305 265 M-45 220 130 80 305 220 M-45 175 130 35 305 175" strokeWidth="2" />
+          </svg>
         </div>
       </div>
     </section>
@@ -103,27 +81,7 @@ function Hero() {
 
 function Count({ to, prefix = "+", suffix = "" }: { to: number; prefix?: string; suffix?: string }) {
   const { lang } = useI18n();
-  const ref = useRef<HTMLSpanElement>(null);
-  const [v, setV] = useState(to);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    setV(0);
-    const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
-      io.disconnect();
-      const start = performance.now();
-      const tick = (n: number) => {
-        const p = Math.min(1, (n - start) / 1400);
-        setV(Math.round(to * (1 - Math.pow(1 - p, 3))));
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [to]);
-  return <span ref={ref}>{prefix}{v.toLocaleString(lang === "pt" ? "pt-PT" : "en-GB").replace(/\u00a0|\u202f/g, ".")}{suffix}</span>;
+  return <span>{prefix}{to.toLocaleString(lang === "pt" ? "pt-PT" : "en-GB").replace(/\u00a0|\u202f/g, ".")}{suffix}</span>;
 }
 
 function Stats() {
@@ -135,12 +93,12 @@ function Stats() {
     { el: <Count to={20} /> },
   ];
   return (
-    <section className="bg-primary text-primary-foreground">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+    <section className="stat-strip bg-background text-foreground">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-12 grid grid-cols-2 lg:grid-cols-4 gap-8">
         {items.map((it, i) => (
-          <div key={i}>
-            <div className="text-4xl md:text-5xl font-bold tabular-nums">{it.el}</div>
-            <div className="mt-2 font-medium">{t.stats[i]}</div>
+          <div key={i} className="stat-item">
+            <div className="stat-number">{it.el}</div>
+            <div className="stat-label">{t.stats[i]}</div>
           </div>
         ))}
       </div>
@@ -150,9 +108,9 @@ function Stats() {
 
 function VideoPlaceholder({ label }: { label: string }) {
   return (
-    <div className="aspect-video rounded-2xl bg-ink text-ink-foreground grid place-items-center">
-      <div className="text-center">
-        <div className="w-16 h-16 mx-auto rounded-full bg-primary text-primary-foreground grid place-items-center"><Play size={26} /></div>
+    <div className="video-placeholder">
+      <div>
+        <div className="play-mark"><Play size={26} /></div>
         <div className="mt-3 text-sm text-ink-foreground/80">{label}</div>
       </div>
     </div>
@@ -172,8 +130,8 @@ function Why() {
             {t.why.items.map(([h, p], i) => {
               const I = icons[i];
               return (
-                <Reveal key={h} className="flex gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary text-primary-foreground grid place-items-center shrink-0"><I size={22} /></div>
+                <Reveal key={h} className="editorial-benefit flex gap-4">
+                  <div className="pt-1 shrink-0"><I size={22} /></div>
                   <div><h3 className="text-lg">{h}</h3><p className="text-muted-foreground mt-1">{p}</p></div>
                 </Reveal>
               );
@@ -188,16 +146,15 @@ function Why() {
 function Process() {
   const { t } = useI18n();
   return (
-    <section id="processo" className="bg-muted">
+    <section id="processo" className="bg-background">
       <div className={wrap}>
         <h2 className="text-3xl md:text-4xl">{t.process.title}</h2>
         <div className="relative mt-12">
-          <div className="hidden lg:block absolute top-7 left-[12%] right-[12%] h-0.5 bg-ink/15" aria-hidden />
           <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
             {t.process.steps.map(([h, p], i) => (
               <li key={h}>
-                <Reveal className="card-soft p-6 h-full">
-                  <div className="w-14 h-14 rounded-full bg-primary text-primary-foreground grid place-items-center font-bold text-lg">0{i + 1}</div>
+                <Reveal className="editorial-step h-full">
+                  <div className="step-number">0{i + 1}</div>
                   <h3 className="mt-5 text-xl">{h}</h3>
                   <p className="mt-2 text-muted-foreground">{p}</p>
                 </Reveal>
@@ -219,17 +176,17 @@ function Guide() {
     w.plausible?.("guide_download");
   };
   return (
-    <section id="guia" className="bg-ink text-ink-foreground">
+    <section id="guia" className="bg-muted text-foreground">
       <div className={`${wrap} grid md:grid-cols-[minmax(0,320px)_1fr] gap-10 items-center`}>
         {/* [PDF FINAL A ENVIAR] capa provisória */}
-        <div className="aspect-[3/4] max-w-[260px] w-full mx-auto rounded-xl bg-ink-foreground text-ink p-6 flex flex-col justify-between shadow-lg">
+        <div className="aspect-[3/4] max-w-[260px] w-full guide-cover bg-background text-foreground p-6 flex flex-col justify-between">
           <div className="flex gap-2"><Mail size={22} /><Linkedin size={22} /></div>
           <div className="font-bold text-xl leading-tight">{t.guide.cover}</div>
-          <div className="h-2 w-16 bg-primary rounded" />
+          <div className="h-px w-16 bg-foreground" />
         </div>
         <div>
           <h2 className="text-3xl md:text-4xl">{t.guide.title}</h2>
-          <p className="mt-4 text-ink-foreground/80 text-lg">{t.guide.sub}</p>
+          <p className="mt-4 text-muted-foreground text-lg">{t.guide.sub}</p>
           <a href="/guia-campanha-email-linkedin.pdf" download onClick={track} className="btn-primary mt-8">
             <Download size={18} /> {t.guide.cta}
           </a>
@@ -271,7 +228,7 @@ function Calculator() {
       <div className={wrap}>
         <h2 className="text-3xl md:text-4xl max-w-2xl">{t.calc.title}</h2>
         <div className="mt-10 grid lg:grid-cols-2 gap-8">
-          <div className="card-soft p-6 space-y-5">
+          <div className="border-t border-border pt-6 space-y-6">
             {field("c1", t.calc.q1, a, setA, a !== "" && !okA && t.calc.err1)}
             {field("c2", t.calc.q2, b, setB, okA && b !== "" && nb === null && t.calc.err)}
             {field("c3", t.calc.q3, c, setC, okB && c !== "" && nc === null && t.calc.err)}
@@ -279,13 +236,13 @@ function Calculator() {
           </div>
           <div className="space-y-3" aria-live="polite">
             {results.map((x, i) => x.show ? (
-              <div key={i} className="rounded-xl bg-muted p-5">
+              <div key={i} className="result-row">
                 <div className="text-sm text-muted-foreground">{i + 1}. {x.label}</div>
                 <div className="text-3xl font-bold mt-1">{x.value}</div>
                 {x.extra && <div className="text-sm text-muted-foreground mt-1">{x.extra}</div>}
               </div>
             ) : (
-              <div key={i} className="rounded-xl border border-dashed border-border p-5 text-sm text-muted-foreground">{i + 1}. {x.label}: {t.calc.fill}</div>
+              <div key={i} className="result-row text-sm text-muted-foreground">{i + 1}. {x.label}: {t.calc.fill}</div>
             ))}
             <p className="text-sm text-muted-foreground">{t.calc.note}</p>
           </div>
@@ -302,7 +259,7 @@ function YouTubeLite({ id, title }: { id: string; title: string }) {
   return (
     <button type="button" onClick={() => setOn(true)} className="relative w-full aspect-video block group" aria-label={t.cases.play}>
       <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" className="w-full h-full object-cover" />
-      <span className="absolute inset-0 grid place-items-center"><span className="w-14 h-14 rounded-full bg-primary text-primary-foreground grid place-items-center group-hover:scale-105 transition"><Play size={24} /></span></span>
+      <span className="absolute inset-0 grid place-items-center"><span className="play-mark bg-ink text-ink-foreground"><Play size={24} /></span></span>
     </button>
   );
 }
@@ -321,9 +278,9 @@ function Cases() {
         <h2 className="text-3xl md:text-4xl max-w-2xl">{t.cases.title}</h2>
         <div className="mt-10 grid md:grid-cols-3 gap-6">
           {cases.map((c, i) => (
-            <Reveal key={i} className="card-soft overflow-hidden flex flex-col">
+            <Reveal key={i} className="case-item overflow-hidden flex flex-col">
               {c ? <YouTubeLite id={c.yt} title={c.company} /> : <div className="aspect-video bg-ink/5 grid place-items-center text-muted-foreground text-sm">{t.cases.soon}</div>}
-              <div className="p-5 flex-1 flex flex-col">
+              <div className="py-6 flex-1 flex flex-col">
                 <div className="font-semibold">{c ? c.company : t.cases.soon}</div>
                 <div className="text-sm text-muted-foreground">{c ? c.sector : ""}</div>
                 {c && (c.linkedin ? (
@@ -349,11 +306,11 @@ function Certs() {
   const { t } = useI18n();
   return (
     <section className="bg-background">
-      <div className={`${wrap} text-center`}>
+      <div className={wrap}>
         <h2 className="text-3xl md:text-4xl">{t.certs.title}</h2>
-        <div className="mt-10 flex flex-wrap justify-center gap-6">
+        <div className="mt-10 flex flex-wrap gap-16">
           {CERTS.map((c) => (
-            <div key={c.src} className="card-soft p-6 w-[220px] sm:w-[260px] grid place-items-center">
+            <div key={c.src} className="cert-item w-[220px] sm:w-[260px] grid place-items-center">
               <img src={c.src} alt={c.alt} loading="lazy" className="w-full h-48 object-contain rounded-xl" />
             </div>
           ))}
@@ -366,7 +323,7 @@ function Certs() {
 function About() {
   const { t } = useI18n();
   return (
-    <section id="sobre" className="bg-muted">
+    <section id="sobre" className="bg-background">
       <div className={wrap}>
         <h2 className="text-3xl md:text-4xl">{t.about.title}</h2>
         <div className="mt-10 grid lg:grid-cols-2 gap-10 items-center">
@@ -392,9 +349,9 @@ function Faq() {
   const { t } = useI18n();
   return (
     <section id="perguntas" className="bg-background">
-      <div className={`${wrap} max-w-3xl`}>
+      <div className={wrap}>
         <h2 className="text-3xl md:text-4xl">{t.faq.title}</h2>
-        <div className="mt-8 divide-y divide-border border-y border-border">
+        <div className="mt-10 max-w-3xl divide-y divide-border border-y border-border">
           {t.faq.items.map(([q, a]) => (
             <details key={q} className="group py-4">
               <summary className="cursor-pointer list-none flex justify-between gap-4 font-semibold text-lg">
@@ -412,10 +369,10 @@ function Faq() {
 function FinalCta() {
   const { t } = useI18n();
   return (
-    <section className="bg-primary text-primary-foreground">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-20 text-center">
+    <section className="final-band bg-ink text-ink-foreground">
+      <div className="site-wrap text-center">
         <h2 className="text-3xl md:text-5xl">{t.final.title}</h2>
-        <BookButton className="btn-dark mt-8" />
+        <BookButton className="btn-outline-light mt-8" />
       </div>
     </section>
   );

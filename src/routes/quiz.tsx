@@ -51,6 +51,7 @@ export const Route = createFileRoute("/quiz")({
         content: "17 perguntas para medir a saúde do teu sistema de aquisição de clientes B2B, com relatório em PDF.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "https://digitalwavept.lovable.app/quiz" },
     ],
     links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/quiz" }],

@@ -10,6 +10,7 @@ export const Route = createFileRoute("/cookies")({
       { property: "og:title", content: "Política de Cookies, Digital Wave" },
       { property: "og:description", content: "Que cookies usamos, para quê e como podes geri-los." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "https://digitalwavept.lovable.app/cookies" },
     ],
     links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/cookies" }],

@@ -10,6 +10,7 @@ export const Route = createFileRoute("/politica-de-privacidade")({
       { property: "og:title", content: "Política de Privacidade, Digital Wave" },
       { property: "og:description", content: "Como tratamos os teus dados pessoais, em conformidade com o RGPD e a Lei n.º 58/2019." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "https://digitalwavept.lovable.app/politica-de-privacidade" },
     ],
     links: [{ rel: "canonical", href: "https://digitalwavept.lovable.app/politica-de-privacidade" }],

@@ -23,9 +23,9 @@ export function Nav() {
   ] as const;
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-ink text-ink-foreground border-b border-ink-foreground/10">
-      <div className="mx-auto max-w-7xl px-4 md:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="mx-auto max-w-[1200px] px-4 md:px-6 h-[72px] flex items-center justify-between gap-4">
         <Link to="/" hash="top" aria-label="Digital Wave"><Logo /></Link>
-        <nav className="hidden xl:flex items-center gap-6 text-sm" aria-label="Principal">
+        <nav className="hidden xl:flex items-center gap-5 text-[15px]" aria-label="Principal">
           {links.map(([h, l]) => (
             <Link key={h} to="/" hash={h} className="text-ink-foreground/85 hover:text-ink-foreground">{l}</Link>
           ))}

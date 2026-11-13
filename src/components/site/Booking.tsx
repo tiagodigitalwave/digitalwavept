@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useI18n } from "@/lib/i18n";
+import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/lib/content";
 
 const Ctx = createContext<() => void>(() => {});
@@ -42,8 +43,8 @@ export function BookButton({ className = "btn-primary", children }: { className?
   const open = useBooking();
   const { t } = useI18n();
   return (
-    <button type="button" onClick={open} className={className}>
+    <Button type="button" variant="ghost" onClick={open} className={className}>
       {children ?? t.nav.book}
-    </button>
+    </Button>
   );
 }
