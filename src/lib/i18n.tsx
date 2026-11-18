@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 import { dict, type Lang } from "./content";
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (typeof dict)["pt"] };
@@ -30,17 +31,17 @@ export function useI18n() {
 export function LangSwitch({ className = "" }: { className?: string }) {
   const { lang, setLang } = useI18n();
   return (
-    <div className={`inline-flex rounded-md border border-ink-foreground/30 p-0.5 text-xs font-semibold ${className}`} role="group" aria-label="Idioma / Language">
+    <div className={`language-switch inline-flex border border-ink-foreground/30 p-0.5 text-xs font-semibold ${className}`} role="group" aria-label="Idioma / Language">
       {(["pt", "en"] as const).map((l) => (
-        <button
+        <Button variant="ghost"
           key={l}
           type="button"
           onClick={() => setLang(l)}
           aria-pressed={lang === l}
-          className={`px-2 py-1 rounded uppercase ${lang === l ? "bg-ink-foreground text-ink" : "text-ink-foreground"}`}
+          className={`language-option h-auto px-2 py-1 uppercase ${lang === l ? "bg-ink-foreground text-ink" : "text-ink-foreground"}`}
         >
           {l}
-        </button>
+        </Button>
       ))}
     </div>
   );

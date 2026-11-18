@@ -18,14 +18,14 @@ export function Nav() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const links = [
-    ["processo", t.nav.process], ["guia", t.nav.guide], ["calculadora", t.nav.calc], ["casos", t.nav.cases],
+    ["o-que-fazemos", t.nav.what], ["processo", t.nav.process], ["calculadora", t.nav.calc], ["casos", t.nav.cases],
     ["sobre", t.nav.about], ["perguntas", t.nav.faq], ["contacto", t.nav.contact],
   ] as const;
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-ink text-ink-foreground border-b border-ink-foreground/10">
       <div className="mx-auto max-w-[1200px] px-4 md:px-6 h-[72px] flex items-center justify-between gap-4">
         <Link to="/" hash="top" aria-label="Digital Wave"><Logo /></Link>
-        <nav className="hidden xl:flex items-center gap-5 text-[15px]" aria-label="Principal">
+        <nav className="hidden xl:flex items-center gap-3 text-[15px]" aria-label={t.nav.menu}>
           {links.map(([h, l]) => (
             <Link key={h} to="/" hash={h} className="text-ink-foreground/85 hover:text-ink-foreground">{l}</Link>
           ))}

@@ -18,16 +18,14 @@ export function Footer() {
           <div className="font-semibold mb-3">{t.footer.contact}</div>
           <a href={`mailto:${CONTACT.email}`} className="block hover:underline break-all">{CONTACT.email}</a>
           <a href={CONTACT.phoneHref} className="block hover:underline">{CONTACT.phoneDisplay}</a>
-          <div className="text-ink-foreground/75">{t.footer.address}: {CONTACT.address}</div>
+          {CONTACT.address && !CONTACT.address.startsWith("[") && <div className="text-ink-foreground/75">{t.footer.address}: {CONTACT.address}</div>}
         </div>
         <div className="text-sm space-y-2">
           <div className="font-semibold mb-3">{t.footer.follow}</div>
           {/* [A PREENCHER] LinkedIn da empresa */}
           {CONTACT.linkedinCompany ? (
             <a href={CONTACT.linkedinCompany} target="_blank" rel="noopener noreferrer" className="block hover:underline">LinkedIn</a>
-          ) : (
-            <span className="block text-ink-foreground/60">LinkedIn [A PREENCHER]</span>
-          )}
+          ) : null}
           <a href={CONTACT.youtubeChannel} target="_blank" rel="noopener noreferrer" className="block hover:underline">YouTube</a>
         </div>
       </div>

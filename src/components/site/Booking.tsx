@@ -14,7 +14,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     <Ctx.Provider value={() => setOpen(true)}>
       {children}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-3xl w-[calc(100%-2rem)] p-0 overflow-hidden bg-background text-foreground">
+        <DialogContent closeLabel={t.modal.close} className="max-w-3xl w-[calc(100%-2rem)] p-0 overflow-hidden bg-background text-foreground">
           <div className="p-5 border-b border-border">
             <DialogTitle className="text-xl font-bold">{t.modal.title}</DialogTitle>
             <DialogDescription className="sr-only">Cal.com</DialogDescription>

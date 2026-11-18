@@ -8,10 +8,24 @@ export function parseNum(v: string): number | null {
 export function calculate(closeOf10: number, avgValue: number, clientsPerMonth: number) {
   const tenMeetings = closeOf10 * avgValue;
   const monthlyGoal = clientsPerMonth * avgValue;
+  const fourMonths = tenMeetings * 4;
+  const yearGoal = monthlyGoal * 12;
   return {
     tenMeetings,
     monthlyGoal,
-    fourMonths: tenMeetings * 4,
-    yearGoal: monthlyGoal * 12,
+    fourMonths,
+    yearGoal,
+    contribution: yearGoal > 0 ? Math.min(100, (fourMonths / yearGoal) * 100) : null,
   };
+}
+
+export function formatEuro(value: number, locale: string) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency", currency: "EUR", maximumFractionDigits: 0, useGrouping: "always",
+  }).format(value).replace(/[\u00a0\u202f]/g, " ");
+}
+
+export function formatContribution(value: number, locale: string) {
+  const number = new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
+  return `${number}${locale === "pt-PT" ? " " : ""}%`;
 }
