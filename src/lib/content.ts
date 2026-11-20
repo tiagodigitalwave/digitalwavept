@@ -231,3 +231,41 @@ const en: Dict = {
 };
 
 export const dict: Record<Lang, Dict> = { pt, en };
+
+// English counterparts of the existing Portuguese legal pages.
+export const legalEnglish = {
+  terms: {
+    title: "Terms and Conditions", sections: [
+      ["1. Identification", "This website is owned by Digital Wave, based in Portugal. Contact us at hello@infodigitalwave.pt. In these terms, ‘Digital Wave’, ‘we’ and ‘the company’ refer to the website owner."],
+      ["2. Purpose", "These Terms and Conditions govern access to and use of tiagodigitalwave.eu and the LinkedIn Outreach and Email Marketing B2B services provided by Digital Wave, in accordance with Portuguese legislation, including the Civil Code, Law no. 7/2004 of 7 January, Decree-Law no. 24/2014 and Regulation (EU) 2016/679 (GDPR)."],
+      ["3. Acceptance", "By using this website, you accept these Terms in full. If you disagree with any provision, you should not use the website or our services."],
+      ["4. Services", "Digital Wave provides commercial acquisition services by email for B2B companies, including list building, sending infrastructure, copywriting, sequence management and reply qualification. Services are agreed following a meeting and a specific commercial proposal."],
+      ["5. Intellectual property", "All website content, including text, graphics, logos and code, is owned by or licensed to Digital Wave and protected by the Portuguese Code of Copyright and Related Rights (Decree-Law no. 63/85). Reproduction, distribution or modification without prior written permission is prohibited."],
+      ["6. Limitation of liability", "Digital Wave is not responsible for interruptions, errors or temporary unavailability of the website. Its content is for information purposes and may be updated without prior notice."],
+      ["7. Applicable law and jurisdiction", "These Terms are governed by Portuguese law. The courts of Porto have jurisdiction over disputes, with express waiver of any other jurisdiction. Alternatively, users may refer to the European online dispute resolution platform at ec.europa.eu/consumers/odr."],
+      ["8. Contact", "For questions about these Terms, contact hello@infodigitalwave.pt."],
+    ],
+  },
+  privacy: {
+    title: "Privacy Policy", sections: [
+      ["1. Data controller", "Digital Wave is responsible for processing your personal data. Contact us at hello@infodigitalwave.pt. This Policy follows Regulation (EU) 2016/679 (GDPR) and Portuguese Law no. 58/2019 of 8 August."],
+      ["2. Data collected", "We collect contact details supplied voluntarily, such as your name, email, company and role; browsing information such as your IP address, device type, browser and pages visited; and information collected through cookies, as set out in the Cookie Policy."],
+      ["3. Purposes and legal bases", "Responding to enquiries and booking meetings: steps prior to entering into a contract (GDPR Article 6(1)(b)). Providing agreed services: performance of a contract. Compliance with tax and accounting obligations: legal obligations. Website traffic analysis and improvements: consent for optional cookies."],
+      ["4. Retention periods", "Data is retained only for as long as necessary for these purposes and the applicable statutory periods, including ten years for tax purposes under the Portuguese VAT Code and Corporate Income Tax Code."],
+      ["5. Processors and transfers", "We use processors for hosting, email delivery and analytics. Where data is transferred internationally, for example outside the European Economic Area, we ensure appropriate safeguards, such as Standard Contractual Clauses approved by the European Commission."],
+      ["5.1. B2B data platforms and compliance information", "To identify and contact B2B decision-makers, we use platforms that comply with GDPR, Portuguese Law no. 58/2019 and major international data protection regimes, including CCPA. We do not use purchased lists of unknown origin. Apollo.io publishes its privacy information at https://www.apollo.io/privacy-policy. Lusha explains its consent basis and data subject rights at https://www.lusha.com/privacy-articles/please-show-me-where-i-have-consented/. Anyone contacted through our systems may exercise their rights of access, rectification, erasure and objection by replying to the email or writing to hello@infodigitalwave.pt."],
+      ["6. Your rights", "Under GDPR Articles 15 to 22, you have rights of access, rectification, erasure, restriction, portability and objection, and the right not to be subject to automated decisions. To exercise these rights, contact hello@infodigitalwave.pt. You may also complain to Portugal’s National Data Protection Commission (CNPD) at https://www.cnpd.pt."],
+      ["7. Security", "We adopt appropriate technical and organisational measures to protect your data against unauthorised access, loss or destruction, in accordance with GDPR Article 32."],
+      ["8. Changes", "This Policy may be updated at any time. The date of the latest revision is shown at the top. We recommend checking it periodically."],
+    ],
+  },
+  cookies: {
+    title: "Cookie Policy", sections: [
+      ["1. What cookies are", "Cookies are small text files stored on your device when you visit a website. They allow users to be recognised and improve the browsing experience. This Policy follows Portuguese Law no. 41/2004 of 18 August and Regulation (EU) 2016/679 (GDPR)."],
+      ["2. Types of cookies used", "Strictly necessary cookies support the website’s technical operation and record your cookie choice. Legal basis: legitimate interest. Duration: session or 12 months. Analytics cookies measure traffic and improve content in aggregate. Legal basis: consent. Duration: up to 24 months. Functional cookies remember preferences and optimise the experience. Legal basis: consent. Duration: up to 12 months."],
+      ["3. Consent", "On your first visit, a banner lets you accept or reject optional cookies. Strictly necessary cookies do not require consent under Article 5(2) of Portuguese Law no. 41/2004."],
+      ["4. Managing cookies", "You can change your preferences at any time by deleting cookies in your browser or resetting your choice here. Most browsers, including Chrome, Firefox, Safari and Edge, let you block or delete cookies in their settings. Blocking strictly necessary cookies may affect the website’s operation."],
+      ["5. Contact", "For questions about this Policy, contact hello@infodigitalwave.pt."],
+    ],
+  },
+};

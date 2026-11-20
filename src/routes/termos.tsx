@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useI18n } from "@/lib/i18n";
+import { EnglishLegal } from "@/components/site/EnglishLegal";
 import { Nav } from "@/components/site/Nav";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 
@@ -19,10 +21,12 @@ export const Route = createFileRoute("/termos")({
 });
 
 function TermosPage() {
+  const { lang } = useI18n();
   return (
     <div className="dark">
       <Nav />
       <main className="section pt-36 md:pt-44">
+        {lang === "en" ? <EnglishLegal page="terms" /> : <> 
         <span className="eyebrow">Legal</span>
         <h1 className="display mt-6">Termos e Condições</h1>
         <p className="mt-4 text-sm text-muted-foreground">Última atualização: {new Date().toLocaleDateString("pt-PT")}</p>
@@ -51,8 +55,8 @@ function TermosPage() {
           <section>
             <h2 className="text-2xl mb-3">3. Aceitação</h2>
             <p>
-              A utilização deste website implica a aceitação integral destes Termos. Caso não concorde
-              com qualquer cláusula, deverá abster-se de utilizar o website e os nossos serviços.
+              A utilização deste website implica a aceitação integral destes Termos. Caso não concordes
+              com qualquer cláusula, deves abster-te de utilizar o website e os nossos serviços.
             </p>
           </section>
 
@@ -101,7 +105,7 @@ function TermosPage() {
           <section>
             <h2 className="text-2xl mb-3">8. Contacto</h2>
             <p>
-              Para qualquer questão relacionada com estes Termos, contacte-nos através de{" "}
+              Para qualquer questão relacionada com estes Termos, contacta-nos através de{" "}
               <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
             </p>
           </section>
@@ -110,6 +114,7 @@ function TermosPage() {
             <Link to="/" className="text-wave underline">← Voltar ao início</Link>
           </p>
         </div>
+        </>}
       </main>
       <Footer />
       <CookieBanner />

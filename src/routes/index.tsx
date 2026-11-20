@@ -114,7 +114,7 @@ function Count({ to, prefix = "+", suffix = "" }: { to: number; prefix?: string;
 function Stats() {
   const { t, lang } = useI18n();
   const items = [
-    { el: <><Count to={100} /> {lang === "pt" ? "mil" : "k"}</> },
+    { el: <><Count to={100} /><span className="stat-unit"> {lang === "pt" ? "mil" : "k"}</span></> },
     { el: <Count to={1000} /> },
     { el: <Count to={35} /> },
     { el: <Count to={20} /> },

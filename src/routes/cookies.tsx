@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useI18n } from "@/lib/i18n";
+import { EnglishLegal } from "@/components/site/EnglishLegal";
 import { Nav } from "@/components/site/Nav";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 
@@ -19,6 +21,7 @@ export const Route = createFileRoute("/cookies")({
 });
 
 function CookiesPage() {
+  const { lang } = useI18n();
   const reset = () => {
     if (typeof window === "undefined") return;
     localStorage.removeItem("dw-cookies");
@@ -29,6 +32,7 @@ function CookiesPage() {
     <div className="dark">
       <Nav />
       <main className="section pt-36 md:pt-44">
+        {lang === "en" ? <EnglishLegal page="cookies" onReset={reset} /> : <> 
         <span className="eyebrow">Legal · Cookies</span>
         <h1 className="display mt-6">Política de Cookies</h1>
         <p className="mt-4 text-sm text-muted-foreground">Última atualização: {new Date().toLocaleDateString("pt-PT")}</p>
@@ -37,7 +41,7 @@ function CookiesPage() {
           <section>
             <h2 className="text-2xl mb-3">1. O que são cookies</h2>
             <p>
-              Cookies são pequenos ficheiros de texto guardados no seu dispositivo quando visita um
+              Cookies são pequenos ficheiros de texto guardados no teu dispositivo quando visitas um
               website. Permitem reconhecer o utilizador e melhorar a experiência de navegação.
               Esta política cumpre a Lei n.º 41/2004, de 18 de agosto (privacidade nas comunicações
               eletrónicas), e o Regulamento (UE) 2016/679 (RGPD).
@@ -83,7 +87,7 @@ function CookiesPage() {
           <section>
             <h2 className="text-2xl mb-3">3. Consentimento</h2>
             <p>
-              Na primeira visita ao website é apresentada uma faixa onde pode aceitar ou recusar os
+              Na primeira visita ao website é apresentada uma faixa onde podes aceitar ou recusar os
               cookies opcionais. Os cookies estritamente necessários não requerem consentimento, nos
               termos do n.º 2 do artigo 5.º da Lei n.º 41/2004.
             </p>
@@ -92,8 +96,8 @@ function CookiesPage() {
           <section>
             <h2 className="text-2xl mb-3">4. Como gerir cookies</h2>
             <p>
-              Pode, a qualquer momento, alterar as preferências eliminando os cookies do seu browser
-              ou repondo a sua escolha aqui:
+              Podes, a qualquer momento, alterar as preferências eliminando os cookies do teu navegador
+              ou repondo a tua escolha aqui:
             </p>
             <button onClick={reset} className="btn-ghost mt-4 !py-2 !px-4 !text-sm">
               Repor preferências de cookies
@@ -108,7 +112,7 @@ function CookiesPage() {
           <section>
             <h2 className="text-2xl mb-3">5. Contacto</h2>
             <p>
-              Para esclarecimentos sobre esta Política, contacte{" "}
+              Para esclarecimentos sobre esta Política, contacta{" "}
               <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
             </p>
           </section>
@@ -117,6 +121,7 @@ function CookiesPage() {
             <Link to="/" className="text-wave underline">← Voltar ao início</Link>
           </p>
         </div>
+        </>}
       </main>
       <Footer />
       <CookieBanner />

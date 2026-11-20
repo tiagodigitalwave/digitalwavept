@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useI18n } from "@/lib/i18n";
+import { EnglishLegal } from "@/components/site/EnglishLegal";
 import { Nav } from "@/components/site/Nav";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 
@@ -19,10 +21,12 @@ export const Route = createFileRoute("/politica-de-privacidade")({
 });
 
 function PrivacidadePage() {
+  const { lang } = useI18n();
   return (
     <div className="dark">
       <Nav />
       <main className="section pt-36 md:pt-44">
+        {lang === "en" ? <EnglishLegal page="privacy" /> : <> 
         <span className="eyebrow">Legal · RGPD</span>
         <h1 className="display mt-6">Política de Privacidade</h1>
         <p className="mt-4 text-sm text-muted-foreground">Última atualização: {new Date().toLocaleDateString("pt-PT")}</p>
@@ -31,7 +35,7 @@ function PrivacidadePage() {
           <section>
             <h2 className="text-2xl mb-3">1. Responsável pelo tratamento</h2>
             <p>
-              A entidade responsável pelo tratamento dos seus dados pessoais é a <strong>Digital Wave</strong>,
+              A entidade responsável pelo tratamento dos teus dados pessoais é a <strong>Digital Wave</strong>,
               com contacto em <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
               Esta Política cumpre o Regulamento (UE) 2016/679 (RGPD) e a Lei n.º 58/2019, de 8 de agosto,
               que executa o RGPD na ordem jurídica nacional portuguesa.
@@ -101,7 +105,7 @@ function PrivacidadePage() {
             </ul>
             <p className="mt-3">
               Qualquer pessoa contactada através dos nossos sistemas pode exercer os direitos de
-              acesso, retificação, apagamento e oposição respondendo diretamente ao e-mail recebido
+              acesso, retificação, apagamento e oposição respondendo diretamente ao email recebido
               ou escrevendo para{" "}
               <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
             </p>
@@ -110,13 +114,13 @@ function PrivacidadePage() {
           <section>
             <h2 className="text-2xl mb-3">6. Direitos do titular</h2>
             <p>
-              Nos termos dos artigos 15.º a 22.º do RGPD, tem direito de acesso, retificação,
+              Nos termos dos artigos 15.º a 22.º do RGPD, tens direito de acesso, retificação,
               apagamento, limitação, portabilidade, oposição e a não ficar sujeito a decisões
-              automatizadas. Para exercer estes direitos, contacte-nos através de{" "}
+              automatizadas. Para exercer estes direitos, contacta-nos através de{" "}
               <a href="mailto:hello@infodigitalwave.pt" className="text-wave underline">hello@infodigitalwave.pt</a>.
             </p>
             <p className="mt-3">
-              Tem ainda o direito de apresentar reclamação à Comissão Nacional de Proteção de Dados
+              Tens ainda o direito de apresentar reclamação à Comissão Nacional de Proteção de Dados
               (CNPD), em <a href="https://www.cnpd.pt" target="_blank" rel="noopener noreferrer" className="text-wave underline">www.cnpd.pt</a>.
             </p>
           </section>
@@ -124,7 +128,7 @@ function PrivacidadePage() {
           <section>
             <h2 className="text-2xl mb-3">7. Segurança</h2>
             <p>
-              Adotamos medidas técnicas e organizativas adequadas para proteger os seus dados contra
+              Adotamos medidas técnicas e organizativas adequadas para proteger os teus dados contra
               acesso não autorizado, perda ou destruição, conforme o artigo 32.º do RGPD.
             </p>
           </section>
@@ -133,7 +137,7 @@ function PrivacidadePage() {
             <h2 className="text-2xl mb-3">8. Alterações</h2>
             <p>
               Esta Política pode ser atualizada a qualquer momento, sendo a data da última revisão
-              indicada no topo. Recomenda-se a sua consulta periódica.
+              indicada no topo. Recomendamos que a consultes periodicamente.
             </p>
           </section>
 
@@ -141,6 +145,7 @@ function PrivacidadePage() {
             <Link to="/" className="text-wave underline">← Voltar ao início</Link>
           </p>
         </div>
+        </>}
       </main>
       <Footer />
       <CookieBanner />

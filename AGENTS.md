@@ -4,3 +4,5 @@
 - Site copy lives in src/lib/content.ts (PT and EN dictionaries) read through useI18n, so every text change must be made in both languages.
 - Define the editorial system in global CSS tokens and reusable site classes, so visual changes remain consistent without altering copy or domain logic.
 - Keep unpublished case-study details empty in the browser-safe case-study configuration and render only supplied values, so placeholders never become public claims.
+
+- Render English legal copy through the shared EnglishLegal view and central content dictionary while retaining the Portuguese legal sections, so the language switch covers legal pages without changing legal policy.

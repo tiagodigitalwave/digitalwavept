@@ -21,8 +21,9 @@ export function calculate(closeOf10: number, avgValue: number, clientsPerMonth: 
 
 export function formatEuro(value: number, locale: string) {
   return new Intl.NumberFormat(locale, {
+    // The runtime supports modern grouping; the project's Intl typings predate it.
     style: "currency", currency: "EUR", maximumFractionDigits: 0, useGrouping: "always",
-  }).format(value).replace(/[\u00a0\u202f]/g, " ");
+  } as unknown as Intl.NumberFormatOptions).format(value).replace(/[\u00a0\u202f]/g, " ");
 }
 
 export function formatContribution(value: number, locale: string) {

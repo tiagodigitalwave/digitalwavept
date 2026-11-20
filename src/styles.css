@@ -115,6 +115,7 @@
   .stat-item { border-left: 1px solid var(--ink); padding-inline: 24px; }
   .stat-item:first-child { border-left: 0; padding-left: 0; }
   .stat-number { font-size: var(--stat-size); font-weight: 800; white-space: nowrap; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .stat-unit { font-size: .55em; }
   .stat-label { font-size: 16px; font-weight: 500; color: var(--ink); margin-top: 8px; }
   .editorial-step { border-top: 1px solid var(--border); padding-top: 24px; }
   .step-number { font-size: 32px; font-variant-numeric: tabular-nums; font-weight: 500; color: var(--muted-foreground); }
@@ -163,7 +164,9 @@
   .hero-copy { grid-column: 1 / -1; }
   .hero-symbol { display: none; }
   :root { --stat-size: 48px; --hero-size: 40px; }
-  .stat-item { padding-inline: 16px; }
+  .stat-item { padding-inline: 8px; }
+  .stat-number { min-height: 84px; }
+  .stat-unit { display: block; font-size: 28px; }
   .stat-item:nth-child(3) { padding-left: 0; border-left: 0; }
   .site-home h3 { font-size: 20px; }
 }
