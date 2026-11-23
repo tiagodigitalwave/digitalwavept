@@ -4,6 +4,15 @@ import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-dw.png";
 import { useI18n, LangSwitch } from "@/lib/i18n";
 import { BookButton } from "./Booking";
+import { Button } from "@/components/ui/button";
+
+export function useSiteLinks() {
+  const { t } = useI18n();
+  return [
+    ["top", t.nav.home], ["o-que-fazemos", t.nav.what], ["processo", t.nav.process],
+    ["guia", t.nav.guide], ["casos", t.nav.cases], ["sobre", t.nav.about], ["contacto", t.nav.contact],
+  ] as const;
+}
 
 export function Logo() {
   return (
@@ -17,10 +26,7 @@ export function Logo() {
 export function Nav() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
-  const links = [
-    ["o-que-fazemos", t.nav.what], ["processo", t.nav.process], ["calculadora", t.nav.calc], ["casos", t.nav.cases],
-    ["sobre", t.nav.about], ["perguntas", t.nav.faq], ["contacto", t.nav.contact],
-  ] as const;
+  const links = useSiteLinks();
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-ink text-ink-foreground border-b border-ink-foreground/10">
       <div className="mx-auto max-w-[1200px] px-4 md:px-6 h-[72px] flex items-center justify-between gap-4">
@@ -33,13 +39,13 @@ export function Nav() {
         <div className="flex items-center gap-2 sm:gap-3">
           <span className="hidden sm:block"><LangSwitch /></span>
           <BookButton className="btn-primary !py-2 !px-3 sm:!px-4 !text-sm whitespace-nowrap" />
-          <button type="button" className="xl:hidden p-2" aria-label={t.nav.menu} aria-expanded={open} onClick={() => setOpen(!open)}>
+          <Button variant="ghost" size="icon" type="button" className="xl:hidden text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground" aria-label={t.nav.menu} aria-expanded={open} onClick={() => setOpen(!open)}>
             {open ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          </Button>
         </div>
       </div>
       {open && (
-        <nav className="xl:hidden border-t border-ink-foreground/10 px-4 pb-4" aria-label="Menu">
+        <nav className="xl:hidden border-t border-ink-foreground/10 px-4 pb-4 max-h-[calc(100dvh-72px)] overflow-y-auto" aria-label={t.nav.menu}>
           {links.map(([h, l]) => (
             <Link key={h} to="/" hash={h} onClick={() => setOpen(false)} className="block py-3 border-b border-ink-foreground/10">{l}</Link>
           ))}

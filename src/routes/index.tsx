@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Linkedin, Play, Download, Mail } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Linkedin, Play, Download, ArrowRight, Check } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { Footer, CookieBanner } from "@/components/site/Footer";
 import { BookButton } from "@/components/site/Booking";
@@ -10,6 +10,7 @@ import { calculate, formatEuro, formatContribution, parseNum } from "@/lib/calcu
 
 import { Button } from "@/components/ui/button";
 import { caseStudy } from "@/lib/case-study";
+import { certifications, clientLogos, guideTopics, outreachStats } from "@/lib/site-presentation";
 
 const SITE = "https://digitalwavept.lovable.app/";
 
@@ -36,14 +37,15 @@ function Home() {
       <Nav />
       <main className="pt-[72px]">
         <Hero />
+        <Certs />
+        <ClientBand />
         <Stats />
+        <Problem />
         <WhatWeDo />
-        <Why />
         <Process />
         <Guide />
         <Calculator />
         <Cases />
-        <Certs />
         <About />
         <Faq />
         <FinalCta />
@@ -54,33 +56,33 @@ function Home() {
   );
 }
 
-function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={className}>{children}</div>;
-}
-
 const wrap = "site-wrap";
 
 function Hero() {
   const { t } = useI18n();
   return (
-    <section className="bg-ink text-ink-foreground">
-      <div className={`${wrap} grid grid-cols-12 gap-8 items-center`}>
-        <div className="hero-copy">
-          <h1 className="hero-title">{t.hero.h1}</h1>
-          <p className="mt-6 text-lg text-ink-foreground/80 max-w-xl">{t.hero.sub}</p>
-          <div className="hero-actions mt-8 flex flex-col sm:flex-row gap-3">
-            <BookButton className="btn-primary justify-center" />
-            <a href="#guia" className="btn-outline-light">{t.hero.guide}</a>
-          </div>
-        </div>
-        <div className="hero-symbol" aria-hidden="true">
-          <svg viewBox="0 0 260 340" role="presentation">
-            <path d="M-45 310 130 170 305 310 M-45 265 130 125 305 265 M-45 220 130 80 305 220 M-45 175 130 35 305 175" strokeWidth="2" />
-          </svg>
+    <section className="hero-band bg-ink text-ink-foreground">
+      <div className={wrap}>
+        <h1 className="hero-title">{t.hero.h1}</h1>
+        <p className="mt-6 text-lg text-ink-foreground/80 hero-subtitle">{t.hero.sub}</p>
+        <div className="hero-actions mt-8 flex flex-col sm:flex-row gap-3">
+          <BookButton className="btn-primary" />
+          <Button asChild variant="ghost" className="btn-outline-light"><a href="#casos">{t.hero.results}</a></Button>
         </div>
       </div>
     </section>
   );
+}
+
+function ClientBand() {
+  const { t } = useI18n();
+  if (clientLogos.length === 0) return null;
+  return <section className="bg-background"><div className={wrap}>
+    <h2>{t.clientsTitle}</h2>
+    <div className="mt-8 flex flex-wrap justify-center gap-10">
+      {clientLogos.map((logo) => <img key={logo.src} src={logo.src} alt={logo.name} className="h-16 w-40 object-contain" loading="lazy" />)}
+    </div>
+  </div></section>;
 }
 
 function Count({ to, prefix = "+", suffix = "" }: { to: number; prefix?: string; suffix?: string }) {
@@ -113,21 +115,19 @@ function Count({ to, prefix = "+", suffix = "" }: { to: number; prefix?: string;
 
 function Stats() {
   const { t, lang } = useI18n();
-  const items = [
-    { el: <><Count to={100} /><span className="stat-unit"> {lang === "pt" ? "mil" : "k"}</span></> },
-    { el: <Count to={1000} /> },
-    { el: <Count to={35} /> },
-    { el: <Count to={20} /> },
-  ];
   return (
     <section className="stat-strip bg-primary text-primary-foreground">
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-16 grid grid-cols-2 lg:grid-cols-4 gap-y-10">
-        {items.map((it, i) => (
-          <div key={i} className="stat-item">
-            <div className="stat-number">{it.el}</div>
-            <div className="stat-label">{t.stats[i]}</div>
-          </div>
-        ))}
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-14">
+        <h2>{t.statsTitle}</h2>
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-4 gap-y-8">
+          {outreachStats.map((stat, i) => (
+            <div key={stat.value} className="stat-item">
+              <div className="stat-number"><Count to={stat.value} />{stat.unit[lang] && <span className="stat-unit"> {stat.unit[lang]}</span>}</div>
+              <h3 className="stat-label">{t.stats[i]}</h3>
+              <p className="stat-description">{t.statsDescriptions[i]}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -169,18 +169,23 @@ function WhatWeDo() {
   );
 }
 
-function Why() {
+function Problem() {
   const { t } = useI18n();
   return (
     <section className="bg-background">
       <div className={wrap}>
-        <h2 className="text-3xl md:text-4xl max-w-2xl">{t.why.title}</h2>
-        <div className="mt-10 grid lg:grid-cols-2 gap-10 items-center">
-          <VideoPlaceholder label={t.why.video} />
-          <ul className="divide-y divide-border border-y border-border">
-            {t.why.items.map((title) => <li key={title} className="py-6 benefit-title font-bold">{title}</li>)}
-          </ul>
+        <h2 className="max-w-2xl">{t.problem.title}</h2>
+        <div className="comparison-grid mt-10">
+          <h3 className="comparison-heading">{t.problem.before}</h3>
+          <h3 className="comparison-heading comparison-after">{t.problem.after}</h3>
+          {t.problem.pairs.map(([before, after]) => (
+            <div key={before} className="comparison-pair">
+              <p className="comparison-before"><span className="sr-only">{t.problem.before}: </span>{before}</p>
+              <p className="comparison-result"><Check size={20} aria-hidden="true" /><span><span className="sr-only">{t.problem.after}: </span>{after}</span></p>
+            </div>
+          ))}
         </div>
+        <p className="mt-8 font-medium">{t.problem.transition}</p>
       </div>
     </section>
   );
@@ -189,29 +194,33 @@ function Why() {
 function Process() {
   const { t } = useI18n();
   return (
-    <section id="processo" className="bg-background">
+    <section id="processo" className="bg-muted">
       <div className={wrap}>
-        <h2 className="text-3xl md:text-4xl">{t.process.title}</h2>
-        <div className="relative mt-12">
-          <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-            {t.process.steps.map(([h, p], i) => (
-              <li key={h}>
-                <Reveal className="editorial-step h-full">
-                  <div className="step-number">0{i + 1}</div>
-                  <h3 className="mt-5 text-xl">{h}</h3>
-                  <p className="mt-2 text-muted-foreground">{p}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <h2>{t.process.title}</h2>
+        <ol className="mt-10 grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {t.process.steps.map(([title], i) => (
+            <li key={title} className="process-card">
+              <div className="step-number">0{i + 1}</div>
+              <h3 className="mt-5">{title}</h3>
+              <ul className="mt-5 space-y-3 text-sm text-muted-foreground list-disc pl-4">
+                {t.process.points[i]?.map((point) => <li key={point}>{point}</li>)}
+              </ul>
+              {i === 2 && <ol className="execution-flow mt-8" aria-label={title}>
+                {t.process.flow.map((node, index) => <li key={node}>
+                  <span className="flow-node">{node}</span>{index < 3 && <ArrowRight size={14} aria-hidden="true" />}
+                </li>)}
+              </ol>}
+            </li>
+          ))}
+        </ol>
+        <BookButton className="btn-primary mt-10" />
       </div>
     </section>
   );
 }
 
 function Guide() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const track = () => {
     // Evento de analytics (apenas contagem, sem dados pessoais)
     const w = window as unknown as { gtag?: (...a: unknown[]) => void; plausible?: (e: string) => void };
@@ -219,21 +228,20 @@ function Guide() {
     w.plausible?.("guide_download");
   };
   return (
-    <section id="guia" className="bg-muted text-foreground">
-      <div className={`${wrap} grid md:grid-cols-[minmax(0,320px)_1fr] gap-10 items-center`}>
-        {/* [PDF FINAL A ENVIAR] capa provisória */}
-        <div className="aspect-[3/4] max-w-[260px] w-full guide-cover bg-background text-foreground p-6 flex flex-col justify-between">
-          <div className="flex gap-2"><Mail size={22} /><Linkedin size={22} /></div>
-          <div className="font-bold text-xl leading-tight">{t.guide.cover}</div>
-          <div className="h-px w-16 bg-foreground" />
-        </div>
-        <div>
-          <h2 className="text-3xl md:text-4xl">{t.guide.title}</h2>
-          <p className="mt-4 text-muted-foreground text-lg">{t.guide.sub}</p>
-          <a href="/guia-campanha-email-linkedin.pdf" download onClick={track} className="btn-primary mt-8">
-            <Download size={18} /> {t.guide.cta}
-          </a>
-        </div>
+    <section id="guia" className="bg-background text-foreground">
+      <div className={wrap}>
+        <h2 className="max-w-3xl">{t.guide.title}</h2>
+        <p className="mt-5 text-muted-foreground text-lg">{t.guide.sub}</p>
+        {guideTopics.length > 0 && <ol className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {guideTopics.slice(0, 3).map((topic, i) => <li key={topic.title[lang]} className="editorial-step">
+            <div className="step-number">0{i + 1}</div>
+            <h3 className="mt-5">{topic.title[lang]}</h3>
+            <p className="mt-3 text-muted-foreground">{topic.description[lang]}</p>
+          </li>)}
+        </ol>}
+        <Button asChild variant="ghost" className="btn-primary mt-8">
+          <a href="/guia-campanha-email-linkedin.pdf" download onClick={track}><Download size={18} />{t.guide.cta}</a>
+        </Button>
       </div>
     </section>
   );
@@ -324,38 +332,31 @@ function Cases() {
   const { t, lang } = useI18n();
   return (
     <section id="casos" className="bg-muted">
-      <div className={wrap}>
-        <h2 className="text-3xl md:text-4xl max-w-2xl">{t.cases.title}</h2>
-        <div className="mt-10 grid lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-8 min-w-0">
-            <YouTubeLite id={caseStudy.youtubeId} title={caseStudy.company || t.cases.title} />
-            {caseStudy.company && <h3 className="mt-6">{caseStudy.company}</h3>}
-            {caseStudy.sector[lang] && <p className="mt-2 text-muted-foreground">{caseStudy.sector[lang]}</p>}
-            {caseStudy.linkedin && <a href={caseStudy.linkedin} target="_blank" rel="noopener noreferrer" className="btn-ghost mt-4"><Linkedin size={16} /> {t.cases.linkedin}</a>}
-          </div>
+      <div className={`${wrap} grid lg:grid-cols-2 gap-10 lg:gap-16 items-center`}>
+        <div className="min-w-0"><YouTubeLite id={caseStudy.youtubeId} title={caseStudy.company || t.cases.title} /></div>
+        <div>
+          <h2>{t.cases.title}</h2>
+          {caseStudy.company && <h3 className="mt-6">{caseStudy.company}</h3>}
+          {caseStudy.sector[lang] && <p className="mt-2 text-muted-foreground">{caseStudy.sector[lang]}</p>}
+          {caseStudy.paragraph[lang] && <p className="mt-5">{caseStudy.paragraph[lang]}</p>}
+          {caseStudy.metrics.length > 0 && <dl className="mt-8 grid grid-cols-3 gap-4 border-t border-border pt-6">
+            {caseStudy.metrics.slice(0, 3).map((metric) => <div key={metric.label[lang]}><dt className="text-sm text-muted-foreground">{metric.label[lang]}</dt><dd className="text-3xl font-bold mt-2">{metric.value}</dd></div>)}
+          </dl>}
+          {caseStudy.linkedin && <Button asChild variant="ghost" className="btn-ghost mt-4"><a href={caseStudy.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin size={16} />{t.cases.linkedin}</a></Button>}
         </div>
       </div>
     </section>
   );
 }
 
-const CERTS = [
-  { src: "/awards/clay-cert.png", alt: "Clay University Automated Outbound Certification" },
-  { src: "/awards/plusvibe-cert.png", alt: "PlusVibe Certified Agency Partner" },
-];
-
 function Certs() {
   const { t } = useI18n();
   return (
-    <section className="bg-background">
-      <div className={wrap}>
-        <h2 className="text-3xl md:text-4xl">{t.certs.title}</h2>
-        <div className="mt-10 flex flex-wrap gap-16">
-          {CERTS.map((c) => (
-            <div key={c.src} className="cert-item w-[220px] sm:w-[260px] grid place-items-center">
-              <img src={c.src} alt={c.alt} loading="lazy" className="w-full h-48 object-contain rounded-xl" />
-            </div>
-          ))}
+    <section className="certification-band bg-background">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-10">
+        <h2>{t.certs.title}</h2>
+        <div className="certification-row mt-6">
+          {certifications.map((cert) => <img key={cert.src} src={cert.src} alt={cert.alt} loading="lazy" />)}
         </div>
       </div>
     </section>
@@ -414,7 +415,8 @@ function FinalCta() {
     <section className="final-band bg-ink text-ink-foreground">
       <div className="site-wrap text-center">
         <h2 className="text-3xl md:text-5xl">{t.final.title}</h2>
-        <BookButton className="btn-outline-light mt-8" />
+        <p className="mt-5 mx-auto text-ink-foreground/80">{t.final.sub}</p>
+        <BookButton className="btn-primary mt-8" />
       </div>
     </section>
   );

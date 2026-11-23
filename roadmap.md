@@ -12,3 +12,6 @@
 - [x] Calculadora: fase 5, validação, formatação e três testes de aceitação.
 - [x] Caso de estudo único, sem marcadores provisórios, e secção O que fazemos com link no menu.
 - [x] Revisão linguística PT/EN e verificação em 390px e 1280px.
+
+- [ ] Reestruturação conforme nova referência: navegação, hero textual, certificados, números, problema, processo, guia, caso e rodapé.
+- [ ] Validar ordem, conteúdos não publicados, PT/EN e fluxos em 390px e 1280px.

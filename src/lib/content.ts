@@ -17,15 +17,29 @@ const pt = {
     title: "Digital Wave | Reuniões com decisores através de email e LinkedIn",
     description: "Empresa portuguesa de outreach B2B. Montamos e gerimos o teu outreach por email e LinkedIn para marcar reuniões com decisores.",
   },
-  nav: { what: "O que fazemos", process: "Processo", guide: "Guia", calc: "Calculadora", cases: "Casos de estudo", about: "Sobre nós", faq: "Perguntas", contact: "Contacto", book: "Marcar conversa", menu: "Abrir menu" },
+  nav: { home: "Início", pages: "Páginas", what: "O que fazemos", process: "Processo", guide: "Guia", calc: "Calculadora", cases: "Casos de estudo", about: "Sobre nós", faq: "Perguntas", contact: "Contacto", book: "Marcar conversa", menu: "Abrir menu" },
   hero: {
     h1: "Reuniões com decisores, através de email marketing e LinkedIn Outreach",
     sub: "Reestruturamos o teu outreach: infraestrutura, listas, mensagens e envio. Tu só atendes as reuniões.",
     guide: "Descarregar o guia",
+    results: "Ver resultados",
     confirmed: "Reunião confirmada",
     via: { email: "via email", linkedin: "via LinkedIn" },
   },
-  stats: ["emails enviados", "reuniões agendadas", "mercados diferentes", "países"],
+  stats: ["Emails de outreach", "Reuniões", "Mercados", "Países"],
+  statsTitle: "O nosso outreach em números",
+  statsDescriptions: ["emails de outreach enviados", "reuniões agendadas", "mercados diferentes", "países"],
+  clientsTitle: "Empresas que confiam em nós",
+  problem: {
+    title: "Porque é que o pipeline é imprevisível", before: "Antes", after: "Depois",
+    pairs: [
+      ["Depender de recomendações", "Contacto direto com decisores todas as semanas"],
+      ["Meses fracos sem aviso", "Pipeline previsível"],
+      ["A equipa a perder horas em prospeção", "A equipa a falar só com interessados"],
+      ["Um só canal de aquisição", "Email e LinkedIn a trabalhar em conjunto"],
+    ],
+    transition: "Nós montamos e gerimos o sistema. Tu atendes as reuniões.",
+  },
   what: {
     title: "O que fazemos, em termos simples",
     sub: "Muitas empresas B2B dependem de recomendações e de clientes que aparecem sozinhos. Nós montamos e gerimos o sistema que contacta diretamente decisores das empresas certas, por email e LinkedIn, e marca as reuniões no teu calendário. A isto chama-se outreach: contactar potenciais clientes antes de eles te procurarem.",
@@ -44,7 +58,14 @@ const pt = {
     items: ["Gerar mais reuniões qualificadas", "Acrescentar previsibilidade", "Poupar horas da equipa em prospeção", "Acrescentar mais canais de aquisição de clientes ao teu negócio"],
   },
   process: {
-    title: "O nosso processo",
+    title: "O nosso processo em 4 etapas",
+    points: [
+      ["Domínios de envio", "Caixas de correio e aquecimento", "Perfis de LinkedIn"],
+      ["Definição do cliente ideal", "Pesquisa de empresas e decisores", "Construção das listas"],
+      ["Mensagens para o teu mercado", "Sequências de email", "Sequências de LinkedIn"],
+      ["Lançamento das campanhas", "Análise das respostas", "Otimização de mensagens e listas"],
+    ],
+    flow: ["Lista", "Mensagem", "Resposta", "Reunião"],
     steps: [
       ["Fundação", "Domínios, caixas de correio, perfis de LinkedIn e aquecimento."],
       ["Pesquisa", "Definição do cliente ideal e construção das listas."],
@@ -83,6 +104,7 @@ const pt = {
     company: "[EMPRESA]",
     sector: "[SETOR]",
     play: "Reproduzir vídeo",
+    all: "Ver todos os casos",
   },
   certs: { title: "Certificados pelas ferramentas que usamos" },
   about: {
@@ -105,7 +127,7 @@ const pt = {
       ["Posso aprovar as mensagens e as listas antes do envio?", "[CONFIRMAR resposta]"],
     ],
   },
-  final: { title: "Pronto para encher o calendário?" },
+  final: { title: "Pronto para encher o calendário?", sub: "Nós montamos e gerimos o teu outreach por email e LinkedIn. Tu atendes as reuniões com decisores interessados." },
   footer: {
     tagline: "Outreach B2B por email e LinkedIn. Marcamos reuniões com decisores.",
     contact: "Contacto",
@@ -127,15 +149,29 @@ const en: Dict = {
     title: "Digital Wave | Meetings with decision-makers through email and LinkedIn",
     description: "Portuguese B2B outreach company. We build and run your email and LinkedIn outreach to book meetings with decision-makers.",
   },
-  nav: { what: "What we do", process: "Process", guide: "Guide", calc: "Calculator", cases: "Case studies", about: "About us", faq: "FAQ", contact: "Contact", book: "Book a call", menu: "Open menu" },
+  nav: { home: "Home", pages: "Pages", what: "What we do", process: "Process", guide: "Guide", calc: "Calculator", cases: "Case studies", about: "About us", faq: "FAQ", contact: "Contact", book: "Book a call", menu: "Open menu" },
   hero: {
     h1: "Meetings with decision-makers through email marketing and LinkedIn outreach",
     sub: "We rebuild your outreach: infrastructure, lists, messaging and sending. You just take the meetings.",
     guide: "Download the guide",
+    results: "View results",
     confirmed: "Meeting confirmed",
     via: { email: "via email", linkedin: "via LinkedIn" },
   },
-  stats: ["emails sent", "meetings booked", "different markets", "countries"],
+  stats: ["Outreach emails", "Meetings", "Markets", "Countries"],
+  statsTitle: "Our outreach in numbers",
+  statsDescriptions: ["outreach emails sent", "meetings booked", "different markets", "countries"],
+  clientsTitle: "Companies that trust us",
+  problem: {
+    title: "Why your pipeline is unpredictable", before: "Before", after: "After",
+    pairs: [
+      ["Relying on referrals", "Direct contact with decision-makers every week"],
+      ["Quiet months without warning", "A predictable pipeline"],
+      ["Your team spending hours prospecting", "Your team speaking only to interested prospects"],
+      ["A single acquisition channel", "Email and LinkedIn working together"],
+    ],
+    transition: "We build and run the system. You take the meetings.",
+  },
   what: {
     title: "What we do, in plain terms",
     sub: "Many B2B companies rely on referrals and on clients who turn up on their own. We build and run the system that contacts decision-makers at the right companies directly, by email and LinkedIn, and books the meetings in your calendar. This is called outreach: contacting potential clients before they come looking for you.",
@@ -154,7 +190,14 @@ const en: Dict = {
     items: ["Generate more qualified meetings", "Add predictability", "Save your team hours of prospecting", "Add more customer acquisition channels to your business"],
   },
   process: {
-    title: "Our process",
+    title: "Our process in 4 steps",
+    points: [
+      ["Sending domains", "Mailboxes and warm-up", "LinkedIn profiles"],
+      ["Ideal customer definition", "Company and decision-maker research", "List building"],
+      ["Messaging for your market", "Email sequences", "LinkedIn sequences"],
+      ["Campaign launch", "Reply analysis", "Message and list optimisation"],
+    ],
+    flow: ["List", "Message", "Reply", "Meeting"],
     steps: [
       ["Foundation", "Domains, mailboxes, LinkedIn profiles and warm-up."],
       ["Research", "Ideal customer definition and list building."],
@@ -193,6 +236,7 @@ const en: Dict = {
     company: "[COMPANY]",
     sector: "[SECTOR]",
     play: "Play video",
+    all: "View all case studies",
   },
   certs: { title: "Certified by the tools we use" },
   about: {
@@ -215,7 +259,7 @@ const en: Dict = {
       ["Can I approve the messages and lists before sending?", "[CONFIRM answer]"],
     ],
   },
-  final: { title: "Ready to fill your calendar?" },
+  final: { title: "Ready to fill your calendar?", sub: "We build and run your email and LinkedIn outreach. You take the meetings with interested decision-makers." },
   footer: {
     tagline: "B2B outreach through email and LinkedIn. We book meetings with decision-makers.",
     contact: "Contact",

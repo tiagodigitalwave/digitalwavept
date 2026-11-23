@@ -6,4 +6,6 @@ export const caseStudy = {
   company: "",
   sector: { pt: "", en: "" } satisfies Record<Lang, string>,
   linkedin: "",
+  paragraph: { pt: "", en: "" } satisfies Record<Lang, string>,
+  metrics: [] as { value: string; label: Record<Lang, string> }[],
 };
