@@ -13,5 +13,5 @@
 - [x] Caso de estudo único, sem marcadores provisórios, e secção O que fazemos com link no menu.
 - [x] Revisão linguística PT/EN e verificação em 390px e 1280px.
 
-- [ ] Reestruturação conforme nova referência: navegação, hero textual, certificados, números, problema, processo, guia, caso e rodapé.
-- [ ] Validar ordem, conteúdos não publicados, PT/EN e fluxos em 390px e 1280px.
+- [x] Reestruturação conforme nova referência: navegação, hero textual, certificados, números, problema, processo, guia, caso e rodapé.
+- [x] Validar ordem, conteúdos não publicados, PT/EN e fluxos em 390px, 715px e 1280px; 14 testes aprovados.
